@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SwipeDetector : MonoBehaviour
 {
@@ -8,13 +9,15 @@ public class SwipeDetector : MonoBehaviour
     private Vector2 fingerUp;
     public bool detectSwipeOnlyAfterRelease = false;
 
-    public float SWIPE_LENGTH_THRESHOLD = 20f;
-    public float SWIPE_TIME_THRESHOLD = 20f;
+    public float SWIPE_LENGTH_THRESHOLD = 0.1f;
+    public float SWIPE_TIME_THRESHOLD = 1f;
 
     private float fingerDownTime;
     private float fingerUpTime;
 
     Swipe currentSwipe;
+
+    List<UnityAction<Swipe>> swipeCallbacks;
 
     public static SwipeDetector Instance { get; private set; }
 
@@ -26,11 +29,12 @@ public class SwipeDetector : MonoBehaviour
             Destroy(this);
         }
 
+        swipeCallbacks = new List<UnityAction<Swipe>>();
     }
 
     // Update is called once per frame
     void Update() {
-
+#if UNITY_ANDROID
         foreach (Touch touch in Input.touches) {
             if (touch.phase == TouchPhase.Began) {
                 fingerUp = touch.position;
@@ -42,7 +46,7 @@ public class SwipeDetector : MonoBehaviour
             if (touch.phase == TouchPhase.Ended) {
                 fingerUp = touch.position;
                 fingerUpTime = Time.time;
-                float swipeTime = Swipe.CalculateSwipeTime(fingerDownTime, fingerUpTime);
+                float swipeTime = Swipe.CalculateSwipeDuration(fingerDownTime, fingerUpTime);
 
                 if (swipeTime <= SWIPE_TIME_THRESHOLD) {
                     // Create a swipe
@@ -52,6 +56,28 @@ public class SwipeDetector : MonoBehaviour
                 }
             }
         }
+#endif
+
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0)) {
+            fingerDown = Input.mousePosition;
+            fingerDownTime = Time.time;
+        }
+
+        if (Input.GetMouseButtonUp(0)) {
+            fingerUp = Input.mousePosition;
+            fingerUpTime = Time.time;
+            float swipeTime = Swipe.CalculateSwipeDuration(fingerDownTime, fingerUpTime);
+            float swipeLength = Swipe.CalculateSwipeLength(fingerDown, fingerUp);
+
+            if (swipeTime <= SWIPE_TIME_THRESHOLD && swipeLength >= SWIPE_LENGTH_THRESHOLD) {
+                // Create a swipe
+                currentSwipe = new Swipe(swipeTime, fingerDown, fingerUp);
+
+                OnSwipe();
+            }
+        }
+#endif
     }
 /*
     void checkSwipe() {
@@ -115,7 +141,9 @@ public class SwipeDetector : MonoBehaviour
     }
 */
     void OnSwipe() {
-
+        foreach (UnityAction<Swipe> swipeCallback in swipeCallbacks) {
+            swipeCallback.Invoke(currentSwipe);
+        }
     }
 
     public Swipe GetSwipe() {
@@ -123,5 +151,15 @@ public class SwipeDetector : MonoBehaviour
             return currentSwipe;
 
         return null;
+    }
+
+    public bool AddSwipeListener(UnityAction<Swipe> callbackFunction) {
+        swipeCallbacks.Add(callbackFunction);
+        return true;
+    }
+
+    public bool RemoveSwipeListener(UnityAction<Swipe> callbackFunction) {
+        swipeCallbacks.Remove(callbackFunction);
+        return true;
     }
 }
