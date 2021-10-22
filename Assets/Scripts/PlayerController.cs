@@ -27,25 +27,83 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float platformIgnoreTime = 0.25f;
 
+    private Vector2 fingerDownPos;
+    private Vector2 fingerCurrentPos;
+    private Vector2 fingerUpPos;
+
+    private TrajectoryPredictor trajectoryPredictor;
+
+    private Vector2 prevMousePos;
+    private Vector2 prevFingerPos;
+
+    public float SWIPE_LENGTH_THRESHOLD = 50f;
+
+    public Vector3 testForce;
+
+    private Vector3 currentSwipeForce;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         swipeDetector = SwipeDetector.Instance;
 
-        swipeDetector.AddSwipeListener(OnSwipe);
+        trajectoryPredictor = TrajectoryPredictor.Instance;
+
+        //rb.AddForce(testForce);
+
+        //swipeDetector.AddSwipeListener(OnSwipe);
     }
 
     // Update is called once per frame
     void Update() {
 
+        Vector2 mousePosition = Input.mousePosition;
+        bool mouseMoved = Vector2.Distance(prevMousePos, mousePosition) <= 0.1f;
+
+        if (Input.touchCount == 1) {
+            Touch touch = Input.touches[0];
+            if (touch.phase == TouchPhase.Began || Input.GetMouseButtonDown(0)) {
+                fingerDownPos = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Moved || mouseMoved) {
+                fingerCurrentPos = touch.position;
+
+                // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
+                float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
+                if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD) {
+                    // Calculate current position difference
+                    Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
+                    float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
+
+                    currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
+                    // Calculate force 
+                    trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+                    //Debug.Log("Simulating Launch");
+                    // Simulate launch
+                }
+
+            }
+            else if (touch.phase == TouchPhase.Ended) {
+                fingerUpPos = touch.position;
+                trajectoryPredictor.ClearSimulation();
+                // Enable Movement
+                StartMovement();
+                // Add swipe force
+                rb.AddForce(currentSwipeForce);
+            }
+
+            prevFingerPos = touch.position;
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            //rb.AddForce(testForce);
+            //trajectoryPredictor.SimulateLaunch(gameObject.transform, testForce);
+        }
+
+
+        prevMousePos = Input.mousePosition;
     }
-
-    private void FixedUpdate() {
-        
-    }
-
-
 
     public void OnSwipe(Swipe newSwipe) {
         if (!canMove)
@@ -59,18 +117,16 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnDestroy() {
-        swipeDetector.RemoveSwipeListener(OnSwipe);
+        //swipeDetector.RemoveSwipeListener(OnSwipe);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
-            Debug.Log("Hit platform");
+            //Debug.Log("Hit platform");
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                Debug.Log("Stopping Movement");
+                //Debug.Log("Stopping Movement");
                 StopMovement();
             }
-
-
 
             previousPlatform = collision.gameObject;
         }
@@ -88,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
-            Debug.Log("Exit platform top");
+            //Debug.Log("Exit platform top");
         }
     }
 
