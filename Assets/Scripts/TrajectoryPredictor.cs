@@ -31,6 +31,8 @@ public class TrajectoryPredictor : MonoBehaviour
     int _steps = 20; //how long we will be simulating for. More steps, more lenghth but also less performance
     Vector3[] points;
 
+    public GameObject obstaclesRoot;
+
     Vector3 _lastForce = Vector3.zero; //used to track what the last force input was 
 
     // Start is called before the first frame update
@@ -45,16 +47,33 @@ public class TrajectoryPredictor : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+    private void Update() {
+        if (Input.GetMouseButtonDown(1)) {
+            if (_simulatedObject)
+                _simulatedObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-100f, 200f));
+        }
     }
 
     private void CreateSimObjects()  //all objects start in regulare scene, and get sent over on start. this way colliders are dynamic and we can grab refrence to simulated player in first scene.
     {
         SceneManager.MoveGameObjectToScene(_simulatedObject, _simScene); // move the simulated player to the sim scene
 
+
+        foreach (Transform t in obstaclesRoot.transform) {
+            if (t.gameObject.GetComponent<Collider2D>() != null) {
+                GameObject fakeT = Instantiate(t.gameObject);
+                fakeT.transform.position = t.position;
+                fakeT.transform.rotation = t.rotation;
+                SpriteRenderer fakeR = fakeT.GetComponent<SpriteRenderer>();
+                if (fakeR) {
+                    fakeR.enabled = false;
+                }
+                SceneManager.MoveGameObjectToScene(fakeT, _simScene);
+                //dummyObstacles.Add(fakeT);
+            }
+        }
+
+        /*
         GameObject[] allGameobjects = FindObjectsOfType<GameObject>();
 
         List<GameObject> _collidables = new List<GameObject>();
@@ -70,6 +89,7 @@ public class TrajectoryPredictor : MonoBehaviour
             var newGO = Instantiate(GO, GO.transform.position, GO.transform.rotation);
             SceneManager.MoveGameObjectToScene(newGO, _simScene);
         }
+        */
     }
 
     public void SimulateLaunch(Transform player, Vector3 force)   //call this every frame while player is grabed;
@@ -80,6 +100,7 @@ public class TrajectoryPredictor : MonoBehaviour
 
         if (_lastForce != force) //if force hasnt changed, skip simulation;
         {
+            Debug.Log("Predicting with force: " + force);
             _simulatedObject.GetComponent<Rigidbody2D>().AddForce(force); //simulate the objects path
             for (var i = 0; i < _steps; i++) // steps is how many physics steps will be done in a frame 
             {

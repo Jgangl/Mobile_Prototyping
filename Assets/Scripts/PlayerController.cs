@@ -6,11 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
 
-    private bool directionLeft;
-
     Rigidbody2D rb;
-
-    SwipeDetector swipeDetector;
 
     [SerializeField]
     private bool canMove = true;
@@ -31,93 +27,112 @@ public class PlayerController : MonoBehaviour
     private Vector2 fingerCurrentPos;
     private Vector2 fingerUpPos;
 
-    private TrajectoryPredictor trajectoryPredictor;
+    private bool mouseHeldDown = false;
 
-    private Vector2 prevMousePos;
     private Vector2 prevFingerPos;
 
     public float SWIPE_LENGTH_THRESHOLD = 50f;
 
-    public Vector3 testForce;
+    private Vector2 currentSwipeForce;
 
-    private Vector3 currentSwipeForce;
+    private TrajectoryPredictor trajectoryPredictor;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        swipeDetector = SwipeDetector.Instance;
+
+        //PredictionManager.instance.copyAllObstacles();
 
         trajectoryPredictor = TrajectoryPredictor.Instance;
-
-        //rb.AddForce(testForce);
-
-        //swipeDetector.AddSwipeListener(OnSwipe);
     }
 
     // Update is called once per frame
     void Update() {
+        /*
+        Touch touch = Input.touches[0];
+        if (touch.phase == TouchPhase.Began || Input.GetMouseButtonDown(0)) {
+            fingerDownPos = touch.position;
+        }
+        else if (touch.phase == TouchPhase.Moved || mouseMoved) {
+            fingerCurrentPos = touch.position;
+
+            // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
+            float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
+            if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD) {
+                // Calculate current position difference
+                Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
+                float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
+
+                // Calculate force
+                currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
+
+                // Simulate launch
+                trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+            }
+
+        }
+        else if (touch.phase == TouchPhase.Ended) {
+            fingerUpPos = touch.position;
+            trajectoryPredictor.ClearSimulation();
+            // Enable Movement
+            StartMovement();
+            // Add swipe force
+            rb.AddForce(currentSwipeForce);
+        }
+        
+        prevFingerPos = touch.position;
+        */
 
         Vector2 mousePosition = Input.mousePosition;
-        bool mouseMoved = Vector2.Distance(prevMousePos, mousePosition) <= 0.1f;
-
-        if (Input.touchCount == 1) {
-            Touch touch = Input.touches[0];
-            if (touch.phase == TouchPhase.Began || Input.GetMouseButtonDown(0)) {
-                fingerDownPos = touch.position;
-            }
-            else if (touch.phase == TouchPhase.Moved || mouseMoved) {
-                fingerCurrentPos = touch.position;
-
-                // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
-                float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
-                if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD) {
-                    // Calculate current position difference
-                    Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
-                    float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
-
-                    currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
-                    // Calculate force 
-                    trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
-                    //Debug.Log("Simulating Launch");
-                    // Simulate launch
-                }
-
-            }
-            else if (touch.phase == TouchPhase.Ended) {
-                fingerUpPos = touch.position;
-                trajectoryPredictor.ClearSimulation();
-                // Enable Movement
-                StartMovement();
-                // Add swipe force
-                rb.AddForce(currentSwipeForce);
-            }
-
-            prevFingerPos = touch.position;
-        }
+        bool mouseMoved = Vector2.Distance(prevFingerPos, mousePosition) >= 0.25f;
 
         if (Input.GetMouseButtonDown(0)) {
-            //rb.AddForce(testForce);
-            //trajectoryPredictor.SimulateLaunch(gameObject.transform, testForce);
+            fingerDownPos = Input.mousePosition;
+            mouseHeldDown = true;
+        }
+        else if (Input.GetMouseButtonUp(0)) {
+            //Debug.Log("Get mouse up");
+            fingerUpPos = Input.mousePosition;
+            mouseHeldDown = false;
+
+            trajectoryPredictor.ClearSimulation();
+            //PredictionManager.instance.ClearSimulation();
+
+            //trajectoryPredictor.ClearSimulation();
+            // Enable Movement
+            StartMovement();
+            // Add swipe force
+
+            Debug.Log("Adding force: " + currentSwipeForce);
+            rb.AddForce(currentSwipeForce);
+        }
+        else if (mouseHeldDown && mouseMoved) {
+            fingerCurrentPos = Input.mousePosition;
+
+            // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
+            float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
+            if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD) {
+                // Calculate current position difference
+                Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
+                float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
+
+                // Calculate force
+                currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
+
+                //Debug.Log("Simulate: " + currentSwipeForce);
+                // Simulate launch
+                //Debug.Log("Simulating force: " + currentSwipeForce);
+                trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+                //PredictionManager.instance.predict(gameObject, gameObject.transform.position, currentSwipeForce);
+            }
         }
 
-
-        prevMousePos = Input.mousePosition;
-    }
-
-    public void OnSwipe(Swipe newSwipe) {
-        if (!canMove)
-            return;
-
-        StartMovement();
-        Vector2 swipeDirection = newSwipe.GetDirection();
-        float swipeLength = newSwipe.GetLength();
-
-        rb.velocity = (swipeDirection.normalized * -1) * speed * (swipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
-    }
-
-    private void OnDestroy() {
-        //swipeDetector.RemoveSwipeListener(OnSwipe);
+#if UNITY_EDITOR
+        prevFingerPos = Input.mousePosition;
+#elif UNITY_ANDROID
+        prevFingerPos = Input.touches[0].position;
+#endif
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -164,3 +179,23 @@ public class PlayerController : MonoBehaviour
         canCollideWithPreviousPlatform = true;
     }
 }
+
+
+
+/*
+    public void OnSwipe(Swipe newSwipe) {
+        if (!canMove)
+            return;
+
+        StartMovement();
+        Vector2 swipeDirection = newSwipe.GetDirection();
+        float swipeLength = newSwipe.GetLength();
+
+        rb.velocity = (swipeDirection.normalized * -1) * speed * (swipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
+    }
+
+
+    private void OnDestroy() {
+        //swipeDetector.RemoveSwipeListener(OnSwipe);
+    }
+*/
