@@ -36,4 +36,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+[Ll]ogs/
 Assets/Packages
