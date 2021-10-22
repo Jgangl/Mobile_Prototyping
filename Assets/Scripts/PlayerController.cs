@@ -37,12 +37,9 @@ public class PlayerController : MonoBehaviour
 
     private TrajectoryPredictor trajectoryPredictor;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        //PredictionManager.instance.copyAllObstacles();
 
         trajectoryPredictor = TrajectoryPredictor.Instance;
     }
@@ -86,47 +83,42 @@ public class PlayerController : MonoBehaviour
 
         Vector2 mousePosition = Input.mousePosition;
         bool mouseMoved = Vector2.Distance(prevFingerPos, mousePosition) >= 0.25f;
+        if (canMove) {
+            if (Input.GetMouseButtonDown(0)) {
+                fingerDownPos = Input.mousePosition;
+                mouseHeldDown = true;
+            }
+            else if (Input.GetMouseButtonUp(0)) {
+                fingerUpPos = Input.mousePosition;
+                mouseHeldDown = false;
 
-        if (Input.GetMouseButtonDown(0)) {
-            fingerDownPos = Input.mousePosition;
-            mouseHeldDown = true;
-        }
-        else if (Input.GetMouseButtonUp(0)) {
-            //Debug.Log("Get mouse up");
-            fingerUpPos = Input.mousePosition;
-            mouseHeldDown = false;
+                trajectoryPredictor.ClearSimulation();
 
-            trajectoryPredictor.ClearSimulation();
-            //PredictionManager.instance.ClearSimulation();
+                // Enable Movement
+                StartMovement();
 
-            //trajectoryPredictor.ClearSimulation();
-            // Enable Movement
-            StartMovement();
-            // Add swipe force
+                // Add swipe force
+                rb.AddForce(currentSwipeForce);
+            }
+            else if (mouseHeldDown && mouseMoved) {
+                fingerCurrentPos = Input.mousePosition;
 
-            Debug.Log("Adding force: " + currentSwipeForce);
-            rb.AddForce(currentSwipeForce);
-        }
-        else if (mouseHeldDown && mouseMoved) {
-            fingerCurrentPos = Input.mousePosition;
+                // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
+                float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
+                if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD) {
+                    // Calculate current position difference
+                    Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
+                    float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
 
-            // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
-            float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
-            if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD) {
-                // Calculate current position difference
-                Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
-                float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
+                    // Calculate force
+                    currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
 
-                // Calculate force
-                currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
-
-                //Debug.Log("Simulate: " + currentSwipeForce);
-                // Simulate launch
-                //Debug.Log("Simulating force: " + currentSwipeForce);
-                trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
-                //PredictionManager.instance.predict(gameObject, gameObject.transform.position, currentSwipeForce);
+                    // Simulate launch
+                    trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+                }
             }
         }
+        
 
 #if UNITY_EDITOR
         prevFingerPos = Input.mousePosition;
@@ -166,11 +158,13 @@ public class PlayerController : MonoBehaviour
     private void StopMovement() {
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
+        canMove = true;
     }
 
     private void StartMovement() {
         StartCoroutine("IgnorePlatformTimer");
         rb.isKinematic = false;
+        canMove = false;
     }
 
     IEnumerator IgnorePlatformTimer() {

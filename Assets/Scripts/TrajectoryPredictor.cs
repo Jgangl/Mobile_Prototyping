@@ -100,7 +100,6 @@ public class TrajectoryPredictor : MonoBehaviour
 
         if (_lastForce != force) //if force hasnt changed, skip simulation;
         {
-            Debug.Log("Predicting with force: " + force);
             _simulatedObject.GetComponent<Rigidbody2D>().AddForce(force); //simulate the objects path
             for (var i = 0; i < _steps; i++) // steps is how many physics steps will be done in a frame 
             {
