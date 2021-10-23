@@ -118,7 +118,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        
 
 #if UNITY_EDITOR
         prevFingerPos = Input.mousePosition;

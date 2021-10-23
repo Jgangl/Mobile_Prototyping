@@ -18,6 +18,15 @@ public class TrajectoryPredictor : MonoBehaviour
 
     private void Awake() {
         _instance = this;
+
+        CreateSceneParameters _param = new CreateSceneParameters(LocalPhysicsMode.Physics2D); //define the parameters of a new scene, this lets us have our own separate physics 
+        _simScene = SceneManager.CreateScene("Simulation", _param); // create a new scene and implement the parameters we just created
+        _physicsSim = _simScene.GetPhysicsScene2D(); // assign the physics of the scene so we can simulate on our own time. 
+        //CreateSimObjects(); // send over simulated objects (see method below for details)
+        line.positionCount = _steps; // set amount of points our drawn line will have
+        points = new Vector3[_steps]; // set amount of points our simulation will record, these will later be passed into the line.
+
+        CreateSimulatedPlayer();
     }
     #endregion
 
@@ -31,33 +40,23 @@ public class TrajectoryPredictor : MonoBehaviour
     int _steps = 20; //how long we will be simulating for. More steps, more lenghth but also less performance
     Vector3[] points;
 
-    public GameObject obstaclesRoot;
+    //public GameObject obstaclesRoot;
 
     Vector3 _lastForce = Vector3.zero; //used to track what the last force input was 
 
     // Start is called before the first frame update
     void Start()
     {
-        CreateSceneParameters _param = new CreateSceneParameters(LocalPhysicsMode.Physics2D); //define the parameters of a new scene, this lets us have our own separate physics 
-        _simScene = SceneManager.CreateScene("Simulation", _param); // create a new scene and implement the parameters we just created
-        _physicsSim = _simScene.GetPhysicsScene2D(); // assign the physics of the scene so we can simulate on our own time. 
-        CreateSimObjects(); // send over simulated objects (see method below for details)
-        line.positionCount = _steps; // set amount of points our drawn line will have
-        points = new Vector3[_steps]; // set amount of points our simulation will record, these will later be passed into the line.
 
     }
 
-    private void Update() {
-        if (Input.GetMouseButtonDown(1)) {
-            if (_simulatedObject)
-                _simulatedObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-100f, 200f));
-        }
+    private void CreateSimulatedPlayer() {
+        SceneManager.MoveGameObjectToScene(_simulatedObject, _simScene); // move the simulated player to the sim scene
     }
 
-    private void CreateSimObjects()  //all objects start in regulare scene, and get sent over on start. this way colliders are dynamic and we can grab refrence to simulated player in first scene.
+    private void CreateSimObjects(GameObject obstaclesRoot)  //all objects start in regulare scene, and get sent over on start. this way colliders are dynamic and we can grab refrence to simulated player in first scene.
     {
         SceneManager.MoveGameObjectToScene(_simulatedObject, _simScene); // move the simulated player to the sim scene
-
 
         foreach (Transform t in obstaclesRoot.transform) {
             if (t.gameObject.GetComponent<Collider2D>() != null) {
@@ -72,24 +71,22 @@ public class TrajectoryPredictor : MonoBehaviour
                 //dummyObstacles.Add(fakeT);
             }
         }
+    }
 
-        /*
-        GameObject[] allGameobjects = FindObjectsOfType<GameObject>();
-
-        List<GameObject> _collidables = new List<GameObject>();
-
-        foreach (GameObject go in allGameobjects) {
-            if (go.layer == LayerMask.NameToLayer("Collidable"))
-                _collidables.Add(go);
+    public void UpdateSimObjects(GameObject obstaclesRoot) {
+        foreach (Transform t in obstaclesRoot.transform) {
+            if (t.gameObject.GetComponent<Collider2D>() != null) {
+                GameObject fakeT = Instantiate(t.gameObject);
+                fakeT.transform.position = t.position;
+                fakeT.transform.rotation = t.rotation;
+                SpriteRenderer fakeR = fakeT.GetComponent<SpriteRenderer>();
+                if (fakeR) {
+                    fakeR.enabled = false;
+                }
+                SceneManager.MoveGameObjectToScene(fakeT, _simScene);
+                //dummyObstacles.Add(fakeT);
+            }
         }
-
-        //GameObject[] _collidables = //GameObject.FindGameObjectsWithTag("Collidable");      //check for all objects tagged collidable in scene. More optimal routes but this is most user friendly
-        foreach (GameObject GO in _collidables)   //duplicate all collidables and move them to the simulation
-        {
-            var newGO = Instantiate(GO, GO.transform.position, GO.transform.rotation);
-            SceneManager.MoveGameObjectToScene(newGO, _simScene);
-        }
-        */
     }
 
     public void SimulateLaunch(Transform player, Vector3 force)   //call this every frame while player is grabed;

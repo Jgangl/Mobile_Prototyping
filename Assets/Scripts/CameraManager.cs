@@ -8,6 +8,14 @@ public class CameraManager : MonoBehaviour
 
     GameObject player;
 
+    public GameObject boundaryYMarker;
+
+    public float deadZoneTop = 3f;
+
+    public float smoothing = 5f;
+
+    public GameObject deadZoneMarker;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +25,28 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (player.transform.position.y <= boundaryYMarker.transform.position.y) {
+            GameManager.instance.GameOver();
+        }
     }
 
     private void LateUpdate() {
-        transform.position = new Vector3(cameraX, player.transform.position.y, transform.position.z);
+        //float targetY = player.transform.position.y + deadZoneTop;
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+
+        transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
+
+        //deadZoneMarker.transform.position
+        /*
+        if (player.transform.position.y >= transform.position.y + deadZoneTop) {
+            // Move camera up
+            Vector2 startPos = transform.position;
+            Vector2 targetPos = new Vector2(transform.position.x, targetY);
+
+            transform.position = Vector2.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
+        }
+        //transform.position = new Vector3(cameraX, player.transform.position.y, transform.position.z);
+        */
     }
 }
