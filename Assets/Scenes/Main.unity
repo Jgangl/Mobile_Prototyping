@@ -560,8 +560,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db2945388c3a9c4487c399ec8473a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnLevelDistance: 20
   levelSectionStart: {fileID: 4041263277175045660, guid: b7f67e892e69a0945969dc71dcfcfe3a, type: 3}
   levelSection: {fileID: 7357798057993588366, guid: 164a20afa6ff70d4788aa0079b702246, type: 3}
+  playerObject: {fileID: 1021003512}
 --- !u!4 &819965306
 Transform:
   m_ObjectHideFlags: 0
@@ -677,7 +679,7 @@ MonoBehaviour:
   cameraX: 0
   boundaryYMarker: {fileID: 1985452393}
   deadZoneTop: 3
-  smoothing: 0
+  smoothing: 0.3
   deadZoneMarker: {fileID: 0}
 --- !u!1 &851284775
 GameObject:
@@ -821,7 +823,7 @@ GameObject:
   - component: {fileID: 1021003514}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
