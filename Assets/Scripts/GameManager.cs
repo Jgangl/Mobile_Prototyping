@@ -14,11 +14,13 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R)) {
+            GameOver();
+        }
     }
 
     public void GameOver() {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("TestScene");
     }
 
     public void RestartLevel() {

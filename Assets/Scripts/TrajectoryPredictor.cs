@@ -40,6 +40,8 @@ public class TrajectoryPredictor : MonoBehaviour
     int _steps = 20; //how long we will be simulating for. More steps, more lenghth but also less performance
     Vector3[] points;
 
+    public GameObject collidablesRoot;
+
     //public GameObject obstaclesRoot;
 
     Vector3 _lastForce = Vector3.zero; //used to track what the last force input was 
@@ -47,7 +49,7 @@ public class TrajectoryPredictor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        UpdateSimObjects(collidablesRoot);
     }
 
     private void CreateSimulatedPlayer() {

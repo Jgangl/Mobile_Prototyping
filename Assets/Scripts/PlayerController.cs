@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float platformIgnoreTime = 0.25f;
 
+    public float maxSwipeLength = 300f;
+
     private Vector2 fingerDownPos;
     private Vector2 fingerCurrentPos;
     private Vector2 fingerUpPos;
@@ -96,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
                 // Enable Movement
                 StartMovement();
-
+                //Debug.Log(currentSwipeForce);
                 // Add swipe force
                 rb.AddForce(currentSwipeForce);
             }
@@ -109,6 +111,10 @@ public class PlayerController : MonoBehaviour
                     // Calculate current position difference
                     Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
                     float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
+
+                    // Clamp swipe length
+                    if (currSwipeLength > maxSwipeLength)
+                        currSwipeLength = maxSwipeLength;
 
                     // Calculate force
                     currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
