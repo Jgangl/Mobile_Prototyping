@@ -20,7 +20,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void GameOver() {
-        SceneManager.LoadScene("TestScene");
+        SceneManager.LoadScene(0);
     }
 
     public void RestartLevel() {

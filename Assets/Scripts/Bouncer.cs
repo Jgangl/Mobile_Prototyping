@@ -34,8 +34,6 @@ public class Bouncer : MonoBehaviour
         Vector2 dir = transform.rotation * Vector3.forward;
         //Debug.DrawLine(transform.position, dir * 3f, Color.yellow, 3f);
         if (rb) {
-            Debug.Log("Adding force on bounce: " + dir * bounceForce);
-            Debug.Log(rb.gameObject.name);
             rb.AddForce(transform.up * bounceForce, ForceMode2D.Impulse);
         }
     }
