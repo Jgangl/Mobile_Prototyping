@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
 
     [SerializeField]
-    private bool canMove = true;
+    private bool canMove;
 
     [SerializeField]
     [Range(0.0f, 1.0f)]
@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         trajectoryPredictor = TrajectoryPredictor.Instance;
+
+        canMove = false;
     }
 
     // Update is called once per frame
