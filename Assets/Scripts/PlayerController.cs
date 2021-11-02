@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 prevFingerPos;
 
-    public float SWIPE_LENGTH_THRESHOLD = 50f;
+    public float SWIPE_LENGTH_THRESHOLD = 0.25f;
 
     private Vector2 currentSwipeForce;
 
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
         trajectoryPredictor = TrajectoryPredictor.Instance;
 
-        canMove = false;
+        //canMove = false;
     }
 
     // Update is called once per frame
@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
         Vector2 mousePosition = Input.mousePosition;
         bool mouseMoved = Vector2.Distance(prevFingerPos, mousePosition) >= 0.25f;
         if (canMove) {
+
             if (Input.GetMouseButtonDown(0)) {
                 fingerDownPos = Input.mousePosition;
                 mouseHeldDown = true;
@@ -100,8 +101,9 @@ public class PlayerController : MonoBehaviour
 
                 // Enable Movement
                 StartMovement();
-                //Debug.Log(currentSwipeForce);
+
                 // Add swipe force
+                //Debug.Log("CURRENT SWIPE FORCE: " + currentSwipeForce);
                 rb.AddForce(currentSwipeForce);
             }
             else if (mouseHeldDown && mouseMoved) {
@@ -122,6 +124,7 @@ public class PlayerController : MonoBehaviour
                     currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
 
                     // Simulate launch
+                    //Debug.Log("SIM SWIPE FORCE: " + currentSwipeForce);
                     trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
                 }
             }
@@ -130,7 +133,7 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
         prevFingerPos = Input.mousePosition;
 #elif UNITY_ANDROID
-        prevFingerPos = Input.touches[0].position;
+        //prevFingerPos = Input.touches[0].position;
 #endif
     }
 
@@ -139,7 +142,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Hit platform");
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
                 //Debug.Log("Stopping Movement");
-                StopMovement();
+                //StopMovement();
             }
 
             previousPlatform = collision.gameObject;
@@ -151,7 +154,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Hit platform");
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
                 //Debug.Log("Stopping Movement");
-                StopMovement();
+                //StopMovement();
             }
         }
     }
@@ -171,7 +174,7 @@ public class PlayerController : MonoBehaviour
     private void StartMovement() {
         StartCoroutine("IgnorePlatformTimer");
         rb.isKinematic = false;
-        canMove = false;
+        //canMove = false;
     }
 
     IEnumerator IgnorePlatformTimer() {

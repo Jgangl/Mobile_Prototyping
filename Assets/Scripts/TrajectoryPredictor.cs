@@ -33,6 +33,10 @@ public class TrajectoryPredictor : MonoBehaviour
     private PhysicsScene2D _physicsSim;
     [SerializeField]
     private GameObject _simulatedObject; //drag your simulated player into the inspector
+
+    //[SerializeField]
+    //private GameObject _simulatedObject; //drag your simulated player into the inspector
+
     [SerializeField]
     LineRenderer line;//drag your lineRenderer into the inspector 
     Scene _simScene;
@@ -93,8 +97,36 @@ public class TrajectoryPredictor : MonoBehaviour
 
     public void SimulateLaunch(Transform player, Vector3 force)   //call this every frame while player is grabed;
     {
+        //Debug.Log(player.transform.position);
+
+        GameObject simObject = Instantiate(_simulatedObject, player.position, player.rotation);
+        SceneManager.MoveGameObjectToScene(simObject, _simScene);
+        //Debug.Log(simObject.transform.position);
+
+        simObject.transform.position = player.position;
+
+        simObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+
+        if (_lastForce != force) //if force hasnt changed, skip simulation;
+        {
+            simObject.GetComponent<Rigidbody2D>().AddForce(force); //simulate the objects path
+            for (var i = 0; i < _steps; i++) // steps is how many physics steps will be done in a frame 
+            {
+                //Debug.Log(simObject.GetComponent<Rigidbody2D>().velocity);
+                //Debug.Log("STEP:  " + Time.time);
+                _physicsSim.Simulate(Time.fixedDeltaTime); // move the physics, one step ahead. (anymore than 1 step creates irregularity in the trajectory)
+                points[i] = simObject.transform.position; //record the simulated objects position for that step
+                //Debug.Log(simObject.transform.position);
+                line.SetPosition(i, points[i]); //let the line render know where to plot a point
+
+            }
+        }
+        _lastForce = force;
+        
+        /*
         _simulatedObject.transform.position = player.position; //set sim object to player position ;
         _simulatedObject.transform.rotation = player.rotation; // set sim object to player rotation;
+
         _simulatedObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero; // resets sim objects velocity to 0;
 
         if (_lastForce != force) //if force hasnt changed, skip simulation;
@@ -102,12 +134,16 @@ public class TrajectoryPredictor : MonoBehaviour
             _simulatedObject.GetComponent<Rigidbody2D>().AddForce(force); //simulate the objects path
             for (var i = 0; i < _steps; i++) // steps is how many physics steps will be done in a frame 
             {
+                //Debug.Log("STEP:  " + Time.time);
                 _physicsSim.Simulate(Time.fixedDeltaTime); // move the physics, one step ahead. (anymore than 1 step creates irregularity in the trajectory)
                 points[i] = _simulatedObject.transform.position; //record the simulated objects position for that step
                 line.SetPosition(i, points[i]); //let the line render know where to plot a point
             }
         }
         _lastForce = force;
+        */
+        
+        Destroy(simObject);
     }
 
     public void ClearSimulation() {
