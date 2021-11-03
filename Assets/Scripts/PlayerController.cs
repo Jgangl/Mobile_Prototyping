@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
         trajectoryPredictor = TrajectoryPredictor.Instance;
 
-        //canMove = false;
+        canMove = false;
     }
 
     // Update is called once per frame
@@ -103,8 +103,12 @@ public class PlayerController : MonoBehaviour
                 StartMovement();
 
                 // Add swipe force
-                //Debug.Log("CURRENT SWIPE FORCE: " + currentSwipeForce);
-                //rb.AddForce(currentSwipeForce);
+
+                // TODO: TRY TO ADD FORCE TO ALL BONES
+                //Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
+                //foreach(Rigidbody2D bone in bones)
+                    //bone.AddForce(currentSwipeForce);
+                rb.AddForce(currentSwipeForce);
             }
             else if (mouseHeldDown && mouseMoved) {
                 fingerCurrentPos = Input.mousePosition;
@@ -125,13 +129,9 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("Swipe: " + currentSwipeForce);
                     // Simulate launch
                     //Debug.Log("SIM SWIPE FORCE: " + currentSwipeForce);
-                    //trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+                    trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
                 }
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E)) {
-            trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
         }
 
 #if UNITY_EDITOR
@@ -140,13 +140,13 @@ public class PlayerController : MonoBehaviour
         //prevFingerPos = Input.touches[0].position;
 #endif
     }
-
+    /*
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
-            //Debug.Log("Hit platform");
+            Debug.Log("Hit platform");
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
                 //Debug.Log("Stopping Movement");
-                //StopMovement();
+                StopMovement();
             }
 
             previousPlatform = collision.gameObject;
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Hit platform");
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
                 //Debug.Log("Stopping Movement");
-                //StopMovement();
+                StopMovement();
             }
         }
     }
@@ -168,6 +168,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Exit platform top");
         }
     }
+    */
 
     private void StopMovement() {
         rb.isKinematic = true;
@@ -178,13 +179,57 @@ public class PlayerController : MonoBehaviour
     private void StartMovement() {
         StartCoroutine("IgnorePlatformTimer");
         rb.isKinematic = false;
-        //canMove = false;
+        canMove = false;
     }
 
     IEnumerator IgnorePlatformTimer() {
         canCollideWithPreviousPlatform = false;
         yield return new WaitForSeconds(platformIgnoreTime);
         canCollideWithPreviousPlatform = true;
+    }
+
+    private Vector2 GetObjectAveragePosition() {
+        Vector3 avgPos = Vector2.zero;
+
+        // Get all rigidbodies of bones
+        Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
+        if (bones.Length == 0)
+            return Vector2.zero;
+
+        // Average all bone positions
+        foreach (Rigidbody2D rb in bones) {
+            avgPos += rb.transform.localPosition;
+        }
+
+        return (avgPos / bones.Length);
+    }
+
+    public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
+        if (collision.gameObject.tag == "Platform") {
+            Debug.Log("Hit platform");
+            if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
+                //Debug.Log("Stopping Movement");
+                StopMovement();
+            }
+
+            previousPlatform = collision.gameObject;
+        }
+    }
+
+    public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) {
+        if (collision.gameObject.tag == "Platform") {
+            //Debug.Log("Hit platform");
+            if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
+                //Debug.Log("Stopping Movement");
+                StopMovement();
+            }
+        }
+    }
+
+    public void OnChildCollisionExit2D(Bone_Softbody bone, Collision2D collision) {
+        if (collision.gameObject.tag == "Platform") {
+            //Debug.Log("Exit platform top");
+        }
     }
 }
 

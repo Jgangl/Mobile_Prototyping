@@ -112,13 +112,16 @@ public class TrajectoryPredictor : MonoBehaviour
             simObject.GetComponent<Rigidbody2D>().AddForce(force); //simulate the objects path
             for (var i = 0; i < _steps; i++) // steps is how many physics steps will be done in a frame 
             {
-                //Debug.Log(simObject.GetComponent<Rigidbody2D>().velocity);
-                //Debug.Log("STEP:  " + Time.time);
                 _physicsSim.Simulate(Time.fixedDeltaTime); // move the physics, one step ahead. (anymore than 1 step creates irregularity in the trajectory)
 
-                Debug.Log(simObject.transform.position);
-
-                points[i] = simObject.transform.position; //record the simulated objects position for that step
+                Vector2 simObjectAvgPos = GetObjectAveragePosition(simObject);
+                if (simObjectAvgPos != Vector2.zero) {
+                    points[i] = simObjectAvgPos;
+                }
+                else {
+                    points[i] = simObject.transform.position;
+                }
+                //points[i] = simObject.transform.position; //record the simulated objects position for that step
                 //Debug.Log(simObject.transform.position);
                 line.SetPosition(i, points[i]); //let the line render know where to plot a point
 
@@ -146,7 +149,23 @@ public class TrajectoryPredictor : MonoBehaviour
         _lastForce = force;
         */
         Debug.Log("");
-        //Destroy(simObject);
+        Destroy(simObject);
+    }
+
+    private Vector2 GetObjectAveragePosition(GameObject simObject) {
+        Vector3 avgPos = Vector2.zero;
+
+        // Get all rigidbodies of bones
+        Rigidbody2D[] bones = simObject.GetComponentsInChildren<Rigidbody2D>();
+        if (bones.Length == 0)
+            return Vector2.zero;
+
+        // Average all bone positions
+        foreach (Rigidbody2D rb in bones) {
+            avgPos += rb.transform.position;
+        }
+
+        return (avgPos / bones.Length);
     }
 
     public void ClearSimulation() {
