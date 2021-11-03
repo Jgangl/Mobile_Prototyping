@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _simulatedObject: {fileID: 1089608862}
   line: {fileID: 276877293}
-  _steps: 100
+  _steps: 1
   collidablesRoot: {fileID: 853073063}
 --- !u!120 &276877293
 LineRenderer:
@@ -569,6 +569,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6119821867948042510, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821867948042510, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.8436305
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868130693093, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868130693093, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.874928
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868130693093, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.8810689
+      objectReference: {fileID: 0}
     - target: {fileID: 6119821868130693099, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -576,6 +596,14 @@ PrefabInstance:
     - target: {fileID: 6119821868292192844, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868292192846, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868428483104, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6119821868428483110, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
@@ -599,11 +627,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6119821868485345447, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.83
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6119821868485345447, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6119821868485345447, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_LocalPosition.z
@@ -649,6 +677,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6119821868657880186, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868682900609, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6119821868682900615, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -657,25 +693,65 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6119821868769107756, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6119821868812249428, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868812249430, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6119821868844039969, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6119821868844039971, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6119821868887276388, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868887276390, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821868887276390, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 1.2384813
       objectReference: {fileID: 0}
     - target: {fileID: 6119821868911651445, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6119821868911651447, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821869016258181, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821869016258181, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.48810652
+      objectReference: {fileID: 0}
     - target: {fileID: 6119821869016258187, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821869043745333, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821869043745333, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -0.020868443
       objectReference: {fileID: 0}
     - target: {fileID: 6119821869043745339, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
@@ -684,6 +760,14 @@ PrefabInstance:
     - target: {fileID: 6119821869172047309, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821869172047311, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821869584188185, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6119821869584188191, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
@@ -696,6 +780,14 @@ PrefabInstance:
     - target: {fileID: 6119821869682830972, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821869682830974, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6119821869682830974, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -1.1231638
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0650a46ccebf1c4484dc18406ce5811, type: 3}

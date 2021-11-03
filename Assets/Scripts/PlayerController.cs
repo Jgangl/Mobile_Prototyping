@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
                 // Add swipe force
                 //Debug.Log("CURRENT SWIPE FORCE: " + currentSwipeForce);
-                rb.AddForce(currentSwipeForce);
+                //rb.AddForce(currentSwipeForce);
             }
             else if (mouseHeldDown && mouseMoved) {
                 fingerCurrentPos = Input.mousePosition;
@@ -122,12 +122,16 @@ public class PlayerController : MonoBehaviour
 
                     // Calculate force
                     currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
-
+                    Debug.Log("Swipe: " + currentSwipeForce);
                     // Simulate launch
                     //Debug.Log("SIM SWIPE FORCE: " + currentSwipeForce);
-                    trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+                    //trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
         }
 
 #if UNITY_EDITOR

@@ -101,11 +101,11 @@ public class TrajectoryPredictor : MonoBehaviour
 
         GameObject simObject = Instantiate(_simulatedObject, player.position, player.rotation);
         SceneManager.MoveGameObjectToScene(simObject, _simScene);
-        //Debug.Log(simObject.transform.position);
+        Debug.Log(simObject.transform.position);
 
-        simObject.transform.position = player.position;
+        //simObject.transform.position = player.position;
 
-        simObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        //simObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 
         if (_lastForce != force) //if force hasnt changed, skip simulation;
         {
@@ -115,6 +115,9 @@ public class TrajectoryPredictor : MonoBehaviour
                 //Debug.Log(simObject.GetComponent<Rigidbody2D>().velocity);
                 //Debug.Log("STEP:  " + Time.time);
                 _physicsSim.Simulate(Time.fixedDeltaTime); // move the physics, one step ahead. (anymore than 1 step creates irregularity in the trajectory)
+
+                Debug.Log(simObject.transform.position);
+
                 points[i] = simObject.transform.position; //record the simulated objects position for that step
                 //Debug.Log(simObject.transform.position);
                 line.SetPosition(i, points[i]); //let the line render know where to plot a point
@@ -122,7 +125,7 @@ public class TrajectoryPredictor : MonoBehaviour
             }
         }
         _lastForce = force;
-        
+
         /*
         _simulatedObject.transform.position = player.position; //set sim object to player position ;
         _simulatedObject.transform.rotation = player.rotation; // set sim object to player rotation;
@@ -142,8 +145,8 @@ public class TrajectoryPredictor : MonoBehaviour
         }
         _lastForce = force;
         */
-        
-        Destroy(simObject);
+        Debug.Log("");
+        //Destroy(simObject);
     }
 
     public void ClearSimulation() {
