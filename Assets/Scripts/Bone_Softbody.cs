@@ -20,7 +20,6 @@ public class Bone_Softbody : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (player == null) {
-            Debug.Log("PLAYER IS NULL");
             return;
         }
 
@@ -29,7 +28,6 @@ public class Bone_Softbody : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision) {
         if (player == null) {
-            Debug.Log("PLAYER IS NULL");
             return;
         }
 
@@ -37,7 +35,6 @@ public class Bone_Softbody : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision) {
         if (player == null) {
-            Debug.Log("PLAYER IS NULL");
             return;
         }
 

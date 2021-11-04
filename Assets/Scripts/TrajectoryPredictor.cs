@@ -97,19 +97,20 @@ public class TrajectoryPredictor : MonoBehaviour
 
     public void SimulateLaunch(Transform player, Vector3 force)   //call this every frame while player is grabed;
     {
-        //Debug.Log(player.transform.position);
-
         GameObject simObject = Instantiate(_simulatedObject, player.position, player.rotation);
         SceneManager.MoveGameObjectToScene(simObject, _simScene);
-        Debug.Log(simObject.transform.position);
-
-        //simObject.transform.position = player.position;
-
-        //simObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 
         if (_lastForce != force) //if force hasnt changed, skip simulation;
         {
-            simObject.GetComponent<Rigidbody2D>().AddForce(force); //simulate the objects path
+            PlayerController playerController = simObject.GetComponent<PlayerController>();
+            if (playerController != null) {
+                foreach (Rigidbody2D bone in playerController.GetBones())
+                    bone.AddForce(force);
+            }
+            else {
+                simObject.GetComponent<Rigidbody2D>().AddForce(force);
+            }
+
             for (var i = 0; i < _steps; i++) // steps is how many physics steps will be done in a frame 
             {
                 _physicsSim.Simulate(Time.fixedDeltaTime); // move the physics, one step ahead. (anymore than 1 step creates irregularity in the trajectory)
@@ -148,7 +149,6 @@ public class TrajectoryPredictor : MonoBehaviour
         }
         _lastForce = force;
         */
-        Debug.Log("");
         Destroy(simObject);
     }
 

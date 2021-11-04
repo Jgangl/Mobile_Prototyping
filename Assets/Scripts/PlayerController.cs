@@ -39,9 +39,12 @@ public class PlayerController : MonoBehaviour
 
     private TrajectoryPredictor trajectoryPredictor;
 
+    Rigidbody2D[] bones;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        bones = GetComponentsInParent<Rigidbody2D>();
 
         trajectoryPredictor = TrajectoryPredictor.Instance;
 
@@ -105,10 +108,10 @@ public class PlayerController : MonoBehaviour
                 // Add swipe force
 
                 // TODO: TRY TO ADD FORCE TO ALL BONES
-                //Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
-                //foreach(Rigidbody2D bone in bones)
-                    //bone.AddForce(currentSwipeForce);
-                rb.AddForce(currentSwipeForce);
+                Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
+                foreach(Rigidbody2D bone in bones)
+                    bone.AddForce(currentSwipeForce);
+                //rb.AddForce(currentSwipeForce);
             }
             else if (mouseHeldDown && mouseMoved) {
                 fingerCurrentPos = Input.mousePosition;
@@ -126,9 +129,7 @@ public class PlayerController : MonoBehaviour
 
                     // Calculate force
                     currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
-                    Debug.Log("Swipe: " + currentSwipeForce);
                     // Simulate launch
-                    //Debug.Log("SIM SWIPE FORCE: " + currentSwipeForce);
                     trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
                 }
             }
@@ -204,11 +205,13 @@ public class PlayerController : MonoBehaviour
         return (avgPos / bones.Length);
     }
 
+    public Rigidbody2D[] GetBones() {
+        return bones;
+    }
+
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
-            Debug.Log("Hit platform");
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                //Debug.Log("Stopping Movement");
                 StopMovement();
             }
 
@@ -218,9 +221,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
-            //Debug.Log("Hit platform");
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                //Debug.Log("Stopping Movement");
                 StopMovement();
             }
         }

@@ -15,7 +15,7 @@ public class Bouncer : MonoBehaviour
     Transform leftCircle;
     Transform rightCircle;
     Transform middleSquare;
-    CapsuleCollider2D collider;
+    CapsuleCollider2D bounceCollider;
 
     Vector3 bouncerScale;
 
@@ -28,7 +28,7 @@ public class Bouncer : MonoBehaviour
         leftCircle = transform.Find("LeftCircle");
         rightCircle = transform.Find("RightCircle");
         middleSquare = transform.Find("MiddleSquare");
-        collider = middleSquare.GetComponent<CapsuleCollider2D>();
+        bounceCollider = middleSquare.GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -50,8 +50,8 @@ public class Bouncer : MonoBehaviour
             if (middleSquare == null)
                 middleSquare = transform.Find("MiddleSquare");
 
-            if (collider == null && middleSquare != null)
-                collider = middleSquare.GetComponent<CapsuleCollider2D>();
+            if (bounceCollider == null && middleSquare != null)
+                bounceCollider = middleSquare.GetComponent<CapsuleCollider2D>();
 
             // Update child object scales
             //Debug.Log("Updating circle y scale with: " + bouncerScale.x);
@@ -68,7 +68,7 @@ public class Bouncer : MonoBehaviour
             // circle y scale = bouncer x scale / bouncer y scale
             // circle y pos = bouncer x scale + (circle y scale / 2)
 
-            collider.size = new Vector2(collider.size.x, 1 + (bouncerScale.x / bouncerScale.y));
+            bounceCollider.size = new Vector2(bounceCollider.size.x, 1 + (bouncerScale.x / bouncerScale.y));
         }
 
         if (visualizeDirection)
@@ -107,15 +107,15 @@ public class Bouncer : MonoBehaviour
         if (middleSquare == null)
             middleSquare = transform.Find("MiddleSquare");
 
-        if (collider == null && middleSquare != null)
-            collider = middleSquare.GetComponent<CapsuleCollider2D>();
+        if (bounceCollider == null && middleSquare != null)
+            bounceCollider = middleSquare.GetComponent<CapsuleCollider2D>();
 
         // Update child object scales
         //Debug.Log("Updating circle y scale with: " + bouncerScale.x);
         leftCircle.localScale = new Vector3(leftCircle.localScale.x, bouncerScale.x, leftCircle.localScale.z);
         rightCircle.localScale = new Vector3(rightCircle.localScale.x, bouncerScale.x, rightCircle.localScale.z);
 
-        collider.size = new Vector2(collider.size.x, 1 + bouncerScale.x);
+        bounceCollider.size = new Vector2(bounceCollider.size.x, 1 + bouncerScale.x);
     }
 
     
