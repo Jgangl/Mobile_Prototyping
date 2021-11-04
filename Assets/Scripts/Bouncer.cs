@@ -81,14 +81,15 @@ public class Bouncer : MonoBehaviour
         if (!enableBouncing)
             return;
 
-        Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+        Rigidbody2D[] bones = collision.gameObject.GetComponentsInChildren<Rigidbody2D>();
         Vector2 contactDir = collision.contacts[0].normal;
         //Debug.DrawRay(transform.position, contactDir);
 
         Vector2 dir = transform.rotation * Vector3.forward;
         //Debug.DrawLine(transform.position, dir * 3f, Color.yellow, 3f);
-        if (rb) {
-            rb.AddForce(transform.right * bounceForce, ForceMode2D.Impulse);
+        if (bones.Length != 0) {
+            foreach(Rigidbody2D bone in bones)
+                bone.AddForce(transform.right * bounceForce, ForceMode2D.Impulse);
         }
     }
 

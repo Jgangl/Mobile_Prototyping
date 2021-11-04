@@ -39,12 +39,9 @@ public class PlayerController : MonoBehaviour
 
     private TrajectoryPredictor trajectoryPredictor;
 
-    Rigidbody2D[] bones;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        bones = GetComponentsInParent<Rigidbody2D>();
 
         trajectoryPredictor = TrajectoryPredictor.Instance;
 
@@ -99,16 +96,17 @@ public class PlayerController : MonoBehaviour
             else if (Input.GetMouseButtonUp(0)) {
                 fingerUpPos = Input.mousePosition;
                 mouseHeldDown = false;
-
-                trajectoryPredictor.ClearSimulation();
+                if (trajectoryPredictor)
+                    trajectoryPredictor.ClearSimulation();
 
                 // Enable Movement
-                StartMovement();
+                Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
+                //foreach(Rigidbody2D bone in bones)
+                StartMovement(this.rb);
 
                 // Add swipe force
 
                 // TODO: TRY TO ADD FORCE TO ALL BONES
-                Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
                 foreach(Rigidbody2D bone in bones)
                     bone.AddForce(currentSwipeForce);
                 //rb.AddForce(currentSwipeForce);
@@ -130,7 +128,8 @@ public class PlayerController : MonoBehaviour
                     // Calculate force
                     currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
                     // Simulate launch
-                    trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+                    if (trajectoryPredictor)
+                        trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
                 }
             }
         }
@@ -171,13 +170,13 @@ public class PlayerController : MonoBehaviour
     }
     */
 
-    private void StopMovement() {
+    private void StopMovement(Rigidbody2D rb) {
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
         canMove = true;
     }
 
-    private void StartMovement() {
+    private void StartMovement(Rigidbody2D rb) {
         StartCoroutine("IgnorePlatformTimer");
         rb.isKinematic = false;
         canMove = false;
@@ -205,14 +204,11 @@ public class PlayerController : MonoBehaviour
         return (avgPos / bones.Length);
     }
 
-    public Rigidbody2D[] GetBones() {
-        return bones;
-    }
-
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                StopMovement();
+                //StopMovement(bone.GetComponent<Rigidbody2D>());
+                StopMovement(this.rb);
             }
 
             previousPlatform = collision.gameObject;
@@ -222,7 +218,8 @@ public class PlayerController : MonoBehaviour
     public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                StopMovement();
+                //StopMovement(bone.GetComponent<Rigidbody2D>());
+                StopMovement(this.rb);
             }
         }
     }

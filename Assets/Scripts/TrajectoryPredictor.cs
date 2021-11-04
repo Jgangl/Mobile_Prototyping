@@ -102,14 +102,10 @@ public class TrajectoryPredictor : MonoBehaviour
 
         if (_lastForce != force) //if force hasnt changed, skip simulation;
         {
-            PlayerController playerController = simObject.GetComponent<PlayerController>();
-            if (playerController != null) {
-                foreach (Rigidbody2D bone in playerController.GetBones())
-                    bone.AddForce(force);
-            }
-            else {
-                simObject.GetComponent<Rigidbody2D>().AddForce(force);
-            }
+            Rigidbody2D[] bones = GetObjectBones(simObject);
+
+            foreach (Rigidbody2D bone in bones)
+                bone.AddForce(force);
 
             for (var i = 0; i < _steps; i++) // steps is how many physics steps will be done in a frame 
             {
@@ -173,5 +169,9 @@ public class TrajectoryPredictor : MonoBehaviour
             points[i] = Vector2.zero; //record the simulated objects position for that step
             line.SetPosition(i, points[i]); //let the line render know where to plot a point
         }
+    }
+
+    private Rigidbody2D[] GetObjectBones(GameObject simObject) {
+        return simObject.GetComponentsInChildren<Rigidbody2D>();
     }
 }
