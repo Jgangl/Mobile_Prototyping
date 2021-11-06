@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 6119821867948042511}
   - component: {fileID: 6119821867948042510}
   - component: {fileID: 828457654}
+  - component: {fileID: 1638854520}
+  - component: {fileID: 1638854521}
   m_Layer: 9
   m_Name: bone_03
   m_TagString: Untagged
@@ -55,7 +57,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821867948042505
 CircleCollider2D:
@@ -88,11 +90,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.060584817, y: 0.48275653}
+  m_ConnectedAnchor: {x: 0.0605853, y: 0.4827563}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821867948042511
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -108,11 +110,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.09703392, y: -0.47452793}
+  m_ConnectedAnchor: {x: 0.0970345, y: -0.474527}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821867948042510
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -128,11 +130,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.8981952, y: 0.8436304}
+  m_ConnectedAnchor: {x: 0.8981943, y: 0.84362984}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &828457654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +147,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &1638854520
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821867948042508}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868657880185}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.048434652
+  m_MaxDistanceOnly: 0
+--- !u!232 &1638854521
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821867948042508}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868769107731}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.048654303
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868130693099
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,6 +200,8 @@ GameObject:
   - component: {fileID: 6119821868130693094}
   - component: {fileID: 6119821868130693093}
   - component: {fileID: 638482077}
+  - component: {fileID: 1443302571}
+  - component: {fileID: 1443302572}
   m_Layer: 9
   m_Name: bone_07
   m_TagString: Untagged
@@ -200,7 +242,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868130693088
 CircleCollider2D:
@@ -233,11 +275,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.07324523, y: 0.43760782}
+  m_ConnectedAnchor: {x: 0.07324447, y: 0.43760723}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868130693094
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -253,11 +295,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.047407832, y: -0.45819834}
+  m_ConnectedAnchor: {x: 0.04740637, y: -0.4582011}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868130693093
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -273,11 +315,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.87492794, y: -0.8810688}
+  m_ConnectedAnchor: {x: 0.8749294, y: -0.8810687}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &638482077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +332,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &1443302571
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868130693099}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869016258180}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04606471
+  m_MaxDistanceOnly: 0
+--- !u!232 &1443302572
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868130693099}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868682900608}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04436945
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868292192844
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +385,8 @@ GameObject:
   - component: {fileID: 6119821868292192847}
   - component: {fileID: 6119821868292192846}
   - component: {fileID: 965480159}
+  - component: {fileID: 1832482410}
+  - component: {fileID: 1832482416}
   m_Layer: 9
   m_Name: bone_12
   m_TagString: Untagged
@@ -345,7 +427,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868292192841
 CircleCollider2D:
@@ -378,11 +460,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.06097193, y: 0.46496254}
+  m_ConnectedAnchor: {x: 0.060970675, y: 0.4649644}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868292192847
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -398,11 +480,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.11758476, y: -0.5216602}
+  m_ConnectedAnchor: {x: 0.11758168, y: -0.5216595}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868292192846
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -418,11 +500,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -1.108621, y: -0.52333194}
+  m_ConnectedAnchor: {x: -1.1086226, y: -0.52333117}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &965480159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +517,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &1832482410
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868292192844}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868428483111}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.046894483
+  m_MaxDistanceOnly: 0
+--- !u!232 &1832482416
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868292192844}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868844039970}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.053474672
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868428483110
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +570,8 @@ GameObject:
   - component: {fileID: 6119821868428483105}
   - component: {fileID: 6119821868428483104}
   - component: {fileID: 829962857}
+  - component: {fileID: 480935940}
+  - component: {fileID: 480935941}
   m_Layer: 9
   m_Name: bone_11
   m_TagString: Untagged
@@ -490,7 +612,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868428483107
 CircleCollider2D:
@@ -523,11 +645,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.059367582, y: 0.47013402}
+  m_ConnectedAnchor: {x: 0.059366807, y: 0.47013545}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868428483105
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -543,11 +665,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.060538657, y: -0.46501926}
+  m_ConnectedAnchor: {x: 0.06054035, y: -0.4650206}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868428483104
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -563,11 +685,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.83522856, y: -0.90433633}
+  m_ConnectedAnchor: {x: -0.83522797, y: -0.904336}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &829962857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +702,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &480935940
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868428483110}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868292192842}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.046894483
+  m_MaxDistanceOnly: 0
+--- !u!232 &480935941
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868428483110}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868911651446}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.047386892
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868485345451
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,9 +753,10 @@ GameObject:
   - component: {fileID: 8357310965189783169}
   - component: {fileID: 6119821868485345444}
   - component: {fileID: 969940170}
+  - component: {fileID: 156612942}
   m_Layer: 9
   m_Name: Softbody_Circle_TEST_1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -609,7 +770,7 @@ Transform:
   m_GameObject: {fileID: 6119821868485345451}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.13, y: 1.387, z: 0}
-  m_LocalScale: {x: 0.48960003, y: 0.48960003, z: 0.48960003}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 6119821869043745329}
   - {fileID: 6119821868769107752}
@@ -701,7 +862,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &6119821868485345444
 MonoBehaviour:
@@ -735,8 +896,8 @@ MonoBehaviour:
   - {fileID: 6119821868292192845}
   - {fileID: 6119821869596645141}
   m_Bounds:
-    m_Center: {x: -0.006214738, y: 0.00080013275, z: 0}
-    m_Extent: {x: 1.272915, y: 1.2760603, z: 0}
+    m_Center: {x: -0.006214738, y: 0.00079989433, z: 0}
+    m_Extent: {x: 1.2729151, y: 1.2760602, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!114 &969940170
@@ -757,6 +918,23 @@ MonoBehaviour:
   platformIgnoreTime: 0.25
   maxSwipeLength: 300
   SWIPE_LENGTH_THRESHOLD: 0.25
+  squishSoundTime: 0.25
+--- !u!58 &156612942
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868485345451}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.006214738, y: 0.00079989433}
+  serializedVersion: 2
+  m_Radius: 0.87
 --- !u!1 &6119821868657880184
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +950,8 @@ GameObject:
   - component: {fileID: 6119821868657880187}
   - component: {fileID: 6119821868657880186}
   - component: {fileID: 751731833}
+  - component: {fileID: 1372641715}
+  - component: {fileID: 1372641716}
   m_Layer: 9
   m_Name: bone_04
   m_TagString: Untagged
@@ -812,7 +992,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868657880181
 CircleCollider2D:
@@ -845,11 +1025,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.04637147, y: 0.4821223}
+  m_ConnectedAnchor: {x: 0.04637064, y: 0.48212168}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868657880187
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -865,11 +1045,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.07409268, y: -0.46183684}
+  m_ConnectedAnchor: {x: 0.0740917, y: -0.4618372}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868657880186
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -885,11 +1065,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.1512285, y: 0.43063354}
+  m_ConnectedAnchor: {x: 1.151228, y: 0.43063402}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &751731833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -902,6 +1082,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &1372641715
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868657880184}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868887276389}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04677427
+  m_MaxDistanceOnly: 0
+--- !u!232 &1372641716
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868657880184}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821867948042509}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.048434652
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868682900615
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,6 +1135,8 @@ GameObject:
   - component: {fileID: 6119821868682900610}
   - component: {fileID: 6119821868682900609}
   - component: {fileID: 1639312000}
+  - component: {fileID: 1559525121}
+  - component: {fileID: 1559525122}
   m_Layer: 9
   m_Name: bone_06
   m_TagString: Untagged
@@ -957,7 +1177,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868682900636
 CircleCollider2D:
@@ -990,11 +1210,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.13580947, y: 0.47620666}
+  m_ConnectedAnchor: {x: 0.13580735, y: 0.47620687}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868682900610
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1010,11 +1230,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.081533514, y: -0.43613955}
+  m_ConnectedAnchor: {x: 0.081534036, y: -0.43613866}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868682900609
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1030,11 +1250,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.1163278, y: -0.5087899}
+  m_ConnectedAnchor: {x: 1.1163282, y: -0.50879}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &1639312000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,6 +1267,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &1559525121
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868682900615}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868130693092}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04436945
+  m_MaxDistanceOnly: 0
+--- !u!232 &1559525122
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868682900615}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868887276389}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04951935
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868769107730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,6 +1320,8 @@ GameObject:
   - component: {fileID: 6119821868769107757}
   - component: {fileID: 6119821868769107756}
   - component: {fileID: 67981236}
+  - component: {fileID: 988912815}
+  - component: {fileID: 988912816}
   m_Layer: 9
   m_Name: bone_02
   m_TagString: Untagged
@@ -1102,7 +1362,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868769107759
 CircleCollider2D:
@@ -1135,11 +1395,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.09891271, y: 0.52173954}
+  m_ConnectedAnchor: {x: 0.098913096, y: 0.52173704}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868769107757
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1155,11 +1415,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.150279, y: -0.4627531}
+  m_ConnectedAnchor: {x: 0.1502785, y: -0.46275315}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868769107756
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1175,11 +1435,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.49974012, y: 1.1228397}
+  m_ConnectedAnchor: {x: 0.49973965, y: 1.1228395}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &67981236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1192,6 +1452,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &988912815
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868769107730}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821867948042509}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.048654303
+  m_MaxDistanceOnly: 0
+--- !u!232 &988912816
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868769107730}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869043745332}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.053103067
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868812249428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1207,6 +1505,8 @@ GameObject:
   - component: {fileID: 6119821868812249431}
   - component: {fileID: 6119821868812249430}
   - component: {fileID: 1594159292}
+  - component: {fileID: 1580483991}
+  - component: {fileID: 1580483992}
   m_Layer: 9
   m_Name: bone_15
   m_TagString: Untagged
@@ -1247,7 +1547,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868812249425
 CircleCollider2D:
@@ -1280,11 +1580,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.11198081, y: 0.4522918}
+  m_ConnectedAnchor: {x: 0.11198326, y: 0.45229286}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868812249431
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1300,11 +1600,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.069891274, y: -0.46345943}
+  m_ConnectedAnchor: {x: 0.06989113, y: -0.46345758}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868812249430
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1320,11 +1620,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.84686315, y: 0.88144016}
+  m_ConnectedAnchor: {x: -0.8468628, y: 0.88144064}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &1594159292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1337,6 +1637,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &1580483991
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868812249428}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869584188184}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04686979
+  m_MaxDistanceOnly: 0
+--- !u!232 &1580483992
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868812249428}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869682830973}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.046594966
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868844039969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,6 +1690,8 @@ GameObject:
   - component: {fileID: 6119821868844039996}
   - component: {fileID: 6119821868844039971}
   - component: {fileID: 493884902}
+  - component: {fileID: 153949887}
+  - component: {fileID: 153949888}
   m_Layer: 9
   m_Name: bone_13
   m_TagString: Untagged
@@ -1392,7 +1732,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868844039998
 CircleCollider2D:
@@ -1425,11 +1765,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.13875797, y: 0.51643175}
+  m_ConnectedAnchor: {x: 0.13876042, y: 0.5164298}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868844039996
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1445,11 +1785,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.09502806, y: -0.5114745}
+  m_ConnectedAnchor: {x: 0.09503175, y: -0.51147336}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868844039971
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1465,11 +1805,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -1.2307755, y: -0.0027228706}
+  m_ConnectedAnchor: {x: -1.2307739, y: -0.0027227402}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &493884902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1482,6 +1822,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &153949887
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868844039969}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869682830973}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.052022688
+  m_MaxDistanceOnly: 0
+--- !u!232 &153949888
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868844039969}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868292192842}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.053474672
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868887276388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,6 +1875,8 @@ GameObject:
   - component: {fileID: 6119821868887276391}
   - component: {fileID: 6119821868887276390}
   - component: {fileID: 2051656312}
+  - component: {fileID: 2106784731}
+  - component: {fileID: 2106784732}
   m_Layer: 9
   m_Name: bone_05
   m_TagString: Untagged
@@ -1537,7 +1917,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868887276385
 CircleCollider2D:
@@ -1570,11 +1950,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.074679054, y: 0.46174237}
+  m_ConnectedAnchor: {x: 0.07468009, y: 0.46174243}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868887276391
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1590,11 +1970,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.07898442, y: -0.4888542}
+  m_ConnectedAnchor: {x: 0.07898642, y: -0.48885354}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868887276390
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1610,11 +1990,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.2384812, y: -0.028898755}
+  m_ConnectedAnchor: {x: 1.2384796, y: -0.028898716}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &2051656312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1627,6 +2007,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &2106784731
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868887276388}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868682900608}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04951935
+  m_MaxDistanceOnly: 0
+--- !u!232 &2106784732
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868887276388}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868657880185}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04677427
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821868911651445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,6 +2060,8 @@ GameObject:
   - component: {fileID: 6119821868911651440}
   - component: {fileID: 6119821868911651447}
   - component: {fileID: 496659135}
+  - component: {fileID: 335189414}
+  - component: {fileID: 335189415}
   m_Layer: 9
   m_Name: bone_10
   m_TagString: Untagged
@@ -1682,7 +2102,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821868911651442
 CircleCollider2D:
@@ -1715,11 +2135,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.07715551, y: 0.43704233}
+  m_ConnectedAnchor: {x: 0.077155985, y: 0.43704036}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868911651440
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1735,11 +2155,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.1260087, y: -0.4568066}
+  m_ConnectedAnchor: {x: 0.12601002, y: -0.4568077}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821868911651447
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1755,11 +2175,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.43095812, y: -1.1515527}
+  m_ConnectedAnchor: {x: -0.4309559, y: -1.1515522}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &496659135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1772,6 +2192,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &335189414
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868911651445}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868428483111}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.047386892
+  m_MaxDistanceOnly: 0
+--- !u!232 &335189415
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868911651445}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869172047310}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.044379883
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821869016258187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,6 +2245,8 @@ GameObject:
   - component: {fileID: 6119821869016258182}
   - component: {fileID: 6119821869016258181}
   - component: {fileID: 1396636334}
+  - component: {fileID: 1394917530}
+  - component: {fileID: 1394917531}
   m_Layer: 9
   m_Name: bone_08
   m_TagString: Untagged
@@ -1827,7 +2287,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821869016258176
 CircleCollider2D:
@@ -1860,11 +2320,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.10802681, y: 0.4477985}
+  m_ConnectedAnchor: {x: 0.10802912, y: 0.4478006}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869016258182
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1880,11 +2340,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.10652303, y: -0.48177835}
+  m_ConnectedAnchor: {x: 0.10652319, y: -0.48177645}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869016258181
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1900,11 +2360,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.4881065, y: -1.1311939}
+  m_ConnectedAnchor: {x: 0.48810482, y: -1.1311936}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &1396636334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1917,6 +2377,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &1394917530
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869016258187}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869172047310}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.049341243
+  m_MaxDistanceOnly: 0
+--- !u!232 &1394917531
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869016258187}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868130693092}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04606471
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821869043745339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,6 +2430,8 @@ GameObject:
   - component: {fileID: 6119821869043745334}
   - component: {fileID: 6119821869043745333}
   - component: {fileID: 337438062}
+  - component: {fileID: 926332978}
+  - component: {fileID: 926332979}
   m_Layer: 9
   m_Name: bone_01
   m_TagString: Untagged
@@ -1972,7 +2472,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821869043745328
 CircleCollider2D:
@@ -2005,11 +2505,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.15078147, y: -0.50917697}
+  m_ConnectedAnchor: {x: 0.15077996, y: -0.5091749}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869043745334
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -2025,11 +2525,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.117857516, y: 0.43083003}
+  m_ConnectedAnchor: {x: 0.11785844, y: 0.4308333}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869043745333
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -2045,11 +2545,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.020868441, y: 1.2275432}
+  m_ConnectedAnchor: {x: -0.020866394, y: 1.2275434}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &337438062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2062,6 +2562,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &926332978
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869043745339}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869584188184}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.044666316
+  m_MaxDistanceOnly: 0
+--- !u!232 &926332979
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869043745339}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868769107731}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.053103067
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821869172047309
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,6 +2615,8 @@ GameObject:
   - component: {fileID: 6119821869172047304}
   - component: {fileID: 6119821869172047311}
   - component: {fileID: 335930965}
+  - component: {fileID: 169388826}
+  - component: {fileID: 169388827}
   m_Layer: 9
   m_Name: bone_09
   m_TagString: Untagged
@@ -2117,7 +2657,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821869172047306
 CircleCollider2D:
@@ -2150,11 +2690,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.12832193, y: 0.4764357}
+  m_ConnectedAnchor: {x: 0.1283209, y: 0.47643408}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869172047304
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -2170,11 +2710,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.10492583, y: -0.43121877}
+  m_ConnectedAnchor: {x: 0.10492461, y: -0.43121716}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869172047311
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -2190,11 +2730,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.005306956, y: -1.2329888}
+  m_ConnectedAnchor: {x: 0.0053071976, y: -1.2329888}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &335930965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2207,6 +2747,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &169388826
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869172047309}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868911651446}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.044379883
+  m_MaxDistanceOnly: 0
+--- !u!232 &169388827
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869172047309}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869016258180}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.049341243
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821869584188191
 GameObject:
   m_ObjectHideFlags: 0
@@ -2222,6 +2800,8 @@ GameObject:
   - component: {fileID: 6119821869584188186}
   - component: {fileID: 6119821869584188185}
   - component: {fileID: 503322588}
+  - component: {fileID: 501774206}
+  - component: {fileID: 501774207}
   m_Layer: 9
   m_Name: bone_16
   m_TagString: Untagged
@@ -2262,7 +2842,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821869584188180
 CircleCollider2D:
@@ -2295,11 +2875,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.14362183, y: 0.44615272}
+  m_ConnectedAnchor: {x: 0.14362113, y: 0.446151}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869584188186
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -2315,11 +2895,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.08631053, y: -0.43824115}
+  m_ConnectedAnchor: {x: 0.08631113, y: -0.43824443}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869584188185
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -2335,11 +2915,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.46004167, y: 1.1461072}
+  m_ConnectedAnchor: {x: -0.46004295, y: 1.1461067}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &503322588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2352,6 +2932,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &501774206
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869584188191}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821869043745332}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.044666316
+  m_MaxDistanceOnly: 0
+--- !u!232 &501774207
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869584188191}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868812249429}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.04686979
+  m_MaxDistanceOnly: 0
 --- !u!1 &6119821869596645140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2471,6 +3089,8 @@ GameObject:
   - component: {fileID: 6119821869682830975}
   - component: {fileID: 6119821869682830974}
   - component: {fileID: 504725127}
+  - component: {fileID: 2002107582}
+  - component: {fileID: 2002107583}
   m_Layer: 9
   m_Name: bone_14
   m_TagString: Untagged
@@ -2511,7 +3131,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &6119821869682830969
 CircleCollider2D:
@@ -2544,11 +3164,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.11207057, y: 0.50801253}
+  m_ConnectedAnchor: {x: 0.11206671, y: 0.50801283}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869682830975
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -2564,11 +3184,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.011437143, y: -0.46580768}
+  m_ConnectedAnchor: {x: 0.011435059, y: -0.46580935}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!231 &6119821869682830974
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -2584,11 +3204,11 @@ SpringJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -1.1231637, y: 0.5062528}
+  m_ConnectedAnchor: {x: -1.1231661, y: 0.50625324}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0.5
-  m_Frequency: 5
+  m_DampingRatio: 1
+  m_Frequency: 10
 --- !u!114 &504725127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2601,3 +3221,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fb27c876c04cc43acf8e81249beca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!232 &2002107582
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869682830972}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868812249429}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.046594966
+  m_MaxDistanceOnly: 0
+--- !u!232 &2002107583
+DistanceJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821869682830972}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 1
+  m_ConnectedRigidBody: {fileID: 6119821868844039970}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 0.052022688
+  m_MaxDistanceOnly: 0

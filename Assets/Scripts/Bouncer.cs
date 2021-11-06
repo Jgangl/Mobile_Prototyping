@@ -19,6 +19,11 @@ public class Bouncer : MonoBehaviour
 
     Vector3 bouncerScale;
 
+    private bool canCollideWithBouncer = true;
+
+    [SerializeField]
+    private float collisionTimeoutTime = 0.25f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,20 +59,8 @@ public class Bouncer : MonoBehaviour
                 bounceCollider = middleSquare.GetComponent<CapsuleCollider2D>();
 
             // Update child object scales
-            //Debug.Log("Updating circle y scale with: " + bouncerScale.x);
             leftCircle.localScale = new Vector3(leftCircle.localScale.x, (bouncerScale.x / bouncerScale.y), leftCircle.localScale.z);
-            //leftCircle.localPosition = new Vector3(leftCircle.localPosition.x, bouncerScale.x + leftCircle.localScale.y, leftCircle.localPosition.z);
-            //leftCircle.localPosition = new Vector3(leftCircle.localPosition.x, bouncerScale.x, leftCircle.localPosition.z);
-
             rightCircle.localScale = new Vector3(rightCircle.localScale.x, (bouncerScale.x / bouncerScale.y), rightCircle.localScale.z);
-            //rightCircle.localPosition = new Vector3(rightCircle.localPosition.x, -(bouncerScale.x + rightCircle.localScale.y), rightCircle.localPosition.z);
-            //rightCircle.localPosition = new Vector3(rightCircle.localPosition.x, -(bouncerScale.x), rightCircle.localPosition.z);
-
-
-
-            // circle y scale = bouncer x scale / bouncer y scale
-            // circle y pos = bouncer x scale + (circle y scale / 2)
-
             bounceCollider.size = new Vector2(bounceCollider.size.x, 1 + (bouncerScale.x / bouncerScale.y));
         }
 
@@ -76,20 +69,20 @@ public class Bouncer : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("Bouncer hit: " + collision.gameObject);
-
-        if (!enableBouncing)
+        if (!enableBouncing || !canCollideWithBouncer)
             return;
 
-        Rigidbody2D[] bones = collision.gameObject.GetComponentsInChildren<Rigidbody2D>();
+        Rigidbody2D[] bones = collision.transform.root.gameObject.GetComponentsInChildren<Rigidbody2D>();
         Vector2 contactDir = collision.contacts[0].normal;
-        //Debug.DrawRay(transform.position, contactDir);
 
         Vector2 dir = transform.rotation * Vector3.forward;
-        //Debug.DrawLine(transform.position, dir * 3f, Color.yellow, 3f);
         if (bones.Length != 0) {
+            Debug.Log("Adding BOUNCE FORCE: " + bounceForce + " to " + bones.Length + " bones");
             foreach(Rigidbody2D bone in bones)
-                bone.AddForce(transform.right * bounceForce, ForceMode2D.Impulse);
+                bone.AddForce(transform.right * bounceForce);
+
+            // Start collisionn timeout timer to avoid multiple collisions in a small time frame
+            StartCoroutine("CollisionTimeoutTimer");
         }
     }
 
@@ -119,5 +112,9 @@ public class Bouncer : MonoBehaviour
         bounceCollider.size = new Vector2(bounceCollider.size.x, 1 + bouncerScale.x);
     }
 
-    
+    IEnumerator CollisionTimeoutTimer() {
+        canCollideWithBouncer = false;
+        yield return new WaitForSeconds(collisionTimeoutTime);
+        canCollideWithBouncer = true;
+    }
 }

@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
 
     private TrajectoryPredictor trajectoryPredictor;
 
+    public float squishSoundTime = 0.25f;
+    private bool canPlaySquishSound = true;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -188,6 +191,12 @@ public class PlayerController : MonoBehaviour
         canCollideWithPreviousPlatform = true;
     }
 
+    IEnumerator SquishSoundTimer() {
+        canPlaySquishSound = false;
+        yield return new WaitForSeconds(squishSoundTime);
+        canPlaySquishSound = true;
+    }
+
     private Vector2 GetObjectAveragePosition() {
         Vector3 avgPos = Vector2.zero;
 
@@ -207,7 +216,12 @@ public class PlayerController : MonoBehaviour
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                //StopMovement(bone.GetComponent<Rigidbody2D>());
+
+                if (canPlaySquishSound && !canMove) {
+                    Sound_Manager.instance.PlaySquishSound();
+                    StartCoroutine("SquishSoundTimer");
+                }
+
                 StopMovement(this.rb);
             }
 
