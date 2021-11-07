@@ -77,7 +77,6 @@ public class Bouncer : MonoBehaviour
 
         Vector2 dir = transform.rotation * Vector3.forward;
         if (bones.Length != 0) {
-            Debug.Log("Adding BOUNCE FORCE: " + bounceForce + " to " + bones.Length + " bones");
             foreach(Rigidbody2D bone in bones)
                 bone.AddForce(transform.right * bounceForce);
 

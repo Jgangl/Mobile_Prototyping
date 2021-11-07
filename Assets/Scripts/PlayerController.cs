@@ -220,6 +220,8 @@ public class PlayerController : MonoBehaviour
                 if (canPlaySquishSound && !canMove) {
                     Sound_Manager.instance.PlaySquishSound();
                     StartCoroutine("SquishSoundTimer");
+
+                    CinemachineShake.instance.ShakeCamera(0.5f, 0.2f);
                 }
 
                 StopMovement(this.rb);
