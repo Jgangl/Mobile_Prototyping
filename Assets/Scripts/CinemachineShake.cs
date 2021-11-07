@@ -22,13 +22,12 @@ public class CinemachineShake : Singleton<CinemachineShake>
     }
 
     IEnumerator ShakeTimer(float duration) {
-        Debug.Log("Start Shaking");
         float shakeTimer = 0f;
         while (shakeTimer < duration) {
             shakeTimer += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("Stop Shaking");
+
         cmPerlin.m_AmplitudeGain = 0f;
 
         yield return 0;
