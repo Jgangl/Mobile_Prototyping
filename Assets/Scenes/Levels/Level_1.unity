@@ -491,6 +491,10 @@ PrefabInstance:
       propertyPath: speed
       value: 125
       objectReference: {fileID: 0}
+    - target: {fileID: 969940170, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
+      propertyPath: bonesCollisionTime
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6119821867948042508, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
       propertyPath: m_TagString
       value: Player

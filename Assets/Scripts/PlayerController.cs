@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour
     public float squishSoundTime = 0.25f;
     private bool canPlaySquishSound = true;
 
+    public bool bonesCanCollide = true;
+    public float bonesCollisionTime = 0.05f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -213,20 +216,40 @@ public class PlayerController : MonoBehaviour
         return (avgPos / bones.Length);
     }
 
+    private Vector2 GetObjectAverageVelocity() {
+        Vector2 totalVelocity = Vector2.zero;
+
+        // Get all rigidbodies of bones
+        Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
+        if (bones.Length == 0)
+            return Vector2.zero;
+
+        // Average all bone positions
+        foreach (Rigidbody2D rb in bones) {
+            totalVelocity += rb.velocity;
+        }
+
+        return (totalVelocity / bones.Length);
+    }
+
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
         // Don't collide with other bones
         if (collision.gameObject.tag == "Player")
             return;
 
-        Debug.Log("BONE COLLISION HIT: " + collision.gameObject.name);
+        float velocityMagnitude = GetObjectAverageVelocity().magnitude;
+        if (velocityMagnitude > 0.25f && bonesCanCollide) {
+            Debug.Log(bone.name + "    HIT OBJECT with avg velocity: " + velocityMagnitude.ToString("F5"));
+            StartCoroutine("IgnoreBonesTimer");
+        }
+
         if (collision.gameObject.tag == "Platform") {
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                //Debug.Log("Play Squish Sound");
                 if (canPlaySquishSound && !canMove) {
-                    
+                    //Debug.Log(bone.gameObject.name + " HIT: " + collision.gameObject.name + " with velocity: " + bone.GetComponent<Rigidbody2D>().velocity.ToString("F10"));
 
-                    Sound_Manager.Instance.PlaySquishSound();
-                    StartCoroutine("SquishSoundTimer");
+                    //Sound_Manager.Instance.PlaySquishSound();
+                    //StartCoroutine("SquishSoundTimer");
 
                     CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
                 }
@@ -253,6 +276,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Platform") {
             //Debug.Log("Exit platform top");
         }
+    }
+
+    IEnumerator IgnoreBonesTimer() {
+        bonesCanCollide = false;
+        yield return new WaitForSeconds(bonesCollisionTime);
+        bonesCanCollide = true;
     }
 }
 
