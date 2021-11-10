@@ -26,7 +26,7 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
         if (player.transform.position.y <= boundaryYMarker.transform.position.y) {
-            GameManager.instance.GameOver();
+            GameManager.Instance.GameOver();
         }
     }
 

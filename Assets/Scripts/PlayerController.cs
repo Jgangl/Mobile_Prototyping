@@ -214,14 +214,21 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
+        // Don't collide with other bones
+        if (collision.gameObject.tag == "Player")
+            return;
+
+        Debug.Log("BONE COLLISION HIT: " + collision.gameObject.name);
         if (collision.gameObject.tag == "Platform") {
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-
+                //Debug.Log("Play Squish Sound");
                 if (canPlaySquishSound && !canMove) {
-                    Sound_Manager.instance.PlaySquishSound();
+                    
+
+                    Sound_Manager.Instance.PlaySquishSound();
                     StartCoroutine("SquishSoundTimer");
 
-                    CinemachineShake.instance.ShakeCamera(0.5f, 0.2f);
+                    CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
                 }
 
                 StopMovement(this.rb);
@@ -230,6 +237,8 @@ public class PlayerController : MonoBehaviour
             previousPlatform = collision.gameObject;
         }
     }
+
+    // Need to figure out when player hits object
 
     public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
