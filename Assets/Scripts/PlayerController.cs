@@ -45,6 +45,12 @@ public class PlayerController : MonoBehaviour
     public bool bonesCanCollide = true;
     public float bonesCollisionTime = 0.05f;
 
+    public GameObject hitParticles;
+
+    private Vector2 prevPosition;
+    private Vector2 prevPositionTwo;
+    private Vector2 dirOfTravel;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -140,11 +146,26 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        Vector2 currentPosition = transform.position;
+        prevPositionTwo = prevPosition;
+        prevPosition = currentPosition;
+
+
 #if UNITY_EDITOR
         prevFingerPos = Input.mousePosition;
 #elif UNITY_ANDROID
         //prevFingerPos = Input.touches[0].position;
 #endif
+    }
+
+    private void FixedUpdate() {
+        /*
+        Vector2 currentPosition = GetObjectAveragePosition();
+        dirOfTravel = (currentPosition - prevPosition).normalized;
+        Debug.DrawRay(currentPosition, dirOfTravel, Color.yellow, 0.02f);
+
+        prevPosition = GetObjectAveragePosition();
+        */
     }
     /*
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -243,6 +264,21 @@ public class PlayerController : MonoBehaviour
             CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
             StartCoroutine("SquishSoundTimer");
             StartCoroutine("IgnoreBonesTimer");
+
+            //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
+            Vector2 currentPosition = transform.position;
+            Vector2 dirOfTravel = (currentPosition - prevPositionTwo).normalized;
+
+            float angle = Mathf.Atan2(dirOfTravel.y, dirOfTravel.x) * Mathf.Rad2Deg;
+            angle -= 90f;
+            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            Vector2 colPoint = collision.contacts[0].point;
+
+            // Create particles and apply rotation
+            GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
+            particles.transform.rotation = q;
+            Destroy(particles, 0.5f);
         }
 
         if (collision.gameObject.tag == "Platform") {
@@ -282,6 +318,14 @@ public class PlayerController : MonoBehaviour
         bonesCanCollide = false;
         yield return new WaitForSeconds(bonesCollisionTime);
         bonesCanCollide = true;
+    }
+
+    private Vector2 GetDirectionOfTravel() {
+        Vector2 currentPos = GetObjectAveragePosition();
+
+        Vector2 dirOfTravel = (currentPos - prevPosition).normalized;
+
+        return dirOfTravel;
     }
 }
 
