@@ -33,6 +33,5 @@ public class Sound_Manager : Singleton<Sound_Manager>
 
         audioSource.Stop();
         audioSource.Play();
-        Debug.Log("Player squish sound");
     }
 }

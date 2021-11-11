@@ -239,21 +239,21 @@ public class PlayerController : MonoBehaviour
 
         float velocityMagnitude = GetObjectAverageVelocity().magnitude;
         if (velocityMagnitude > 0.25f && bonesCanCollide) {
-            Debug.Log(bone.name + "    HIT OBJECT with avg velocity: " + velocityMagnitude.ToString("F5"));
+            Sound_Manager.Instance.PlaySquishSound();
+            CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
+            StartCoroutine("SquishSoundTimer");
             StartCoroutine("IgnoreBonesTimer");
         }
 
         if (collision.gameObject.tag == "Platform") {
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
+                /*
                 if (canPlaySquishSound && !canMove) {
                     //Debug.Log(bone.gameObject.name + " HIT: " + collision.gameObject.name + " with velocity: " + bone.GetComponent<Rigidbody2D>().velocity.ToString("F10"));
 
-                    //Sound_Manager.Instance.PlaySquishSound();
-                    //StartCoroutine("SquishSoundTimer");
 
-                    CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
                 }
-
+                */
                 StopMovement(this.rb);
             }
 
