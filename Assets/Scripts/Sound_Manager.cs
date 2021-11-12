@@ -16,6 +16,9 @@ public class Sound_Manager : Singleton<Sound_Manager>
     [SerializeField]
     private bool enableSoundEffects;
 
+    public float minPitch = 0.85f;
+    public float maxPitch = 1.15f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +33,8 @@ public class Sound_Manager : Singleton<Sound_Manager>
 
     public void PlaySquishSound() {
         audioSource.clip = squishClip;
-
+        //audioSource.pitch
+        audioSource.pitch = Random.Range(minPitch, maxPitch);
         audioSource.Stop();
         audioSource.Play();
     }

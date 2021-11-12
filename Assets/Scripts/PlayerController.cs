@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 prevPosition;
     private Vector2 prevPositionTwo;
-    private Vector2 dirOfTravel;
 
     void Start()
     {
@@ -113,15 +112,11 @@ public class PlayerController : MonoBehaviour
 
                 // Enable Movement
                 Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
-                //foreach(Rigidbody2D bone in bones)
                 StartMovement(this.rb);
 
                 // Add swipe force
-
-                // TODO: TRY TO ADD FORCE TO ALL BONES
                 foreach(Rigidbody2D bone in bones)
                     bone.AddForce(currentSwipeForce);
-                //rb.AddForce(currentSwipeForce);
             }
             else if (mouseHeldDown && mouseMoved) {
                 fingerCurrentPos = Input.mousePosition;
@@ -150,52 +145,12 @@ public class PlayerController : MonoBehaviour
         prevPositionTwo = prevPosition;
         prevPosition = currentPosition;
 
-
 #if UNITY_EDITOR
         prevFingerPos = Input.mousePosition;
 #elif UNITY_ANDROID
         //prevFingerPos = Input.touches[0].position;
 #endif
     }
-
-    private void FixedUpdate() {
-        /*
-        Vector2 currentPosition = GetObjectAveragePosition();
-        dirOfTravel = (currentPosition - prevPosition).normalized;
-        Debug.DrawRay(currentPosition, dirOfTravel, Color.yellow, 0.02f);
-
-        prevPosition = GetObjectAveragePosition();
-        */
-    }
-    /*
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Platform") {
-            Debug.Log("Hit platform");
-            if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                //Debug.Log("Stopping Movement");
-                StopMovement();
-            }
-
-            previousPlatform = collision.gameObject;
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Platform") {
-            //Debug.Log("Hit platform");
-            if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                //Debug.Log("Stopping Movement");
-                StopMovement();
-            }
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Platform") {
-            //Debug.Log("Exit platform top");
-        }
-    }
-    */
 
     private void StopMovement(Rigidbody2D rb) {
         rb.isKinematic = true;
@@ -269,8 +224,10 @@ public class PlayerController : MonoBehaviour
             Vector2 currentPosition = transform.position;
             Vector2 dirOfTravel = (currentPosition - prevPositionTwo).normalized;
 
+            // Find angle between x axis and direction of travel
             float angle = Mathf.Atan2(dirOfTravel.y, dirOfTravel.x) * Mathf.Rad2Deg;
-            angle -= 90f;
+
+            // Rotating the angle around an axis (Similar to applying the rotation to a specfic axis)
             Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
             Vector2 colPoint = collision.contacts[0].point;
@@ -283,21 +240,12 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Platform") {
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                /*
-                if (canPlaySquishSound && !canMove) {
-                    //Debug.Log(bone.gameObject.name + " HIT: " + collision.gameObject.name + " with velocity: " + bone.GetComponent<Rigidbody2D>().velocity.ToString("F10"));
-
-
-                }
-                */
                 StopMovement(this.rb);
             }
 
             previousPlatform = collision.gameObject;
         }
     }
-
-    // Need to figure out when player hits object
 
     public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) {
         if (collision.gameObject.tag == "Platform") {
@@ -319,32 +267,4 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(bonesCollisionTime);
         bonesCanCollide = true;
     }
-
-    private Vector2 GetDirectionOfTravel() {
-        Vector2 currentPos = GetObjectAveragePosition();
-
-        Vector2 dirOfTravel = (currentPos - prevPosition).normalized;
-
-        return dirOfTravel;
-    }
 }
-
-
-
-/*
-    public void OnSwipe(Swipe newSwipe) {
-        if (!canMove)
-            return;
-
-        StartMovement();
-        Vector2 swipeDirection = newSwipe.GetDirection();
-        float swipeLength = newSwipe.GetLength();
-
-        rb.velocity = (swipeDirection.normalized * -1) * speed * (swipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
-    }
-
-
-    private void OnDestroy() {
-        //swipeDetector.RemoveSwipeListener(OnSwipe);
-    }
-*/

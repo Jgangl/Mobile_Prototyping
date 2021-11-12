@@ -704,7 +704,7 @@ PrefabInstance:
     - target: {fileID: 969940170, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
       propertyPath: hitParticles
       value: 
-      objectReference: {fileID: 4244740073381975920, guid: dad80a64aeaa07f41a0dca929618bb67, type: 3}
+      objectReference: {fileID: 9014898375944429613, guid: dad80a64aeaa07f41a0dca929618bb67, type: 3}
     - target: {fileID: 969940170, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
       propertyPath: bonesCollisionTime
       value: 0.2
@@ -2004,10 +2004,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepAlive: 0
-  squishClip: {fileID: 8300000, guid: 1d0e9c559a49eb14f94c60632ecacbe4, type: 3}
+  squishClip: {fileID: 8300000, guid: 45b6859ef8b1a4b4c9b17ee8c1259563, type: 3}
   enableAllSounds: 1
   enableMusic: 1
   enableSoundEffects: 1
+  minPitch: 0.75
+  maxPitch: 1.25
 --- !u!4 &1982065077
 Transform:
   m_ObjectHideFlags: 0
