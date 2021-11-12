@@ -57,9 +57,6 @@ public class TrajectoryPredictor : MonoBehaviour
     }
 
     private void CreateSimulatedPlayer() {
-        PlayerController playerController = _simulatedObject.GetComponent<PlayerController>();
-        if (playerController)
-            playerController.isSimulated = true;
         SceneManager.MoveGameObjectToScene(_simulatedObject, _simScene); // move the simulated player to the sim scene
     }
 
@@ -85,13 +82,10 @@ public class TrajectoryPredictor : MonoBehaviour
     public void UpdateSimObjects(GameObject obstaclesRoot) {
         foreach (Transform t in obstaclesRoot.transform) {
             if (t.gameObject.GetComponentInChildren<Collider2D>() != null) {
+                Debug.Log(t.name);
                 GameObject fakeT = Instantiate(t.gameObject);
                 fakeT.transform.position = t.position;
                 fakeT.transform.rotation = t.rotation;
-
-                Bouncer bouncer = fakeT.GetComponent<Bouncer>();
-                if (bouncer)
-                    bouncer.isSimulated = true;
 
                 SpriteRenderer[] fakeSprites = fakeT.GetComponentsInChildren<SpriteRenderer>();
                 foreach (SpriteRenderer sprite in fakeSprites)

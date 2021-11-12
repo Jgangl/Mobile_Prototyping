@@ -24,6 +24,8 @@ public class Bouncer : MonoBehaviour
     [SerializeField]
     private float collisionTimeoutTime = 0.25f;
 
+    public bool isSimulated = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,13 +77,20 @@ public class Bouncer : MonoBehaviour
         Rigidbody2D[] bones = collision.transform.root.gameObject.GetComponentsInChildren<Rigidbody2D>();
         Vector2 contactDir = collision.contacts[0].normal;
 
+        if (bones[0].gameObject.layer == LayerMask.NameToLayer("PlayerSim"))
+            Debug.Log("Bouncer hit sim player");
+
         Vector2 dir = transform.rotation * Vector3.forward;
         if (bones.Length != 0) {
-            foreach(Rigidbody2D bone in bones)
-                bone.AddForce(transform.right * bounceForce);
+            foreach(Rigidbody2D bone in bones) {
+                bone.AddForce(transform.right * bounceForce, ForceMode2D.Impulse);
+                //Debug.Log("Bouncer adding force to bone for sim player");
+            }
+
 
             // Start collisionn timeout timer to avoid multiple collisions in a small time frame
-            StartCoroutine("CollisionTimeoutTimer");
+            if (!isSimulated)
+                StartCoroutine("CollisionTimeoutTimer");
         }
     }
 

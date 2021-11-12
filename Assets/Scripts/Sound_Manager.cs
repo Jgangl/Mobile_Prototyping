@@ -16,8 +16,8 @@ public class Sound_Manager : Singleton<Sound_Manager>
     [SerializeField]
     private bool enableSoundEffects;
 
-    public float minPitch = 0.85f;
-    public float maxPitch = 1.15f;
+    public float[] pitchValues;
+    public AudioClip[] squishClips;
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +32,9 @@ public class Sound_Manager : Singleton<Sound_Manager>
     }
 
     public void PlaySquishSound() {
-        audioSource.clip = squishClip;
+        audioSource.clip = squishClips[Random.Range(0, squishClips.Length)];
         //audioSource.pitch
-        audioSource.pitch = Random.Range(minPitch, maxPitch);
+        audioSource.pitch = pitchValues[Random.Range(0, pitchValues.Length)];
         audioSource.Stop();
         audioSource.Play();
     }

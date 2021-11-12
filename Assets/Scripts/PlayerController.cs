@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 prevPosition;
     private Vector2 prevPositionTwo;
 
+    public bool isSimulated = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,6 +63,8 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        if (isSimulated)
+            return;
         /*
         Touch touch = Input.touches[0];
         if (touch.phase == TouchPhase.Began || Input.GetMouseButtonDown(0)) {
@@ -215,27 +219,29 @@ public class PlayerController : MonoBehaviour
 
         float velocityMagnitude = GetObjectAverageVelocity().magnitude;
         if (velocityMagnitude > 0.25f && bonesCanCollide) {
-            Sound_Manager.Instance.PlaySquishSound();
-            CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
-            StartCoroutine("SquishSoundTimer");
-            StartCoroutine("IgnoreBonesTimer");
+            //if (!isSimulated) {
+                Sound_Manager.Instance.PlaySquishSound();
+                CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
+                StartCoroutine("SquishSoundTimer");
+                StartCoroutine("IgnoreBonesTimer");
 
-            //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
-            Vector2 currentPosition = transform.position;
-            Vector2 dirOfTravel = (currentPosition - prevPositionTwo).normalized;
+                //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
+                Vector2 currentPosition = transform.position;
+                Vector2 dirOfTravel = (currentPosition - prevPositionTwo).normalized;
 
-            // Find angle between x axis and direction of travel
-            float angle = Mathf.Atan2(dirOfTravel.y, dirOfTravel.x) * Mathf.Rad2Deg;
+                // Find angle between x axis and direction of travel
+                float angle = Mathf.Atan2(dirOfTravel.y, dirOfTravel.x) * Mathf.Rad2Deg;
 
-            // Rotating the angle around an axis (Similar to applying the rotation to a specfic axis)
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+                // Rotating the angle around an axis (Similar to applying the rotation to a specfic axis)
+                Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            Vector2 colPoint = collision.contacts[0].point;
+                Vector2 colPoint = collision.contacts[0].point;
 
-            // Create particles and apply rotation
-            GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
-            particles.transform.rotation = q;
-            Destroy(particles, 0.5f);
+                // Create particles and apply rotation
+                GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
+                particles.transform.rotation = q;
+                Destroy(particles, 0.5f);
+            //}
         }
 
         if (collision.gameObject.tag == "Platform") {
