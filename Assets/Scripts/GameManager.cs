@@ -36,16 +36,19 @@ public class GameManager : Singleton<GameManager>
     }
 
     public bool SaveGame() {
-        Debug.Log("Saved Game");
+
+
         List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
 
         if (gameData != null) {
+            //Debug.Log("Saved Game");
+            // Insert save data
             gameData.SetCompletedLevels(completedLevels);
             Save_Manager.Instance.Save(gameData);
             return true;
         }
         else {
-            Debug.Log("GAME NOT SAVED");
+            //Debug.Log("GAME NOT SAVED");
             return false;
         }
     }
@@ -54,12 +57,12 @@ public class GameManager : Singleton<GameManager>
         object saveData = Save_Manager.Instance.LoadGame();
 
         if (saveData != null) {
-            Debug.Log("Loaded Game");
+            //Debug.Log("Loaded Game");
             gameData = (GameData)saveData;
             return true;
         }
         else {
-            Debug.Log("DID NOT LOAD Game");
+            //Debug.Log("DID NOT LOAD Game");
             return false;
         }
 

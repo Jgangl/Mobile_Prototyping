@@ -5,13 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/Scenes/EndlessRunner_Up.unity
-    guid: 93e0a9346005a5641998be398a69e5aa
   - enabled: 1
     path: Assets/Scenes/Levels/Level_1.unity
     guid: f669055aab1ffc7488333228956e97f0
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level_2.unity
+    guid: f3601181ca05dcd4799289e9cff0a094
   m_configObjects: {}
