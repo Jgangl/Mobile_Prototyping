@@ -1646,7 +1646,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 4.53
+    OrthographicSize: 3.39
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3280,7 +3280,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.53
+  orthographic size: 3.39
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9168,7 +9168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112570107933548101, guid: 1675ac182c93e9841b1c9b7c095d9e37, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.644
+      value: -4.391
       objectReference: {fileID: 0}
     - target: {fileID: 3112570107933548101, guid: 1675ac182c93e9841b1c9b7c095d9e37, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9213,6 +9213,10 @@ PrefabInstance:
     - target: {fileID: 6418693404598683185, guid: 1675ac182c93e9841b1c9b7c095d9e37, type: 3}
       propertyPath: m_SortingOrder
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405625559536057806, guid: 1675ac182c93e9841b1c9b7c095d9e37, type: 3}
+      propertyPath: m_Size.x
+      value: 0.97
       objectReference: {fileID: 0}
     - target: {fileID: 8405625559536057806, guid: 1675ac182c93e9841b1c9b7c095d9e37, type: 3}
       propertyPath: m_Offset.y
