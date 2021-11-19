@@ -5,9 +5,9 @@ using UnityEngine.Audio;
 
 public class Sound_Manager : Singleton<Sound_Manager>
 {
-    public AudioClip squishClip;
+    public AudioClip backgroundMusicClip;
 
-    AudioSource audioSource;
+    public AudioClip squishClip;
 
     [SerializeField]
     private bool enableAllSounds;
@@ -19,10 +19,26 @@ public class Sound_Manager : Singleton<Sound_Manager>
     public float[] pitchValues;
     public AudioClip[] squishClips;
 
+    [SerializeField]
+    private AudioSource[] backgroundSources;
+
+    [SerializeField]
+    private AudioSource squishSource;
+
+    public override void Awake() {
+        base.Awake();
+        if (keepAlive) {
+            // Don't destroy child audio sources
+            for(int i = 0; i < transform.childCount; i++) {
+                DontDestroyOnLoad(transform.GetChild(i).gameObject);
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -32,10 +48,9 @@ public class Sound_Manager : Singleton<Sound_Manager>
     }
 
     public void PlaySquishSound() {
-        audioSource.clip = squishClips[Random.Range(0, squishClips.Length)];
-        //audioSource.pitch
-        audioSource.pitch = pitchValues[Random.Range(0, pitchValues.Length)];
-        audioSource.Stop();
-        audioSource.Play();
+        squishSource.clip = squishClips[Random.Range(0, squishClips.Length)];
+        squishSource.pitch = pitchValues[Random.Range(0, pitchValues.Length)];
+        squishSource.Stop();
+        squishSource.Play();
     }
 }
