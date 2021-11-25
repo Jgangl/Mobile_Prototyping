@@ -45,10 +45,6 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void CompleteLevel(int level) {
-        Level_Manager.Instance.LevelCompleted(level);
-    }
-
     public void PauseGame() {
         if (currentGameState == GameState.Playing) {
             Time.timeScale = 0.0f;

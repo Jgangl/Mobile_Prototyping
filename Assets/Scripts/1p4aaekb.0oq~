@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Finish_Zone : MonoBehaviour
 {
-    bool playerCollided = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +18,8 @@ public class Finish_Zone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
-            if (!playerCollided) {
-                Debug.Log("WIN");
-                Level_Manager.Instance.CompleteCurrentLevel();
-            }
-
-            playerCollided = true;
+            Debug.Log("WIN");
+            Level_Manager.Instance.CompleteCurrentLevel();
         }
     }
 }

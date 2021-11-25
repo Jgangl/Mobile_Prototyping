@@ -17,14 +17,23 @@ public class Level_Manager : Singleton<Level_Manager>
     public GameObject fadeCanvasPrefab;
     private GameObject fadeCanvas;
 
+    private void Start() {
+        completedLevels = new List<int>();
+    }
+
     private void Update() {
         if (Input.GetKeyDown(KeyCode.N)) {
             LoadNextLevel();
         }
     }
 
-    public void LevelCompleted(int level) {
+    public void CompleteLevel(int level) {
         completedLevels.Add(level);
+        LoadNextLevel();
+    }
+
+    public void CompleteCurrentLevel() {
+        CompleteLevel(currentLevel);
     }
 
     public List<int> GetCompletedLevels() {
@@ -37,7 +46,7 @@ public class Level_Manager : Singleton<Level_Manager>
             currentLevel++;
 
         // Load scene at the next build index
-        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+        StartCoroutine(LoadLevel(currentLevel));
     }
 
     public void LoadCurrentLevel() {
