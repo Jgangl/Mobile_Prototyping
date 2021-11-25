@@ -40,7 +40,13 @@ public class Level_Manager : Singleton<Level_Manager>
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
+    public void LoadCurrentLevel() {
+        Debug.Log("LOADING CURRENT LEVEL");
+        StartCoroutine(LoadLevel(currentLevel));
+    }
+
     IEnumerator LoadLevel(int levelIndex) {
+        Debug.Log("Loading Level: " + levelIndex);
         GameObject fadeCanvas = CreateFadeObject();
 
         Animator fadeAnim = fadeCanvas.GetComponent<Animator>();

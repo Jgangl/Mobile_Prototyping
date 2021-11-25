@@ -20,25 +20,23 @@ public class Sound_Manager : Singleton<Sound_Manager>
     public AudioClip[] squishClips;
 
     [SerializeField]
-    private AudioSource[] backgroundSources;
+    private List<AudioSource> backgroundSources;
 
     [SerializeField]
     private AudioSource squishSource;
 
-    public override void Awake() {
-        base.Awake();
-        if (keepAlive) {
-            // Don't destroy child audio sources
-            for(int i = 0; i < transform.childCount; i++) {
-                DontDestroyOnLoad(transform.GetChild(i).gameObject);
-            }
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
-        
+        squishSource = transform.Find("SquishSource_One").GetComponent<AudioSource>();
+
+        AudioSource backgroundSource = transform.Find("BackgroundSource_One").GetComponent<AudioSource>();
+        if (backgroundSource)
+            backgroundSources.Add(backgroundSource);
+
+        backgroundSource = transform.Find("BackgroundSource_Two").GetComponent<AudioSource>();
+        if (backgroundSource)
+            backgroundSources.Add(backgroundSource);
     }
 
     // Update is called once per frame
@@ -52,5 +50,20 @@ public class Sound_Manager : Singleton<Sound_Manager>
         squishSource.pitch = pitchValues[Random.Range(0, pitchValues.Length)];
         squishSource.Stop();
         squishSource.Play();
+    }
+
+    public void PlayBackgroundMusicOne() {
+        AudioSource backgroundSource = null;
+        // Find first available background source
+        foreach(AudioSource source in backgroundSources) {
+            if (!source.isPlaying)
+                backgroundSource = source;
+        }
+
+        if (backgroundSource != null) {
+            // Play music clip
+            backgroundSource.clip = backgroundMusicClip;
+            backgroundSource.Play();
+        }
     }
 }

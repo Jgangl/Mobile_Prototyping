@@ -33,7 +33,6 @@ public class GameManager : Singleton<GameManager>
     public void StartGame() {
         // Start game at current uncompleted level
         Debug.Log("Started Game");
-        Level_Manager.Instance.LoadCurrentLevel();
     }
 
     public void QuitGame() {

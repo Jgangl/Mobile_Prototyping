@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private TrajectoryPredictor trajectoryPredictor;
 
     public float squishSoundTime = 0.25f;
-    private bool canPlaySquishSound = true;
+    //private bool canPlaySquishSound = true;
 
     public bool bonesCanCollide = true;
     public float bonesCollisionTime = 0.05f;
@@ -173,13 +173,13 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(platformIgnoreTime);
         canCollideWithPreviousPlatform = true;
     }
-
+    /*
     IEnumerator SquishSoundTimer() {
         canPlaySquishSound = false;
         yield return new WaitForSeconds(squishSoundTime);
         canPlaySquishSound = true;
     }
-
+    */
     private Vector2 GetObjectAveragePosition() {
         Vector3 avgPos = Vector2.zero;
 
@@ -222,7 +222,7 @@ public class PlayerController : MonoBehaviour
             //if (!isSimulated) {
                 Sound_Manager.Instance.PlaySquishSound();
                 CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
-                StartCoroutine("SquishSoundTimer");
+                //StartCoroutine("SquishSoundTimer");
                 StartCoroutine("IgnoreBonesTimer");
 
                 //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
