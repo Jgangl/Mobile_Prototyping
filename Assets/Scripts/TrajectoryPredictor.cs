@@ -22,20 +22,14 @@ public class TrajectoryPredictor : MonoBehaviour
         CreateSceneParameters _param = new CreateSceneParameters(LocalPhysicsMode.Physics2D); //define the parameters of a new scene, this lets us have our own separate physics 
         _simScene = SceneManager.CreateScene("Simulation", _param); // create a new scene and implement the parameters we just created
         _physicsSim = _simScene.GetPhysicsScene2D(); // assign the physics of the scene so we can simulate on our own time. 
-        //CreateSimObjects(); // send over simulated objects (see method below for details)
         line.positionCount = _steps; // set amount of points our drawn line will have
         points = new Vector3[_steps]; // set amount of points our simulation will record, these will later be passed into the line.
-
-        CreateSimulatedPlayer();
     }
     #endregion
 
     private PhysicsScene2D _physicsSim;
     [SerializeField]
-    private GameObject _simulatedObject; //drag your simulated player into the inspector
-
-    //[SerializeField]
-    //private GameObject _simulatedObject; //drag your simulated player into the inspector
+    private GameObject _playerObject; //drag your player into the inspector
 
     [SerializeField]
     LineRenderer line;//drag your lineRenderer into the inspector 
@@ -45,28 +39,18 @@ public class TrajectoryPredictor : MonoBehaviour
     Vector3[] points;
 
     public GameObject collidablesRoot;
-
-    //public GameObject obstaclesRoot;
-
     Vector3 _lastForce = Vector3.zero; //used to track what the last force input was 
 
     // Start is called before the first frame update
     void Start()
     {
+        _playerObject = GameObject.FindGameObjectWithTag("Player");
+
         UpdateSimObjects(collidablesRoot);
     }
-
-    private void CreateSimulatedPlayer() {
-        PlayerController playerController = _simulatedObject.GetComponent<PlayerController>();
-        if (playerController)
-            playerController.isSimulated = true;
-        SceneManager.MoveGameObjectToScene(_simulatedObject, _simScene); // move the simulated player to the sim scene
-    }
-
+/*
     private void CreateSimObjects(GameObject obstaclesRoot)  //all objects start in regulare scene, and get sent over on start. this way colliders are dynamic and we can grab refrence to simulated player in first scene.
     {
-        SceneManager.MoveGameObjectToScene(_simulatedObject, _simScene); // move the simulated player to the sim scene
-
         foreach (Transform t in obstaclesRoot.transform) {
             if (t.gameObject.GetComponentInChildren<Collider2D>() != null) {
                 GameObject fakeT = Instantiate(t.gameObject);
@@ -77,11 +61,10 @@ public class TrajectoryPredictor : MonoBehaviour
                     fakeR.enabled = false;
                 }
                 SceneManager.MoveGameObjectToScene(fakeT, _simScene);
-                //dummyObstacles.Add(fakeT);
             }
         }
     }
-
+*/
     public void UpdateSimObjects(GameObject obstaclesRoot) {
         foreach (Transform t in obstaclesRoot.transform) {
             if (t.gameObject.GetComponentInChildren<Collider2D>() != null) {
@@ -98,15 +81,24 @@ public class TrajectoryPredictor : MonoBehaviour
                     sprite.enabled = false;
 
                 SceneManager.MoveGameObjectToScene(fakeT, _simScene);
-                //dummyObstacles.Add(fakeT);
             }
         }
     }
 
     public void SimulateLaunch(Transform player, Vector3 force)   //call this every frame while player is grabed;
     {
-        GameObject simObject = Instantiate(_simulatedObject, player.position, player.rotation);
+        GameObject simObject = Instantiate(_playerObject, player.position, player.rotation);
         SceneManager.MoveGameObjectToScene(simObject, _simScene);
+
+        // Set player simulated flag in playercontroller
+        PlayerController playerController = simObject.GetComponent<PlayerController>();
+        if (playerController)
+            playerController.enabled = false;
+
+        // Disable player sprite
+        SpriteRenderer sprite = simObject.GetComponent<SpriteRenderer>();
+        if (sprite)
+            sprite.enabled = false;
 
         if (_lastForce != force) //if force hasnt changed, skip simulation;
         {

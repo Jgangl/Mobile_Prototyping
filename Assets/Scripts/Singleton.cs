@@ -35,7 +35,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
         _instance = GetComponent<T>();
 
         if (keepAlive) {
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject.transform.root);
         }
 
         if (_instance == null) {

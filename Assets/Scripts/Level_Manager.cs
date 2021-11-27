@@ -28,6 +28,7 @@ public class Level_Manager : Singleton<Level_Manager>
     }
 
     public void CompleteLevel(int level) {
+        Debug.Log("Level " + level + " completed");
         completedLevels.Add(level);
         LoadNextLevel();
     }
@@ -41,12 +42,16 @@ public class Level_Manager : Singleton<Level_Manager>
     }
 
     public void LoadNextLevel() {
-        Debug.Log("Loading next level");
-        if (currentLevel < numLevels)
+        if (currentLevel < numLevels) {
             currentLevel++;
+            // Load scene at the next build index
+            StartCoroutine(LoadLevel(currentLevel));
+        }
+        else {
+            Debug.Log("No more levels");
+        }
 
-        // Load scene at the next build index
-        StartCoroutine(LoadLevel(currentLevel));
+
     }
 
     public void LoadCurrentLevel() {
