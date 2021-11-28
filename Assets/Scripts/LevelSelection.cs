@@ -1,0 +1,66 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class LevelSelection : MonoBehaviour
+{
+    [SerializeField]
+    private GameObject levelsPanel;
+
+    [SerializeField]
+    private GameObject levelButtonPrefab;
+
+    private int numLevels;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        numLevels = Level_Manager.Instance.NumLevels;
+
+        AddLevelButtons();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void AddLevelButtons() {
+        Debug.Log("Adding " + numLevels + " level buttons");
+        for(int i = 0; i < numLevels; i++) {
+            GameObject levelButtonObject = Instantiate(levelButtonPrefab, levelsPanel.transform);
+            levelButtonObject.name = "Level_" + (i + 1).ToString();
+            SetButtonLevelText(levelButtonObject, i + 1);
+            Button levelButton = levelButtonObject.GetComponentInChildren<Button>();
+            if (levelButton) {
+                levelButton.onClick.AddListener(()=> OnLevelButtonPressed(levelButtonObject));
+            }
+        }
+    }
+
+    private void SetButtonLevelText(GameObject levelButton, int level) {
+        TextMeshProUGUI buttonText = levelButton.GetComponentInChildren<TextMeshProUGUI>();
+        if (buttonText) {
+            buttonText.text = level.ToString();
+        }
+    }
+
+    public void OnLevelButtonPressed(GameObject levelButtonObject) {
+        string[] nameSplit = levelButtonObject.name.Split(char.Parse("_"));
+        string levelNum = "";
+        if (nameSplit.Length > 1)
+            levelNum = nameSplit[1];
+
+        if (levelNum != "") {
+            int level;
+            if (int.TryParse(levelNum, out level))
+                Level_Manager.Instance.LoadLevel(level);
+           
+        }
+
+    }
+
+}

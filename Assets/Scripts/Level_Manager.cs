@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Level_Manager : Singleton<Level_Manager>
-{
+public class Level_Manager : Singleton<Level_Manager> {
     [SerializeField]
-    int numLevels = 2;
+    int numLevels  = 2;
+    public int NumLevels {
+        get => numLevels;
+    }
 
     int currentLevel = 1;
 
@@ -45,7 +47,7 @@ public class Level_Manager : Singleton<Level_Manager>
         if (currentLevel < numLevels) {
             currentLevel++;
             // Load scene at the next build index
-            StartCoroutine(LoadLevel(currentLevel));
+            StartCoroutine(LoadLevelCoroutine(currentLevel));
         }
         else {
             Debug.Log("No more levels");
@@ -56,10 +58,15 @@ public class Level_Manager : Singleton<Level_Manager>
 
     public void LoadCurrentLevel() {
         Debug.Log("LOADING CURRENT LEVEL");
-        StartCoroutine(LoadLevel(currentLevel));
+        StartCoroutine(LoadLevelCoroutine(currentLevel));
     }
 
-    IEnumerator LoadLevel(int levelIndex) {
+    public void LoadLevel(int levelIndex) {
+        Debug.Log("LOADING LEVEL " + levelIndex);
+        StartCoroutine(LoadLevelCoroutine(levelIndex));
+    }
+
+    IEnumerator LoadLevelCoroutine(int levelIndex) {
         Debug.Log("Loading Level: " + levelIndex);
         GameObject fadeCanvas = CreateFadeObject();
 
