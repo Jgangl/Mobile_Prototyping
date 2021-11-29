@@ -63,10 +63,6 @@ public class LevelSelection : MonoBehaviour
 
     }
 
-    public void OpenLevelSelctionMenu() {
-        EnableLevelSelectionMenu(true);
-    }
-
     public void EnableLevelSelectionMenu(bool enabled) {
         for(int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(enabled);

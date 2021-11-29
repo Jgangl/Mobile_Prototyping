@@ -52,8 +52,6 @@ public class Level_Manager : Singleton<Level_Manager> {
         else {
             Debug.Log("No more levels");
         }
-
-
     }
 
     public void LoadCurrentLevel() {
@@ -76,7 +74,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         if (fadeAnim)
             fadeAnim.SetTrigger("FadeOut");
 
-        // Wait
+        // Wait time for fade out
         yield return new WaitForSeconds(transitionTime);
 
         // Load scene
@@ -86,7 +84,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         if (fadeAnim)
             fadeAnim.SetTrigger("FadeIn");
 
-        // Wait
+        // Wait time for fade in
         yield return new WaitForSeconds(transitionTime);
 
         // Destroy fadeCanvas
