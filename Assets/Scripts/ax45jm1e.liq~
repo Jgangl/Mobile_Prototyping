@@ -44,7 +44,9 @@ public class TrajectoryPredictor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //_playerObject = GameObject.FindGameObjectWithTag("Player");
+        _playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        Debug.Log(_playerObject);
 
         UpdateSimObjects(collidablesRoot);
     }
@@ -90,19 +92,10 @@ public class TrajectoryPredictor : MonoBehaviour
         GameObject simObject = Instantiate(_playerObject, player.position, player.rotation);
         SceneManager.MoveGameObjectToScene(simObject, _simScene);
 
-        simObject.layer = LayerMask.NameToLayer("PlayerSim");
-        foreach(Transform child in simObject.transform) {
-            child.gameObject.layer = LayerMask.NameToLayer("PlayerSim");
-        }
-
         // Set player simulated flag in playercontroller
         PlayerController playerController = simObject.GetComponent<PlayerController>();
-        //if (playerController) {
-        //    Debug.Log("Setting SIMULATED");
-        //    playerController.isSimulated = true;
-        //}
-
-        playerController.StartMovement();
+        if (playerController)
+            Destroy(playerController);
 
         // Disable player sprite
         SpriteRenderer sprite = simObject.GetComponent<SpriteRenderer>();
@@ -154,7 +147,7 @@ public class TrajectoryPredictor : MonoBehaviour
         }
         _lastForce = force;
         */
-        Destroy(simObject);
+        //Destroy(simObject);
     }
 
     private Vector2 GetObjectAveragePosition(GameObject simObject) {

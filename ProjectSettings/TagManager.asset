@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Platform
   - Wall
+  - PlayerSim
   layers:
   - Default
   - TransparentFX

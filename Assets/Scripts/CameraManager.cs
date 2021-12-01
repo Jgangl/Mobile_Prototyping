@@ -25,9 +25,9 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.y <= boundaryYMarker.transform.position.y) {
-            GameManager.Instance.GameOver();
-        }
+        //if (player.transform.position.y <= boundaryYMarker.transform.position.y) {
+        //    GameManager.Instance.GameOver();
+        //}
     }
 
     private void LateUpdate() {

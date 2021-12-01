@@ -24,9 +24,6 @@ public class Bouncer : MonoBehaviour
     [SerializeField]
     private float collisionTimeoutTime = 0.25f;
 
-    [SerializeField]
-    private float simulatedCollisionTimeoutTime = 0.01f;
-
     public bool isSimulated = false;
 
     // Start is called before the first frame update
@@ -131,10 +128,7 @@ public class Bouncer : MonoBehaviour
 
     IEnumerator CollisionTimeoutTimer() {
         canCollideWithBouncer = false;
-        if (isSimulated)
-            yield return new WaitForSeconds(simulatedCollisionTimeoutTime);
-        else
-            yield return new WaitForSeconds(collisionTimeoutTime);
+        yield return new WaitForSeconds(collisionTimeoutTime);
         canCollideWithBouncer = true;
     }
 }

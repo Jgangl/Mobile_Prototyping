@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if (isSimulated)
+        if (tag != "Player")
             return;
         /*
         Touch touch = Input.touches[0];
@@ -103,7 +103,6 @@ public class PlayerController : MonoBehaviour
         Vector2 mousePosition = Input.mousePosition;
         bool mouseMoved = Vector2.Distance(prevFingerPos, mousePosition) >= 0.25f;
         if (canMove) {
-
             if (Input.GetMouseButtonDown(0)) {
                 fingerDownPos = Input.mousePosition;
                 mouseHeldDown = true;
@@ -116,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
                 // Enable Movement
                 Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
-                StartMovement(this.rb);
+                StartMovement();
 
                 // Add swipe force
                 foreach(Rigidbody2D bone in bones)
@@ -162,8 +161,12 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
-    private void StartMovement(Rigidbody2D rb) {
+    public void StartMovement() {
         StartCoroutine("IgnorePlatformTimer");
+
+        if (!rb)
+            rb = GetComponent<Rigidbody2D>();
+
         rb.isKinematic = false;
         canMove = false;
     }
@@ -214,12 +217,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
         // Don't collide with other bones
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PlayerSim")
             return;
 
         float velocityMagnitude = GetObjectAverageVelocity().magnitude;
         if (velocityMagnitude > 0.25f && bonesCanCollide) {
-            //if (!isSimulated) {
+            if (tag == "Player") {
                 Sound_Manager.Instance.PlaySquishSound();
                 CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
                 //StartCoroutine("SquishSoundTimer");
@@ -241,13 +244,19 @@ public class PlayerController : MonoBehaviour
                 GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
                 particles.transform.rotation = q;
                 Destroy(particles, 0.5f);
-            //}
+            }
         }
 
-        if (collision.gameObject.tag == "Platform") {
-            if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                StopMovement(this.rb);
+        if (collision.gameObject.tag == "Platform") {            
+            if (collision.gameObject == previousPlatform) {
+                if (canCollideWithPreviousPlatform) {
+                    StopMovement(rb);
+                }
             }
+            else {
+                StopMovement(rb);
+            }
+            
 
             previousPlatform = collision.gameObject;
         }

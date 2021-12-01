@@ -101,6 +101,9 @@ MonoBehaviour:
   bounceForce: 5
   visualizeDirection: 0
   enableBouncing: 1
+  collisionTimeoutTime: 0.25
+  simulatedCollisionTimeoutTime: 0.001
+  isSimulated: 0
 --- !u!1 &7110229203922199637
 GameObject:
   m_ObjectHideFlags: 0
