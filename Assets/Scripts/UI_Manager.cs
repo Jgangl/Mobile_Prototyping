@@ -90,4 +90,8 @@ public class UI_Manager : Singleton<UI_Manager>
     public void OnCloseMenuButton() {
         DisableMenuObjects();
     }
+
+    public void OnRestartButton() {
+        Level_Manager.Instance.RestartLevel();
+    }
 }

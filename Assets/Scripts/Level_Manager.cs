@@ -54,12 +54,21 @@ public class Level_Manager : Singleton<Level_Manager> {
         }
     }
 
+    public void RestartLevel() {
+        LoadLevel(currentLevel);
+    }
+
     public void LoadCurrentLevel() {
         Debug.Log("LOADING CURRENT LEVEL");
         StartCoroutine(LoadLevelCoroutine(currentLevel));
     }
 
     public void LoadLevel(int levelIndex) {
+        Debug.Log("TRYING TO LOAD LEVEL: " + levelIndex);
+        currentLevel = levelIndex;
+        if (currentLevel > numLevels)
+            return;
+
         Debug.Log("LOADING LEVEL " + levelIndex);
         StartCoroutine(LoadLevelCoroutine(levelIndex));
     }
