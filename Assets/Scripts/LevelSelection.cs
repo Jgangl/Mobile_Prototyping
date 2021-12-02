@@ -76,5 +76,4 @@ public class LevelSelection : MonoBehaviour
     public void OnExitButtonPressed() {
         EnableLevelSelectionMenu(false);
     }
-
 }

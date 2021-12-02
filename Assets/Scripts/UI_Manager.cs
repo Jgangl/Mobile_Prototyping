@@ -6,11 +6,15 @@ using UnityEngine.SceneManagement;
 public class UI_Manager : Singleton<UI_Manager>
 {
     GameObject settingsMenu;
+    GameObject levelSelectionMenu;
 
     // Start is called before the first frame update
     void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        FindMenuObjects();
+        DisableMenuObjects();
     }
 
     // Update is called once per frame
@@ -35,13 +39,55 @@ public class UI_Manager : Singleton<UI_Manager>
         GameManager.Instance.QuitGame();
     }
 
-    private void OpenSettingsMenu() {
+    private void EnableSettingsMenu(bool enabled) {
+        if (settingsMenu) {
+            settingsMenu.SetActive(enabled);
+        }
+    }
 
+    private void EnableLevelSelectionMenu(bool enabled) {
+        if (levelSelectionMenu) {
+            levelSelectionMenu.SetActive(enabled);
+        }
+    }
+
+    public void OpenSettingsMenu() {
+        EnableSettingsMenu(true);
+    }
+
+    public void OpenLevelSelectionMenu() {
+        EnableLevelSelectionMenu(true);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         // Find menu objects
 
+        FindMenuObjects();
+
+        DisableMenuObjects();
+    }
+
+    private void FindMenuObjects() {
+        ClearMenuObjects();
+
         settingsMenu = GameObject.Find("SettingsMenu");
+        levelSelectionMenu = GameObject.Find("LevelSelectionMenu");
+    }
+
+    private void DisableMenuObjects() {
+        if (settingsMenu)
+            settingsMenu.SetActive(false);
+
+        if (levelSelectionMenu)
+            levelSelectionMenu.SetActive(false);
+    }
+
+    private void ClearMenuObjects() {
+        settingsMenu = null;
+        levelSelectionMenu = null;
+    }
+
+    public void OnCloseMenuButton() {
+        DisableMenuObjects();
     }
 }
