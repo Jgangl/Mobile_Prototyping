@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using UnityEngine.UI;
+
 public class UI_Manager : Singleton<UI_Manager>
 {
     GameObject settingsMenu;
@@ -14,6 +16,7 @@ public class UI_Manager : Singleton<UI_Manager>
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         FindMenuObjects();
+        FindButtons();
         DisableMenuObjects();
     }
 
@@ -63,6 +66,7 @@ public class UI_Manager : Singleton<UI_Manager>
         // Find menu objects
 
         FindMenuObjects();
+        FindButtons();
 
         DisableMenuObjects();
     }
@@ -72,6 +76,52 @@ public class UI_Manager : Singleton<UI_Manager>
 
         settingsMenu = GameObject.Find("SettingsMenu");
         levelSelectionMenu = GameObject.Find("LevelSelectionMenu");
+    }
+
+    private void FindButtons() {
+        GameObject levelSelectionButtonObj = GameObject.Find("LevelSelectionButton");
+        GameObject settingsButtonObj = GameObject.Find("SettingsButton");
+        GameObject restartButtonObj = GameObject.Find("RestartButton");
+        GameObject levelSelectExitButtonObj = GameObject.Find("LevelSelectExitButton");
+        GameObject settingsExitButtonObj = GameObject.Find("SettingsExitButton");
+
+        Button levelSelectionButton;
+        if (levelSelectionButtonObj) {
+            levelSelectionButton = levelSelectionButtonObj.GetComponent<Button>();
+            if (levelSelectionButton) {
+                levelSelectionButton.onClick.AddListener(OpenLevelSelectionMenu);
+            }
+        }
+
+        Button settingsButton;
+        if (settingsButtonObj) {
+            settingsButton = settingsButtonObj.GetComponent<Button>();
+            if (settingsButton)
+                settingsButton.onClick.AddListener(OpenSettingsMenu);
+        }
+
+        Button restartButton;
+        if (restartButtonObj) {
+            restartButton = restartButtonObj.GetComponent<Button>();
+            if (restartButton) {
+                restartButton.onClick.AddListener(OnRestartButton);
+            }
+
+        }
+
+        Button levelSelectExitButton;
+        if (levelSelectExitButtonObj) {
+            levelSelectExitButton = levelSelectExitButtonObj.GetComponent<Button>();
+            if (levelSelectExitButton)
+                levelSelectExitButton.onClick.AddListener(DisableMenuObjects);
+        }
+
+        Button settingsExitButton;
+        if (settingsExitButtonObj) {
+            settingsExitButton = settingsExitButtonObj.GetComponent<Button>();
+            if (settingsExitButton)
+                settingsExitButton.onClick.AddListener(DisableMenuObjects);
+        }
     }
 
     private void DisableMenuObjects() {
@@ -92,6 +142,7 @@ public class UI_Manager : Singleton<UI_Manager>
     }
 
     public void OnRestartButton() {
+        Debug.Log("RESTART BUTTON");
         Level_Manager.Instance.RestartLevel();
     }
 }
