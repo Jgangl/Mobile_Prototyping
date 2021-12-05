@@ -9,13 +9,16 @@ public class GameManager : Singleton<GameManager>
 
     private GameState currentGameState;
 
+    private bool gameOver = false;
+
     // Start is called before the first frame update
     void Start()
     {
         currentGameState = GameState.Playing;
         gameData = new GameData();
 
-        LoadGame();
+        if (LoadGame())
+            Level_Manager.Instance.SetCompletedLevels(gameData.GetCompletedLevels());
     }
 
     // Update is called once per frame
@@ -43,7 +46,11 @@ public class GameManager : Singleton<GameManager>
 
     public void GameOver() {
         Debug.Log("Game Over");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        //if (!gameOver) {
+        Level_Manager.Instance.LoadCurrentLevel();
+            //gameOver = true;
+        //}
     }
 
     public void PauseGame() {
@@ -61,7 +68,11 @@ public class GameManager : Singleton<GameManager>
         List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
 
         if (gameData != null) {
-            //Debug.Log("Saved Game");
+            Debug.Log("Saved Game");
+            foreach(int level in completedLevels) {
+                Debug.Log("Saving completed level: " + level);
+            }
+
             // Insert save data
             gameData.SetCompletedLevels(completedLevels);
             Save_Manager.Instance.Save(gameData);
@@ -77,8 +88,9 @@ public class GameManager : Singleton<GameManager>
         object saveData = Save_Manager.Instance.LoadGame();
 
         if (saveData != null) {
-            //Debug.Log("Loaded Game");
+            Debug.Log("Loaded Game");
             gameData = (GameData)saveData;
+            Debug.Log(gameData.GetCompletedLevels().Count);
             return true;
         }
         else {

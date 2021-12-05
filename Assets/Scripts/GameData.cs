@@ -19,4 +19,8 @@ public class GameData
     public void SetCompletedLevels(List<int> completedLevels) {
         this.completedLevels = completedLevels;
     }
+
+    public List<int> GetCompletedLevels() {
+        return completedLevels;
+    }
 }

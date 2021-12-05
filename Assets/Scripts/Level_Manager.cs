@@ -43,6 +43,11 @@ public class Level_Manager : Singleton<Level_Manager> {
         return completedLevels;
     }
 
+    public void SetCompletedLevels(List<int> completedLevels) {
+        Debug.Log("Setting completed levels length  " + completedLevels.Count);
+        this.completedLevels = completedLevels;
+    }
+
     public void LoadNextLevel() {
         if (currentLevel < numLevels) {
             currentLevel++;
@@ -95,7 +100,6 @@ public class Level_Manager : Singleton<Level_Manager> {
 
         // Wait time for fade in
         yield return new WaitForSeconds(transitionTime);
-
         // Destroy fadeCanvas
         Destroy(fadeCanvas);
     }

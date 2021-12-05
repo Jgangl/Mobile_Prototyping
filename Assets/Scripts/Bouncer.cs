@@ -75,10 +75,10 @@ public class Bouncer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (isSimulated) {
-            Debug.Log("Simulated Bouncer hit: " + collision.transform.root.gameObject);
+            //Debug.Log("Simulated Bouncer hit: " + collision.transform.root.gameObject);
         }
         else {
-            Debug.Log("Bouncer hit: " + collision.transform.root.gameObject);
+            //Debug.Log("Bouncer hit: " + collision.transform.root.gameObject);
         }
 
         if (!enableBouncing || !canCollideWithBouncer)
@@ -96,7 +96,6 @@ public class Bouncer : MonoBehaviour
                 bone.AddForce(transform.right * bounceForce, ForceMode2D.Impulse);
                 //Debug.Log("Bouncer adding force to bone for sim player");
             }
-
 
             // Start collisionn timeout timer to avoid multiple collisions in a small time frame
             StartCoroutine("CollisionTimeoutTimer");

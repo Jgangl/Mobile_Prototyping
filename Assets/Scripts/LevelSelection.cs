@@ -14,18 +14,18 @@ public class LevelSelection : MonoBehaviour
 
     private int numLevels;
 
+    private List<GameObject> levelButtons;
+
     // Start is called before the first frame update
     void Start()
     {
         numLevels = Level_Manager.Instance.NumLevels;
 
-        AddLevelButtons();
-    }
+        levelButtons = new List<GameObject>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        AddLevelButtons();
+        Debug.Log("Update Level completion icons");
+        UpdateLevelCompletionIcons();
     }
 
     private void AddLevelButtons() {
@@ -38,7 +38,11 @@ public class LevelSelection : MonoBehaviour
             if (levelButton) {
                 levelButton.onClick.AddListener(()=> OnLevelButtonPressed(levelButtonObject));
             }
+
+            levelButtons.Add(levelButtonObject);
         }
+
+        UpdateLevelCompletionIcons();
     }
 
     private void SetButtonLevelText(GameObject levelButton, int level) {
@@ -60,11 +64,51 @@ public class LevelSelection : MonoBehaviour
                 Level_Manager.Instance.LoadLevel(level);
            
         }
+    }
 
+    private void UpdateLevelCompletionIcons() {
+        List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
+
+        foreach(GameObject button in levelButtons) {
+            string buttonName = button.name;
+            // Get level number from name
+            string[] buttonSplit = buttonName.Split('_');
+            
+            if (buttonSplit.Length > 1) {
+                Debug.Log("Button split: " + buttonSplit[1]);
+                int outButtonNum;
+                if (int.TryParse(buttonSplit[1], out outButtonNum)) {
+                    // Compare button level number to completed levels
+                    foreach(int level in completedLevels) {
+                        Debug.Log(level);
+                    }
+                    if (completedLevels.Contains(outButtonNum)) {
+                        Debug.Log("Completed levels contains: " + outButtonNum);
+                        EnableLevelCompleteCheck(button, true);
+                    }
+                    else {
+                        EnableLevelCompleteCheck(button, false);
+                    }
+                }
+            }
+        }
+    }
+
+    private void EnableLevelCompleteCheck(GameObject levelSelectButton, bool enabled) {
+        Transform levelCompleteTransform = levelSelectButton.transform.Find("Button").transform.Find("LevelCompleteCheck");
+        if (levelCompleteTransform) {
+            levelCompleteTransform.gameObject.SetActive(enabled);
+        }
+            
+        
     }
 
     public void OpenLevelSelctionMenu() {
         EnableLevelSelectionMenu(true);
+
+        // Should probably update the level selection checkmarks here
+
+        UpdateLevelCompletionIcons();
     }
 
     public void EnableLevelSelectionMenu(bool enabled) {
