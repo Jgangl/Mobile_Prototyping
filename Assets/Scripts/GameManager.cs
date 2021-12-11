@@ -68,9 +68,9 @@ public class GameManager : Singleton<GameManager>
         List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
 
         if (gameData != null) {
-            Debug.Log("Saved Game");
+            //Debug.Log("Saved Game");
             foreach(int level in completedLevels) {
-                Debug.Log("Saving completed level: " + level);
+                //Debug.Log("Saving completed level: " + level);
             }
 
             // Insert save data
@@ -88,9 +88,9 @@ public class GameManager : Singleton<GameManager>
         object saveData = Save_Manager.Instance.LoadGame();
 
         if (saveData != null) {
-            Debug.Log("Loaded Game");
+            //Debug.Log("Loaded Game");
             gameData = (GameData)saveData;
-            Debug.Log(gameData.GetCompletedLevels().Count);
+            //Debug.Log(gameData.GetCompletedLevels().Count);
             return true;
         }
         else {

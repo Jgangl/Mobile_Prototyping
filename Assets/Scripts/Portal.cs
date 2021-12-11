@@ -9,18 +9,7 @@ public class Portal : MonoBehaviour
     private bool canTeleport = true;
 
     private Vector3 playerVelocityOnEnter;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private float playerAngleOnEnter;
 
     private void OnTriggerEnter2D(Collider2D collision) {
         PlayerController player = collision.GetComponent<PlayerController>();
@@ -42,15 +31,22 @@ public class Portal : MonoBehaviour
             connectedPortal.SetCanTeleport(false);
 
             Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
-            playerVelocityOnEnter = playerRb.velocity;
+            playerVelocityOnEnter = player.GetObjectAverageVelocity();
 
-            float speed = playerVelocityOnEnter.magnitude;
-            Vector3 newDirection = connectedPortal.transform.up;
+            playerAngleOnEnter = Vector3.Angle(playerVelocityOnEnter, transform.up);
+
+            float previousSpeed = playerVelocityOnEnter.magnitude;
+            Vector3 newDirection = connectedPortal.transform.up;//Quaternion.Euler(0f, 0f, playerAngleOnEnter) * connectedPortal.transform.up;
+            Debug.Log(newDirection);
+            Debug.DrawRay(connectedPortal.transform.position, newDirection, Color.yellow, 3f);
 
             player.transform.position = connectedPortal.transform.position;
-            playerRb.velocity = newDirection * speed;
-        }
+            Vector2 newVelocity = newDirection * previousSpeed;
+            player.SetVelocity(newVelocity);
+            //Debug.Log(playerRb.velocity);
 
+            //Debug.Log(playerRb.velocity);
+        }
     }
 
     private void SetCanTeleport(bool canTeleport) {

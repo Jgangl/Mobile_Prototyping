@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
         return (avgPos / bones.Length);
     }
 
-    private Vector2 GetObjectAverageVelocity() {
+    public Vector2 GetObjectAverageVelocity() {
         Vector2 totalVelocity = Vector2.zero;
 
         // Get all rigidbodies of bones
@@ -281,5 +281,12 @@ public class PlayerController : MonoBehaviour
         bonesCanCollide = false;
         yield return new WaitForSeconds(bonesCollisionTime);
         bonesCanCollide = true;
+    }
+
+    public void SetVelocity(Vector2 newVelocity) {
+        Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
+        foreach(Rigidbody2D bone in bones) {
+            bone.velocity = newVelocity;
+        }
     }
 }

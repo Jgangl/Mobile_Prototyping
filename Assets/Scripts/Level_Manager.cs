@@ -44,7 +44,7 @@ public class Level_Manager : Singleton<Level_Manager> {
     }
 
     public void SetCompletedLevels(List<int> completedLevels) {
-        Debug.Log("Setting completed levels length  " + completedLevels.Count);
+        //Debug.Log("Setting completed levels length  " + completedLevels.Count);
         this.completedLevels = completedLevels;
     }
 
