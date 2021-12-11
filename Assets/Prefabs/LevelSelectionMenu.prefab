@@ -597,6 +597,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelSelectExitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 114364962893373594, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114547877942267770, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 1
@@ -667,15 +671,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114755903884993926, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
       propertyPath: m_Color.b
-      value: 0.33333334
+      value: 0.3019608
       objectReference: {fileID: 0}
     - target: {fileID: 114755903884993926, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
       propertyPath: m_Color.g
-      value: 0.25490198
+      value: 0.3019608
       objectReference: {fileID: 0}
     - target: {fileID: 114755903884993926, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
       propertyPath: m_Color.r
-      value: 0.1764706
+      value: 0.3019608
       objectReference: {fileID: 0}
     - target: {fileID: 114809245569716970, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
       propertyPath: m_Sprite

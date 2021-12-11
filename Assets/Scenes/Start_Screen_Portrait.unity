@@ -367,6 +367,10 @@ PrefabInstance:
       propertyPath: m_PixelsPerUnitMultiplier
       value: 42
       objectReference: {fileID: 0}
+    - target: {fileID: 114316891967693908, guid: f99269924fc18d449a9a2caaf53dc5fe, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114388508864629952, guid: f99269924fc18d449a9a2caaf53dc5fe, type: 3}
       propertyPath: buttonText
       value: Settings
@@ -672,6 +676,10 @@ PrefabInstance:
       propertyPath: m_PixelsPerUnitMultiplier
       value: 42
       objectReference: {fileID: 0}
+    - target: {fileID: 114316891967693908, guid: f99269924fc18d449a9a2caaf53dc5fe, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114388508864629952, guid: f99269924fc18d449a9a2caaf53dc5fe, type: 3}
       propertyPath: buttonText
       value: Level Select
@@ -1060,6 +1068,10 @@ PrefabInstance:
       propertyPath: m_PixelsPerUnitMultiplier
       value: 42
       objectReference: {fileID: 0}
+    - target: {fileID: 114316891967693908, guid: f99269924fc18d449a9a2caaf53dc5fe, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114388508864629952, guid: f99269924fc18d449a9a2caaf53dc5fe, type: 3}
       propertyPath: buttonText
       value: Start
@@ -1673,6 +1685,10 @@ PrefabInstance:
       propertyPath: m_PixelsPerUnitMultiplier
       value: 42
       objectReference: {fileID: 0}
+    - target: {fileID: 114316891967693908, guid: f99269924fc18d449a9a2caaf53dc5fe, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114388508864629952, guid: f99269924fc18d449a9a2caaf53dc5fe, type: 3}
       propertyPath: buttonText
       value: Quit
@@ -2038,6 +2054,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2252510304208789201, guid: 2fa18b9f8853159409e29e5e2589ec2d, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
+    - target: {fileID: 2252789795356206140, guid: 2fa18b9f8853159409e29e5e2589ec2d, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
+    - target: {fileID: 2252789796328197601, guid: 2fa18b9f8853159409e29e5e2589ec2d, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fa18b9f8853159409e29e5e2589ec2d, type: 3}
 --- !u!1001 &4001097272589542261
@@ -2075,6 +2103,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3895770456653283289, guid: 7be1d9d952ea4c24aacd957411c3d387, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 4001097271455099221, guid: 7be1d9d952ea4c24aacd957411c3d387, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

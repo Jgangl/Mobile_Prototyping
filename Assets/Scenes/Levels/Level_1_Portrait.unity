@@ -1814,6 +1814,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114644008230777624, guid: 61c756c874f5e6f40bc3573de6cb5656, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114839029211519642, guid: 61c756c874f5e6f40bc3573de6cb5656, type: 3}
       propertyPath: isOn
       value: 0
@@ -3528,6 +3532,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsButton
       objectReference: {fileID: 0}
+    - target: {fileID: 114364962893373594, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114555953128545906, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
       propertyPath: buttonIcon
       value: 
@@ -4728,6 +4736,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundFX_Switch
       objectReference: {fileID: 0}
+    - target: {fileID: 114644008230777624, guid: 61c756c874f5e6f40bc3573de6cb5656, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 224835212225136070, guid: 61c756c874f5e6f40bc3573de6cb5656, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5081,6 +5093,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RestartButton
       objectReference: {fileID: 0}
+    - target: {fileID: 114364962893373594, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114555953128545906, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
       propertyPath: buttonIcon
       value: 
@@ -5799,6 +5815,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsExitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 114364962893373594, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
+      propertyPath: UIManagerAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bccd055ecdb77a64290fc9d5e644313c, type: 2}
     - target: {fileID: 114547877942267770, guid: 9e8df12253060b348ae97b03d00984ea, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 1
