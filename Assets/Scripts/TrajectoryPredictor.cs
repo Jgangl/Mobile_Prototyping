@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Vectrosity;
 
 public class TrajectoryPredictor : MonoBehaviour
 {
@@ -41,17 +42,46 @@ public class TrajectoryPredictor : MonoBehaviour
     public GameObject collidablesRoot;
     Vector3 _lastForce = Vector3.zero; //used to track what the last force input was 
 
+    public Texture lineTex;
+    public Color lineColor = Color.green;
+    public LineType lineType = LineType.Continuous;
+    public float lineWidthStart = 13.0f;
+    public float lineWidthEnd = 5.0f;
+
+    [SerializeField]
+    private int lineDrawStart = 1;
+
+    private VectorLine trajectoryVisualLine;
+
+    private List<float> lineWidths;
+
     // Start is called before the first frame update
     void Start()
     {
-        //_playerObject = GameObject.FindGameObjectWithTag("Player");
+        int lineWidthLength = _steps - lineDrawStart;
+        lineWidths = new List<float>(new float[lineWidthLength]);
+        float stepSize = (lineWidthStart - lineWidthEnd) / lineWidthLength;
+
+        //lineWidths[0] = lineWidthStart;
+        for (int i = 0; i < lineWidths.Count; i++) {
+            lineWidths[i] = Mathf.Clamp(lineWidthStart - (i * stepSize), lineWidthEnd, lineWidthStart);
+        }
+
+        trajectoryVisualLine = new VectorLine("Trajectory", new List<Vector2>(), lineTex, lineWidthStart, lineType);
+        //trajectoryVisualLine.endPointsUpdate = 2;
+        //GameObject canvas = GameObject.Find("Trajectory_Canvas");
+        //if (canvas)
+        //    trajectoryVisualLine.SetCanvas(canvas);
+        trajectoryVisualLine.color = lineColor;
+        trajectoryVisualLine.textureScale = 1.0f;
+        trajectoryVisualLine.smoothWidth = true;
 
         UpdateSimObjects(collidablesRoot);
     }
 
     private void Update() {
         // width is the width of the line
-        float width = line.startWidth;
+        //float width = line.startWidth;
         //line.material.mainTextureScale = new Vector2(1f / width, 1.0f);
         //line.material.SetTextureScale("_MainTex", new Vector2(1f / width, 1.0f));
 
@@ -141,13 +171,22 @@ public class TrajectoryPredictor : MonoBehaviour
                 else {
                     points[i] = simObject.transform.position;
                 }
-                //points[i] = simObject.transform.position; //record the simulated objects position for that step
-                //Debug.Log(simObject.transform.position);
-                line.SetPosition(i, points[i]); //let the line render know where to plot a point
 
+                Vector2 uiPoint = Camera.main.WorldToScreenPoint(points[i]);
+
+                // VectorLine points need to be in ui space NOT world space
+                if (i >= lineDrawStart)
+                    trajectoryVisualLine.points2.Add(uiPoint);
+
+                //line.SetPosition(i, points[i]); //let the line render know where to plot a point
             }
         }
         _lastForce = force;
+
+        trajectoryVisualLine.SetWidths(lineWidths);
+        trajectoryVisualLine.Draw();
+
+        trajectoryVisualLine.points2.Clear();
 
         /*
         _simulatedObject.transform.position = player.position; //set sim object to player position ;
@@ -190,8 +229,12 @@ public class TrajectoryPredictor : MonoBehaviour
     public void ClearSimulation() {
         for (var i = 0; i < _steps; i++){ // steps is how many physics steps will be done in a frame 
             points[i] = Vector2.zero; //record the simulated objects position for that step
-            line.SetPosition(i, points[i]); //let the line render know where to plot a point
+            //trajectoryVisualLine.points3[i] = points[i];
+            //line.SetPosition(i, points[i]); //let the line render know where to plot a point
         }
+
+        trajectoryVisualLine.points2.Clear();
+        trajectoryVisualLine.Draw();
     }
 
     private Rigidbody2D[] GetObjectBones(GameObject simObject) {
