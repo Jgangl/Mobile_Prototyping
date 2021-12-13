@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using UnityEngine.UI;
+using Michsky.UI.ModernUIPack;
 
 public class UI_Manager : Singleton<UI_Manager>
 {
@@ -84,6 +85,8 @@ public class UI_Manager : Singleton<UI_Manager>
         GameObject restartButtonObj = GameObject.Find("RestartButton");
         GameObject levelSelectExitButtonObj = GameObject.Find("LevelSelectExitButton");
         GameObject settingsExitButtonObj = GameObject.Find("SettingsExitButton");
+        GameObject musicSwitchObj = GameObject.Find("Music_Switch");
+        GameObject soundFXSwitchObj = GameObject.Find("SoundFX_Switch");
 
         Button levelSelectionButton;
         if (levelSelectionButtonObj) {
@@ -106,7 +109,6 @@ public class UI_Manager : Singleton<UI_Manager>
             if (restartButton) {
                 restartButton.onClick.AddListener(OnRestartButton);
             }
-
         }
 
         Button levelSelectExitButton;
@@ -121,6 +123,26 @@ public class UI_Manager : Singleton<UI_Manager>
             settingsExitButton = settingsExitButtonObj.GetComponent<Button>();
             if (settingsExitButton)
                 settingsExitButton.onClick.AddListener(DisableMenuObjects);
+        }
+
+        SwitchManager musicSwitch;
+        if (musicSwitchObj) {
+            musicSwitch = musicSwitchObj.GetComponent<SwitchManager>();
+            if (musicSwitch) {
+                musicSwitch.OnEvents.AddListener(OnMusicSwitch_On);
+                musicSwitch.OffEvents.AddListener(OnMusicSwitch_Off);
+                Sound_Manager.Instance.UpdateMusicEnabled(musicSwitch.isOn);
+            }
+        }
+
+        SwitchManager soundFXSwitch;
+        if (soundFXSwitchObj) {
+            soundFXSwitch = soundFXSwitchObj.GetComponent<SwitchManager>();
+            if (soundFXSwitch) {
+                soundFXSwitch.OnEvents.AddListener(OnSoundFXSwitch_On);
+                soundFXSwitch.OffEvents.AddListener(OnSoundFXSwitch_Off);
+                Sound_Manager.Instance.UpdateSoundFXEnabled(soundFXSwitch.isOn);
+            }
         }
     }
 
@@ -144,5 +166,21 @@ public class UI_Manager : Singleton<UI_Manager>
     public void OnRestartButton() {
         Debug.Log("RESTART BUTTON");
         Level_Manager.Instance.RestartLevel();
+    }
+
+    public void OnMusicSwitch_On() {
+        Sound_Manager.Instance.OnMusicChecked(true);
+    }
+
+    public void OnMusicSwitch_Off() {
+        Sound_Manager.Instance.OnMusicChecked(false);
+    }
+
+    public void OnSoundFXSwitch_On() {
+        Sound_Manager.Instance.OnSoundFXChecked(true);
+    }
+
+    public void OnSoundFXSwitch_Off() {
+        Sound_Manager.Instance.OnSoundFXChecked(false);
     }
 }

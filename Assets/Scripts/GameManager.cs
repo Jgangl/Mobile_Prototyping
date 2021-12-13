@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
 
     private GameState currentGameState;
 
-    private bool gameOver = false;
+    //private bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()

@@ -7,14 +7,10 @@ public class Sound_Manager : Singleton<Sound_Manager>
 {
     public AudioClip backgroundMusicClip;
 
-    public AudioClip squishClip;
-
-    [SerializeField]
-    private bool enableAllSounds;
     [SerializeField]
     private bool enableMusic;
     [SerializeField]
-    private bool enableSoundEffects;
+    private bool enableSoundFX;
 
     public float[] pitchValues;
     public AudioClip[] squishClips;
@@ -37,15 +33,14 @@ public class Sound_Manager : Singleton<Sound_Manager>
         backgroundSource = transform.Find("BackgroundSource_Two").GetComponent<AudioSource>();
         if (backgroundSource)
             backgroundSources.Add(backgroundSource);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PlayBackgroundMusicOne();
     }
 
     public void PlaySquishSound() {
+        if (!enableSoundFX)
+            return;
+
         squishSource.clip = squishClips[Random.Range(0, squishClips.Length)];
         squishSource.pitch = pitchValues[Random.Range(0, pitchValues.Length)];
         squishSource.Stop();
@@ -53,6 +48,9 @@ public class Sound_Manager : Singleton<Sound_Manager>
     }
 
     public void PlayBackgroundMusicOne() {
+        if (!enableMusic)
+            return;
+
         AudioSource backgroundSource = null;
         // Find first available background source
         foreach(AudioSource source in backgroundSources) {
@@ -64,6 +62,53 @@ public class Sound_Manager : Singleton<Sound_Manager>
             // Play music clip
             backgroundSource.clip = backgroundMusicClip;
             backgroundSource.Play();
+        }
+    }
+
+    public void UpdateMusicStatus() {
+        if (!enableMusic) {
+            foreach(AudioSource source in backgroundSources) {
+                source.Stop();
+            }
+        }
+    }
+
+    public void UpdateSoundFXStatus() {
+        if (!enableSoundFX) {
+            // Stop all Sound FX Sources
+            squishSource.Stop();
+        }
+    }
+
+    public void ChangeSourceVolume(AudioSource source, float volume) {
+        source.volume = volume;
+    }
+
+    public void OnSoundFXChecked(bool isChecked) {
+        //Debug.Log("Sound FX Checked: " + isChecked);
+
+        enableSoundFX = isChecked;
+        UpdateSoundFXStatus();
+    }
+
+    public void OnMusicChecked(bool isChecked) {
+        //Debug.Log("Music Checked: " + isChecked);
+
+        enableMusic = isChecked;
+        UpdateMusicStatus();
+    }
+
+    public void UpdateMusicEnabled(bool enabled) {
+        if (enableMusic != enabled) {
+            enableMusic = enabled;
+            UpdateMusicStatus();
+        }
+    }
+
+    public void UpdateSoundFXEnabled(bool enabled) {
+        if (enableSoundFX != enabled) {
+            enableSoundFX = enabled;
+            UpdateSoundFXStatus();
         }
     }
 }

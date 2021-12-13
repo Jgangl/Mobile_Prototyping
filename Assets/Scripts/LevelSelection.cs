@@ -69,13 +69,16 @@ public class LevelSelection : MonoBehaviour
     private void UpdateLevelCompletionIcons() {
         List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
 
+        if (completedLevels == null)
+            return;
+
         foreach(GameObject button in levelButtons) {
             string buttonName = button.name;
             // Get level number from name
             string[] buttonSplit = buttonName.Split('_');
             
             if (buttonSplit.Length > 1) {
-                Debug.Log("Button split: " + buttonSplit[1]);
+                //Debug.Log("Button split: " + buttonSplit[1]);
                 int outButtonNum;
                 if (int.TryParse(buttonSplit[1], out outButtonNum)) {
                     // Compare button level number to completed levels
