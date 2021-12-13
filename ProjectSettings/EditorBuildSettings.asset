@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Start_Screen_Portrait.unity
     guid: d2b12203811423e42ac40ba70c11cc39
   - enabled: 1
-    path: Assets/Scenes/Levels/Portal_TEST.unity
+    path: Assets/Scenes/Portal_TEST.unity
     guid: 67da6a16f36209d4db75e5378649c143
   m_configObjects: {}

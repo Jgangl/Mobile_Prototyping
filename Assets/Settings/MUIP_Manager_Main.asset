@@ -20,7 +20,7 @@ MonoBehaviour:
   animatedIconColor: {r: 1, g: 1, b: 1, a: 1}
   contextBackgroundColor: {r: 0.21568628, g: 0.29411766, b: 0.37254903, a: 1}
   buttonThemeType: 1
-  buttonFont: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
+  buttonFont: {fileID: 11400000, guid: b23e67ba15637c449a83f3a3cd17a3c3, type: 2}
   buttonFontSize: 14
   buttonBorderColor: {r: 1, g: 1, b: 1, a: 1}
   buttonFilledColor: {r: 1, g: 1, b: 1, a: 1}

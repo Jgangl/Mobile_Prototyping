@@ -113,13 +113,17 @@ public class PlayerController : MonoBehaviour
                 if (trajectoryPredictor)
                     trajectoryPredictor.ClearSimulation();
 
-                // Enable Movement
-                Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
-                StartMovement();
+                if (currentSwipeForce.x >= 0.01f || currentSwipeForce.y >= 0.01f) {
+                    // Enable Movement
+                    Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
+                    StartMovement();
 
-                // Add swipe force
-                foreach(Rigidbody2D bone in bones)
-                    bone.AddForce(currentSwipeForce);
+                    // Add swipe force
+                    foreach (Rigidbody2D bone in bones)
+                        bone.AddForce(currentSwipeForce);
+                }
+
+                currentSwipeForce = Vector2.zero;
             }
             else if (mouseHeldDown && mouseMoved) {
                 fingerCurrentPos = Input.mousePosition;

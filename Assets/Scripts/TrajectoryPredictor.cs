@@ -48,23 +48,37 @@ public class TrajectoryPredictor : MonoBehaviour
 
         UpdateSimObjects(collidablesRoot);
     }
-/*
-    private void CreateSimObjects(GameObject obstaclesRoot)  //all objects start in regulare scene, and get sent over on start. this way colliders are dynamic and we can grab refrence to simulated player in first scene.
-    {
-        foreach (Transform t in obstaclesRoot.transform) {
-            if (t.gameObject.GetComponentInChildren<Collider2D>() != null) {
-                GameObject fakeT = Instantiate(t.gameObject);
-                fakeT.transform.position = t.position;
-                fakeT.transform.rotation = t.rotation;
-                SpriteRenderer fakeR = fakeT.GetComponent<SpriteRenderer>();
-                if (fakeR) {
-                    fakeR.enabled = false;
+
+    private void Update() {
+        // width is the width of the line
+        float width = line.startWidth;
+        //line.material.mainTextureScale = new Vector2(1f / width, 1.0f);
+        //line.material.SetTextureScale("_MainTex", new Vector2(1f / width, 1.0f));
+
+        
+
+
+
+        // 1/width is the repetition of the texture per unit (thus you can also do double
+        // lines)
+    }
+    /*
+        private void CreateSimObjects(GameObject obstaclesRoot)  //all objects start in regulare scene, and get sent over on start. this way colliders are dynamic and we can grab refrence to simulated player in first scene.
+        {
+            foreach (Transform t in obstaclesRoot.transform) {
+                if (t.gameObject.GetComponentInChildren<Collider2D>() != null) {
+                    GameObject fakeT = Instantiate(t.gameObject);
+                    fakeT.transform.position = t.position;
+                    fakeT.transform.rotation = t.rotation;
+                    SpriteRenderer fakeR = fakeT.GetComponent<SpriteRenderer>();
+                    if (fakeR) {
+                        fakeR.enabled = false;
+                    }
+                    SceneManager.MoveGameObjectToScene(fakeT, _simScene);
                 }
-                SceneManager.MoveGameObjectToScene(fakeT, _simScene);
             }
         }
-    }
-*/
+    */
     public void UpdateSimObjects(GameObject obstaclesRoot) {
         foreach (Transform t in obstaclesRoot.transform) {
             if (t.gameObject.GetComponentInChildren<Collider2D>() != null) {
