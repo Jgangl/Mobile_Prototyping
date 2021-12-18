@@ -11,20 +11,21 @@ public class UI_Manager : Singleton<UI_Manager>
     GameObject settingsMenu;
     GameObject levelSelectionMenu;
 
+    GameObject levelSelectionButtonObj;
+    GameObject settingsButtonObj;
+    GameObject settingsButtonLevelObj;
+    GameObject restartButtonObj;
+    GameObject levelSelectExitButtonObj;
+    GameObject settingsExitButtonObj;
+    GameObject musicSwitchObj;
+    GameObject soundFXSwitchObj;
+
     // Start is called before the first frame update
     void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        FindMenuObjects();
-        FindButtons();
-        DisableMenuObjects();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SceneLoad();
     }
 
     public void StartButton() {
@@ -64,12 +65,33 @@ public class UI_Manager : Singleton<UI_Manager>
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        SceneLoad();
+    }
+
+    void SceneLoad() {
         // Find menu objects
 
         FindMenuObjects();
         FindButtons();
 
         DisableMenuObjects();
+
+        string[] splitName = SceneManager.GetActiveScene().name.Split('_');
+        bool inLevel = false;
+        foreach(string val in splitName) {
+            int levelNum = -1;
+            if (int.TryParse(val, out levelNum)) {
+                if (levelNum != -1) {
+                    inLevel = true;
+                    break;
+                }
+            }
+        }
+
+        if (inLevel) {
+            EnableSettingsButton(false);
+            EnableRestartButton(false);
+        }
     }
 
     private void FindMenuObjects() {
@@ -80,13 +102,14 @@ public class UI_Manager : Singleton<UI_Manager>
     }
 
     private void FindButtons() {
-        GameObject levelSelectionButtonObj = GameObject.Find("LevelSelectionButton");
-        GameObject settingsButtonObj = GameObject.Find("SettingsButton");
-        GameObject restartButtonObj = GameObject.Find("RestartButton");
-        GameObject levelSelectExitButtonObj = GameObject.Find("LevelSelectExitButton");
-        GameObject settingsExitButtonObj = GameObject.Find("SettingsExitButton");
-        GameObject musicSwitchObj = GameObject.Find("Music_Switch");
-        GameObject soundFXSwitchObj = GameObject.Find("SoundFX_Switch");
+        levelSelectionButtonObj = GameObject.Find("LevelSelectionButton");
+        settingsButtonObj = GameObject.Find("SettingsButton");
+        settingsButtonLevelObj = GameObject.Find("SettingsButtonLevel");
+        restartButtonObj = GameObject.Find("RestartButton");
+        levelSelectExitButtonObj = GameObject.Find("LevelSelectExitButton");
+        settingsExitButtonObj = GameObject.Find("SettingsExitButton");
+        musicSwitchObj = GameObject.Find("Music_Switch");
+        soundFXSwitchObj = GameObject.Find("SoundFX_Switch");
 
         Button levelSelectionButton;
         if (levelSelectionButtonObj) {
@@ -101,6 +124,13 @@ public class UI_Manager : Singleton<UI_Manager>
             settingsButton = settingsButtonObj.GetComponent<Button>();
             if (settingsButton)
                 settingsButton.onClick.AddListener(OpenSettingsMenu);
+        }
+
+        Button settingsButtonLevel;
+        if (settingsButtonLevelObj) {
+            settingsButtonLevel = settingsButtonLevelObj.GetComponent<Button>();
+            if (settingsButtonLevel)
+                settingsButtonLevel.onClick.AddListener(OpenSettingsMenu);
         }
 
         Button restartButton;
@@ -161,6 +191,17 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void OnCloseMenuButton() {
         DisableMenuObjects();
+    }
+
+    public void EnableSettingsButton(bool enabled) {
+        if (settingsButtonLevelObj) {
+            settingsButtonLevelObj.SetActive(enabled);
+        }
+    }
+
+    public void EnableRestartButton(bool enabled) {
+        if (restartButtonObj)
+            restartButtonObj.SetActive(enabled);
     }
 
     public void OnRestartButton() {

@@ -48,8 +48,8 @@ public class TrajectoryPredictor : MonoBehaviour
     public float lineWidthStart = 13.0f;
     public float lineWidthEnd = 5.0f;
 
-    [SerializeField]
-    private int lineDrawStart = 1;
+    //[SerializeField]
+    //private int lineDrawStart = 1;
 
     private VectorLine trajectoryVisualLine;
 
@@ -58,7 +58,7 @@ public class TrajectoryPredictor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int lineWidthLength = _steps - lineDrawStart;
+        int lineWidthLength = _steps;
         lineWidths = new List<float>(new float[lineWidthLength]);
         float stepSize = (lineWidthStart - lineWidthEnd) / lineWidthLength;
 
@@ -84,10 +84,6 @@ public class TrajectoryPredictor : MonoBehaviour
         //float width = line.startWidth;
         //line.material.mainTextureScale = new Vector2(1f / width, 1.0f);
         //line.material.SetTextureScale("_MainTex", new Vector2(1f / width, 1.0f));
-
-        
-
-
 
         // 1/width is the repetition of the texture per unit (thus you can also do double
         // lines)
@@ -175,18 +171,18 @@ public class TrajectoryPredictor : MonoBehaviour
                 Vector2 uiPoint = Camera.main.WorldToScreenPoint(points[i]);
 
                 // VectorLine points need to be in ui space NOT world space
-                if (i >= lineDrawStart)
-                    trajectoryVisualLine.points2.Add(uiPoint);
+                //if (i >= lineDrawStart)
+                trajectoryVisualLine.points2.Add(uiPoint);
 
                 //line.SetPosition(i, points[i]); //let the line render know where to plot a point
             }
+
+            // Update Trajectory visualizer
+            trajectoryVisualLine.SetWidths(lineWidths);
+            trajectoryVisualLine.Draw();
+            trajectoryVisualLine.points2.Clear();
         }
         _lastForce = force;
-
-        trajectoryVisualLine.SetWidths(lineWidths);
-        trajectoryVisualLine.Draw();
-
-        trajectoryVisualLine.points2.Clear();
 
         /*
         _simulatedObject.transform.position = player.position; //set sim object to player position ;
