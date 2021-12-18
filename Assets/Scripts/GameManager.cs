@@ -9,16 +9,25 @@ public class GameManager : Singleton<GameManager>
 
     private GameState currentGameState;
 
+    bool isMenuOpened = false;
+
+    GameObject player;
+
     //private bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         currentGameState = GameState.Playing;
         gameData = new GameData();
 
         if (LoadGame())
             Level_Manager.Instance.SetCompletedLevels(gameData.GetCompletedLevels());
+
+        // Find Player
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -62,6 +71,21 @@ public class GameManager : Singleton<GameManager>
             Time.timeScale = 1.0f;
             currentGameState = GameState.Playing;
         }
+    }
+
+    public void SetMenuOpened(bool menuOpen) {
+        isMenuOpened = menuOpen;
+
+        print("Settings menu enabled from game manager: " + isMenuOpened);
+
+        // Enable/Disable player movement if a menu is open
+        if (player) {
+            player.GetComponent<PlayerController>().EnableMovement(!isMenuOpened);
+        }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public bool SaveGame() {

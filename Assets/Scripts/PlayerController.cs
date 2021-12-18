@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
 
     public bool isSimulated = false;
 
+    public bool disableInput = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -64,6 +66,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update() {
         if (tag != "Player")
+            return;
+
+        if (disableInput)
             return;
         /*
         Touch touch = Input.touches[0];
@@ -173,6 +178,10 @@ public class PlayerController : MonoBehaviour
 
         rb.isKinematic = false;
         canMove = false;
+    }
+
+    public void EnableMovement(bool enabled) {
+        disableInput = !enabled;
     }
 
     IEnumerator IgnorePlatformTimer() {

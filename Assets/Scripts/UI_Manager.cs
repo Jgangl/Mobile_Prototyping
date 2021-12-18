@@ -20,6 +20,10 @@ public class UI_Manager : Singleton<UI_Manager>
     GameObject musicSwitchObj;
     GameObject soundFXSwitchObj;
 
+    bool isLevelSelectionMenuOpen = false;
+    bool isSettingsMenuOpen = false;
+    bool isMenuOpened = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,12 +51,19 @@ public class UI_Manager : Singleton<UI_Manager>
     private void EnableSettingsMenu(bool enabled) {
         if (settingsMenu) {
             settingsMenu.SetActive(enabled);
+            print("Settings menu enabled: " + enabled);
+
+            isSettingsMenuOpen = enabled;
+            UpdateMenuStatus();
         }
     }
 
     private void EnableLevelSelectionMenu(bool enabled) {
         if (levelSelectionMenu) {
             levelSelectionMenu.SetActive(enabled);
+
+            isLevelSelectionMenuOpen = enabled;
+            UpdateMenuStatus();
         }
     }
 
@@ -88,9 +99,15 @@ public class UI_Manager : Singleton<UI_Manager>
             }
         }
 
-        if (inLevel) {
-            EnableSettingsButton(false);
-            EnableRestartButton(false);
+        EnableSettingsButton(inLevel);
+        EnableRestartButton(inLevel);
+    }
+
+    private void UpdateMenuStatus() {
+        bool menuOpen = isSettingsMenuOpen || isLevelSelectionMenuOpen;
+        if (isMenuOpened != menuOpen) {
+            isMenuOpened = menuOpen;
+            GameManager.Instance.SetMenuOpened(isMenuOpened);
         }
     }
 
@@ -177,11 +194,8 @@ public class UI_Manager : Singleton<UI_Manager>
     }
 
     private void DisableMenuObjects() {
-        if (settingsMenu)
-            settingsMenu.SetActive(false);
-
-        if (levelSelectionMenu)
-            levelSelectionMenu.SetActive(false);
+        EnableSettingsMenu(false);
+        EnableLevelSelectionMenu(false);
     }
 
     private void ClearMenuObjects() {
