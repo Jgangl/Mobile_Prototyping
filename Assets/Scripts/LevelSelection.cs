@@ -102,10 +102,8 @@ public class LevelSelection : MonoBehaviour
         if (levelCompleteTransform) {
             levelCompleteTransform.gameObject.SetActive(enabled);
         }
-            
-        
     }
-
+    /*
     public void OpenLevelSelctionMenu() {
         EnableLevelSelectionMenu(true);
 
@@ -113,14 +111,17 @@ public class LevelSelection : MonoBehaviour
 
         UpdateLevelCompletionIcons();
     }
-
+    */
+    /*
     public void EnableLevelSelectionMenu(bool enabled) {
         for(int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(enabled);
         }
     }
-
+    */
+    /*
     public void OnExitButtonPressed() {
         EnableLevelSelectionMenu(false);
     }
+    */
 }

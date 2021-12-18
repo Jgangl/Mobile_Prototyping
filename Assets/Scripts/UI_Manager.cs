@@ -50,8 +50,15 @@ public class UI_Manager : Singleton<UI_Manager>
 
     private void EnableSettingsMenu(bool enabled) {
         if (settingsMenu) {
-            settingsMenu.SetActive(enabled);
-            print("Settings menu enabled: " + enabled);
+            //settingsMenu.SetActive(enabled);
+            print("Enable settings menu: " + enabled);
+            Animator anim = settingsMenu.GetComponent<Animator>();
+            if (anim) {
+                if (enabled)
+                    anim.SetTrigger("Open");
+                else
+                    anim.SetTrigger("Close");
+            }
 
             isSettingsMenuOpen = enabled;
             UpdateMenuStatus();
@@ -60,7 +67,17 @@ public class UI_Manager : Singleton<UI_Manager>
 
     private void EnableLevelSelectionMenu(bool enabled) {
         if (levelSelectionMenu) {
-            levelSelectionMenu.SetActive(enabled);
+            //levelSelectionMenu.SetActive(enabled);
+
+            print("Enable level selection menu: " + enabled);
+
+            Animator anim = levelSelectionMenu.GetComponent<Animator>();
+            if (anim) {
+                if (enabled)
+                    anim.SetTrigger("Open");
+                else
+                    anim.SetTrigger("Close");
+            }
 
             isLevelSelectionMenuOpen = enabled;
             UpdateMenuStatus();
@@ -85,7 +102,7 @@ public class UI_Manager : Singleton<UI_Manager>
         FindMenuObjects();
         FindButtons();
 
-        DisableMenuObjects();
+        //DisableMenuObjects();
 
         string[] splitName = SceneManager.GetActiveScene().name.Split('_');
         bool inLevel = false;
@@ -160,6 +177,7 @@ public class UI_Manager : Singleton<UI_Manager>
 
         Button levelSelectExitButton;
         if (levelSelectExitButtonObj) {
+            print("Level select exit button FOUND");
             levelSelectExitButton = levelSelectExitButtonObj.GetComponent<Button>();
             if (levelSelectExitButton)
                 levelSelectExitButton.onClick.AddListener(DisableMenuObjects);
