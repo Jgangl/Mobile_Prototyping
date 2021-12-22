@@ -140,8 +140,8 @@ public class UI_Manager : Singleton<UI_Manager>
         settingsButtonObj = GameObject.Find("SettingsButton");
         settingsButtonLevelObj = GameObject.Find("SettingsButtonLevel");
         restartButtonObj = GameObject.Find("RestartButton");
-        levelSelectExitButtonObj = GameObject.Find("LevelSelectExitButton");
-        settingsExitButtonObj = GameObject.Find("SettingsExitButton");
+        levelSelectExitButtonObj = levelSelectionMenu.transform.Find("LevelsPanel").transform.Find("LevelSelectExitButton").gameObject;
+        settingsExitButtonObj = settingsMenu.transform.Find("SettingsPanel").transform.Find("SettingsExitButton").gameObject;
         musicSwitchObj = GameObject.Find("Music_Switch");
         soundFXSwitchObj = GameObject.Find("SoundFX_Switch");
 
@@ -180,14 +180,14 @@ public class UI_Manager : Singleton<UI_Manager>
             print("Level select exit button FOUND");
             levelSelectExitButton = levelSelectExitButtonObj.GetComponent<Button>();
             if (levelSelectExitButton)
-                levelSelectExitButton.onClick.AddListener(DisableMenuObjects);
+                levelSelectExitButton.onClick.AddListener(DisableLevelSelectionMenu);
         }
 
         Button settingsExitButton;
         if (settingsExitButtonObj) {
             settingsExitButton = settingsExitButtonObj.GetComponent<Button>();
             if (settingsExitButton)
-                settingsExitButton.onClick.AddListener(DisableMenuObjects);
+                settingsExitButton.onClick.AddListener(DisableSettingsMenu);
         }
 
         SwitchManager musicSwitch;
@@ -211,18 +211,17 @@ public class UI_Manager : Singleton<UI_Manager>
         }
     }
 
-    private void DisableMenuObjects() {
-        EnableSettingsMenu(false);
+    private void DisableLevelSelectionMenu() {
         EnableLevelSelectionMenu(false);
+    }
+
+    private void DisableSettingsMenu() {
+        EnableSettingsMenu(false);
     }
 
     private void ClearMenuObjects() {
         settingsMenu = null;
         levelSelectionMenu = null;
-    }
-
-    public void OnCloseMenuButton() {
-        DisableMenuObjects();
     }
 
     public void EnableSettingsButton(bool enabled) {
