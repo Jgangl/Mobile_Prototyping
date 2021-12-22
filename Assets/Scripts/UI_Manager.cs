@@ -50,8 +50,7 @@ public class UI_Manager : Singleton<UI_Manager>
 
     private void EnableSettingsMenu(bool enabled) {
         if (settingsMenu) {
-            //settingsMenu.SetActive(enabled);
-            print("Enable settings menu: " + enabled);
+            print("Settings menu");
             Animator anim = settingsMenu.GetComponent<Animator>();
             if (anim) {
                 if (enabled)
@@ -67,10 +66,6 @@ public class UI_Manager : Singleton<UI_Manager>
 
     private void EnableLevelSelectionMenu(bool enabled) {
         if (levelSelectionMenu) {
-            //levelSelectionMenu.SetActive(enabled);
-
-            print("Enable level selection menu: " + enabled);
-
             Animator anim = levelSelectionMenu.GetComponent<Animator>();
             if (anim) {
                 if (enabled)
@@ -85,6 +80,7 @@ public class UI_Manager : Singleton<UI_Manager>
     }
 
     public void OpenSettingsMenu() {
+        print("Open setting menu");
         EnableSettingsMenu(true);
     }
 
@@ -177,7 +173,6 @@ public class UI_Manager : Singleton<UI_Manager>
 
         Button levelSelectExitButton;
         if (levelSelectExitButtonObj) {
-            print("Level select exit button FOUND");
             levelSelectExitButton = levelSelectExitButtonObj.GetComponent<Button>();
             if (levelSelectExitButton)
                 levelSelectExitButton.onClick.AddListener(DisableLevelSelectionMenu);

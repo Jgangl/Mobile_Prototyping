@@ -76,8 +76,6 @@ public class GameManager : Singleton<GameManager>
     public void SetMenuOpened(bool menuOpen) {
         isMenuOpened = menuOpen;
 
-        print("Settings menu enabled from game manager: " + isMenuOpened);
-
         // Enable/Disable player movement if a menu is open
         if (player) {
             player.GetComponent<PlayerController>().EnableMovement(!isMenuOpened);
@@ -92,11 +90,6 @@ public class GameManager : Singleton<GameManager>
         List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
 
         if (gameData != null) {
-            //Debug.Log("Saved Game");
-            foreach(int level in completedLevels) {
-                //Debug.Log("Saving completed level: " + level);
-            }
-
             // Insert save data
             gameData.SetCompletedLevels(completedLevels);
             Save_Manager.Instance.Save(gameData);

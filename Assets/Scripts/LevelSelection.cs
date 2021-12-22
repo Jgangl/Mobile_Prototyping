@@ -82,11 +82,7 @@ public class LevelSelection : MonoBehaviour
                 int outButtonNum;
                 if (int.TryParse(buttonSplit[1], out outButtonNum)) {
                     // Compare button level number to completed levels
-                    foreach(int level in completedLevels) {
-                        Debug.Log(level);
-                    }
                     if (completedLevels.Contains(outButtonNum)) {
-                        Debug.Log("Completed levels contains: " + outButtonNum);
                         EnableLevelCompleteCheck(button, true);
                     }
                     else {
