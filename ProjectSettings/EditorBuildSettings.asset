@@ -30,6 +30,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Level_7_Portrait.unity
     guid: 9894e0c8703b15f449eeb91d4dc52545
   - enabled: 1
-    path: Assets/Scenes/Levels/Level_8_Portrait.unity
+    path: Assets/Scenes/Levels/Level_Art_Portrait.unity
     guid: bc29db9170425a542afe349899883dea
   m_configObjects: {}
