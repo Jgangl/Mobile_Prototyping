@@ -405,6 +405,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5303874046333041262, guid: 6284634264d625b45ab17354dab01364, type: 3}
+      propertyPath: numLevels
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5303874046553163718, guid: 6284634264d625b45ab17354dab01364, type: 3}
       propertyPath: m_Name
       value: _____MANAGERS_____
