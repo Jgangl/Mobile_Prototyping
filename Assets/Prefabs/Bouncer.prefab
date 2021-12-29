@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2373265316087344592}
   - component: {fileID: 7758301566282008969}
   - component: {fileID: 786578737299360529}
+  - component: {fileID: 661650339678769896}
   m_Layer: 0
   m_Name: Bouncer
   m_TagString: Untagged
@@ -104,6 +105,27 @@ MonoBehaviour:
   collisionTimeoutTime: 0.25
   simulatedCollisionTimeoutTime: 0.001
   isSimulated: 0
+--- !u!50 &661650339678769896
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648886761980974171}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7110229203922199637
 GameObject:
   m_ObjectHideFlags: 0
