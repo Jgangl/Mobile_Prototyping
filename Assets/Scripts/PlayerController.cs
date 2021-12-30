@@ -269,7 +269,6 @@ public class PlayerController : MonoBehaviour
             else {
                 StopMovement(rb);
             }
-            
 
             previousPlatform = collision.gameObject;
         }
