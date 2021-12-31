@@ -56,6 +56,8 @@ public class GameManager : Singleton<GameManager>
     public void GameOver() {
         Debug.Log("Game Over");
 
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         //if (!gameOver) {
         Level_Manager.Instance.LoadCurrentLevel();
             //gameOver = true;
@@ -71,6 +73,12 @@ public class GameManager : Singleton<GameManager>
             Time.timeScale = 1.0f;
             currentGameState = GameState.Playing;
         }
+    }
+
+    public void PlayerDied() {
+        Debug.Log("Player Died");
+
+        GameOver();
     }
 
     public void SetMenuOpened(bool menuOpen) {

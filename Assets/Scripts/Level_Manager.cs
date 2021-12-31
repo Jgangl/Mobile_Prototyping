@@ -64,22 +64,23 @@ public class Level_Manager : Singleton<Level_Manager> {
     }
 
     public void LoadCurrentLevel() {
-        Debug.Log("LOADING CURRENT LEVEL");
-        StartCoroutine(LoadLevelCoroutine(currentLevel));
+        //Debug.Log("LOADING CURRENT LEVEL");
+
+        StartCoroutine(LoadLevelCoroutine(SceneManager.GetActiveScene().buildIndex));
+        //StartCoroutine(LoadLevelCoroutine(currentLevel));
     }
 
     public void LoadLevel(int levelIndex) {
-        Debug.Log("TRYING TO LOAD LEVEL: " + levelIndex);
+        //Debug.Log("TRYING TO LOAD LEVEL: " + levelIndex);
         currentLevel = levelIndex;
         if (currentLevel > numLevels)
             return;
 
-        Debug.Log("LOADING LEVEL " + levelIndex);
+        //Debug.Log("LOADING LEVEL " + levelIndex);
         StartCoroutine(LoadLevelCoroutine(levelIndex));
     }
 
     IEnumerator LoadLevelCoroutine(int levelIndex) {
-        Debug.Log("Loading Level: " + levelIndex);
         GameObject fadeCanvas = CreateFadeObject();
 
         Animator fadeAnim = fadeCanvas.GetComponent<Animator>();

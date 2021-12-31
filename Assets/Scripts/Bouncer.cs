@@ -74,7 +74,6 @@ public class Bouncer : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        print("hit");
         if (isSimulated) {
             //Debug.Log("Simulated Bouncer hit: " + collision.transform.root.gameObject);
         }
@@ -93,7 +92,7 @@ public class Bouncer : MonoBehaviour
 
         Vector2 dir = transform.rotation * Vector3.forward;
         if (bones.Length != 0) {
-            Debug.Log("Adding force to bones");
+            //Debug.Log("Adding force to bones");
             foreach(Rigidbody2D bone in bones) {
                 bone.AddForce(transform.right * bounceForce, ForceMode2D.Impulse);
                 //Debug.Log("Bouncer adding force to bone for sim player");
