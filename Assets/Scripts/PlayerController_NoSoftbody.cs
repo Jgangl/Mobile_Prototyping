@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,25 +39,25 @@ public class PlayerController_NoSoftbody : MonoBehaviour
     private Vector2 currentSwipeForce;
 
     public float squishSoundTime = 0.25f;
-    //private bool canPlaySquishSound = true;
-
-    public bool bonesCanCollide = true;
     public float bonesCollisionTime = 0.05f;
 
     public GameObject hitParticles;
 
     private Vector2 prevPosition;
-    private Vector2 prevPositionTwo;
-
-    public bool isSimulated = false;
 
     public bool disableInput = false;
 
-    void Start()
+    private Animator anim;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+    }
 
-        canMove = false;
+    void Start()
+    {
+        //canMove = false;
     }
 
     // Update is called once per frame
@@ -149,9 +150,18 @@ public class PlayerController_NoSoftbody : MonoBehaviour
             }
         }
 
-        Vector2 currentPosition = transform.position;
-        prevPositionTwo = prevPosition;
-        prevPosition = currentPosition;
+        Vector2 velocity = rb.velocity;
+        
+        anim.SetFloat("speed", velocity.magnitude);
+
+        Vector2 velocityDirection = velocity.normalized;
+
+        
+        
+        if (Mathf.Approximately(velocityDirection.x, 0f) && Mathf.Approximately(velocityDirection.y, 0f)) return;
+        
+        float angle = Mathf.Atan2(velocityDirection.y, velocityDirection.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
 #if UNITY_EDITOR
         prevFingerPos = Input.mousePosition;
@@ -257,12 +267,6 @@ public class PlayerController_NoSoftbody : MonoBehaviour
         if (collision.gameObject.tag == "Platform") {
             //Debug.Log("Exit platform top");
         }
-    }
-
-    IEnumerator IgnoreBonesTimer() {
-        bonesCanCollide = false;
-        yield return new WaitForSeconds(bonesCollisionTime);
-        bonesCanCollide = true;
     }
 
     public void SetVelocity(Vector2 newVelocity) {
