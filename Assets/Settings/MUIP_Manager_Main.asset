@@ -21,7 +21,7 @@ MonoBehaviour:
   contextBackgroundColor: {r: 0.21568628, g: 0.29411766, b: 0.37254903, a: 1}
   buttonThemeType: 1
   buttonFont: {fileID: 11400000, guid: b23e67ba15637c449a83f3a3cd17a3c3, type: 2}
-  buttonFontSize: 14
+  buttonFontSize: 36
   buttonBorderColor: {r: 1, g: 1, b: 1, a: 1}
   buttonFilledColor: {r: 1, g: 1, b: 1, a: 1}
   buttonTextBasicColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
