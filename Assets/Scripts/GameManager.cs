@@ -13,6 +13,8 @@ public class GameManager : Singleton<GameManager>
 
     GameObject player;
 
+    private bool gameOver = false;
+
     //private bool gameOver = false;
 
     // Start is called before the first frame update
@@ -53,15 +55,14 @@ public class GameManager : Singleton<GameManager>
         Application.Quit();
     }
 
-    public void GameOver() {
+    public void GameOver()
+    {
+        if (gameOver) return;
+
+        gameOver = true;
         Debug.Log("Game Over");
 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-        //if (!gameOver) {
         Level_Manager.Instance.LoadCurrentLevel();
-            //gameOver = true;
-        //}
     }
 
     public void PauseGame() {
@@ -92,6 +93,7 @@ public class GameManager : Singleton<GameManager>
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         player = GameObject.FindGameObjectWithTag("Player");
+        gameOver = false;
     }
 
     public bool SaveGame() {

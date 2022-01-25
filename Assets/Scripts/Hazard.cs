@@ -18,7 +18,7 @@ public class Hazard : MonoBehaviour
         if (collision.transform.root.tag != "Player")
             return;
 
-        Debug.Log("Hit Player");
+        //Debug.Log("Hit Player");
 
         if (collided)
             return;
