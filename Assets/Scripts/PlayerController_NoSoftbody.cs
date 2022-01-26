@@ -111,7 +111,7 @@ public class PlayerController_NoSoftbody : MonoBehaviour
         if (currentSwipeForce.x >= 0.01f || currentSwipeForce.y >= 0.01f) {
             // Enable Movement
             StartMovement();
-            print("Actual force: " + currentSwipeForce);
+
             rb.AddForce(currentSwipeForce);
         }
 

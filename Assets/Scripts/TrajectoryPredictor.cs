@@ -55,6 +55,8 @@ public class TrajectoryPredictor : MonoBehaviour
 
     private List<float> lineWidths;
 
+    private GameObject _simObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -123,36 +125,53 @@ public class TrajectoryPredictor : MonoBehaviour
                 SceneManager.MoveGameObjectToScene(fakeT, _simScene);
             }
         }
+        
+        _simObject = Instantiate(_playerObject, _playerObject.transform.position, _playerObject.transform.rotation);
+        _simObject.name = "SIM_PLAYER";
+        SpriteRenderer playerSprite = _simObject.GetComponent<SpriteRenderer>();
+        if (playerSprite) playerSprite.enabled = false;
+        SceneManager.MoveGameObjectToScene(_simObject, _simScene);
     }
 
     public void SimulateLaunch(Transform player, Vector3 force)   //call this every frame while player is grabed;
     {
-        GameObject simObject = Instantiate(_playerObject, player.position, player.rotation);
-        SceneManager.MoveGameObjectToScene(simObject, _simScene);
+        //GameObject simObject = Instantiate(_playerObject, player.position, player.rotation);
+        //SceneManager.MoveGameObjectToScene(simObject, _simScene);
 
-        simObject.layer = LayerMask.NameToLayer("PlayerSim");
-        foreach(Transform child in simObject.transform) {
-            child.gameObject.layer = LayerMask.NameToLayer("PlayerSim");
-        }
+        //simObject.layer = LayerMask.NameToLayer("PlayerSim");
+        //foreach(Transform child in simObject.transform) {
+        //    child.gameObject.layer = LayerMask.NameToLayer("PlayerSim");
+        //}
 
         // Set player simulated flag in playercontroller
-        PlayerController playerController = simObject.GetComponent<PlayerController>();
+        //PlayerController playerController = simObject.GetComponent<PlayerController>();
         //if (playerController) {
         //    Debug.Log("Setting SIMULATED");
         //    playerController.isSimulated = true;
         //}
 
-        playerController.StartMovement();
+        //playerController.StartMovement();
 
         // Disable player sprite
-        SpriteRenderer sprite = simObject.GetComponent<SpriteRenderer>();
-        if (sprite)
-            sprite.enabled = false;
+        //SpriteRenderer sprite = simObject.GetComponent<SpriteRenderer>();
+        //if (sprite)
+        //    sprite.enabled = false;
 
         if (_lastForce != force) //if force hasnt changed, skip simulation;
         {
-            Rigidbody2D[] bones = GetObjectBones(simObject);
+            _simObject.transform.position = player.transform.position;
 
+            for (int i = 0; i < player.childCount; i++)
+            {
+                Vector2 playerBonePos = player.GetChild(i).position;
+                _simObject.transform.GetChild(i).position = playerBonePos;
+            }
+            
+            Rigidbody2D[] bones = GetObjectBones(_simObject);
+
+            foreach (Rigidbody2D bone in bones)
+                bone.velocity = Vector3.zero;
+            
             foreach (Rigidbody2D bone in bones)
                 bone.AddForce(force);
 
@@ -160,12 +179,12 @@ public class TrajectoryPredictor : MonoBehaviour
             {
                 _physicsSim.Simulate(Time.fixedDeltaTime); // move the physics, one step ahead. (anymore than 1 step creates irregularity in the trajectory)
 
-                Vector2 simObjectAvgPos = GetObjectAveragePosition(simObject);
+                Vector2 simObjectAvgPos = GetObjectAveragePosition(_simObject);
                 if (simObjectAvgPos != Vector2.zero) {
                     points[i] = simObjectAvgPos;
                 }
                 else {
-                    points[i] = simObject.transform.position;
+                    points[i] = _simObject.transform.position;
                 }
 
                 Vector2 uiPoint = Camera.main.WorldToScreenPoint(points[i]);
@@ -203,7 +222,7 @@ public class TrajectoryPredictor : MonoBehaviour
         }
         _lastForce = force;
         */
-        Destroy(simObject);
+        //Destroy(simObject);
     }
 
     private Vector2 GetObjectAveragePosition(GameObject simObject) {

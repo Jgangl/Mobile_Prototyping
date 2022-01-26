@@ -8,17 +8,9 @@ public class Hazard : MonoBehaviour
 
     private bool collided = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.transform.root.tag != "Player")
             return;
-
-        //Debug.Log("Hit Player");
 
         if (collided)
             return;
@@ -32,6 +24,11 @@ public class Hazard : MonoBehaviour
         CreateSplatter(splatterPosition);
 
         GameManager.Instance.PlayerDied();
+
+        Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+        //collision.transform.parent = transform;
     }
 
     private void CreateSplatter(Vector2 splatterPos) {
