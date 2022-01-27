@@ -23,7 +23,6 @@ public class TrajectoryPredictor : MonoBehaviour
         CreateSceneParameters _param = new CreateSceneParameters(LocalPhysicsMode.Physics2D); //define the parameters of a new scene, this lets us have our own separate physics 
         _simScene = SceneManager.CreateScene("Simulation", _param); // create a new scene and implement the parameters we just created
         _physicsSim = _simScene.GetPhysicsScene2D(); // assign the physics of the scene so we can simulate on our own time. 
-        line.positionCount = _steps; // set amount of points our drawn line will have
         points = new Vector3[_steps]; // set amount of points our simulation will record, these will later be passed into the line.
     }
     #endregion
@@ -31,9 +30,7 @@ public class TrajectoryPredictor : MonoBehaviour
     private PhysicsScene2D _physicsSim;
     [SerializeField]
     private GameObject _playerObject; //drag your player into the inspector
-
-    [SerializeField]
-    LineRenderer line;//drag your lineRenderer into the inspector 
+    
     Scene _simScene;
     [SerializeField]
     int _steps = 20; //how long we will be simulating for. More steps, more lenghth but also less performance
@@ -48,13 +45,8 @@ public class TrajectoryPredictor : MonoBehaviour
     public float lineWidthStart = 13.0f;
     public float lineWidthEnd = 5.0f;
 
-    //[SerializeField]
-    //private int lineDrawStart = 1;
-
     private VectorLine trajectoryVisualLine;
-
     private List<float> lineWidths;
-
     private GameObject _simObject;
 
     // Start is called before the first frame update
@@ -70,10 +62,6 @@ public class TrajectoryPredictor : MonoBehaviour
         }
 
         trajectoryVisualLine = new VectorLine("Trajectory", new List<Vector2>(), lineTex, lineWidthStart, lineType);
-        //trajectoryVisualLine.endPointsUpdate = 2;
-        //GameObject canvas = GameObject.Find("Trajectory_Canvas");
-        //if (canvas)
-        //    trajectoryVisualLine.SetCanvas(canvas);
         trajectoryVisualLine.color = lineColor;
         trajectoryVisualLine.textureScale = 1.0f;
         trajectoryVisualLine.smoothWidth = true;

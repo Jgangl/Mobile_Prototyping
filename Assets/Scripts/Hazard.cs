@@ -24,11 +24,6 @@ public class Hazard : MonoBehaviour
         CreateSplatter(splatterPosition);
 
         GameManager.Instance.PlayerDied();
-
-        Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-        rb.isKinematic = true;
-        rb.velocity = Vector3.zero;
-        //collision.transform.parent = transform;
     }
 
     private void CreateSplatter(Vector2 splatterPos) {
