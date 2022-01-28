@@ -6,51 +6,36 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Michsky.UI.ModernUIPack;
 
-public class UI_Manager : Singleton<UI_Manager>
+
+public class UI_Manager : MonoBehaviour
 {
     GameObject settingsMenu;
     GameObject levelSelectionMenu;
-
-    GameObject levelSelectionButtonObj;
-    GameObject settingsButtonObj;
-    GameObject settingsButtonLevelObj;
-    GameObject restartButtonObj;
-    GameObject levelSelectExitButtonObj;
-    GameObject settingsExitButtonObj;
-    GameObject musicSwitchObj;
-    GameObject soundFXSwitchObj;
+    GameObject mainMenu;
 
     bool isLevelSelectionMenuOpen = false;
     bool isSettingsMenuOpen = false;
     bool isMenuOpened = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        SceneLoad();
-    }
-
-    public void StartButton() {
+    public void OnStartButtonPressed() {
+        print("start game");
         GameManager.Instance.StartGame();
     }
-
-    public void SettingsButton() {
-        
+    
+    public void OnLevelSelectionButtonPressed() {
+        print("Open level select menu");
+    }
+    
+    public void OnSettingsButtonPressed() {
+        print("Open settings menu");
     }
 
-    public void LevelSelectionButton() {
-
-    }
-
-    public void QuitButton() {
+    public void OnQuitButtonPressed() {
         GameManager.Instance.QuitGame();
     }
 
     private void EnableSettingsMenu(bool enabled) {
         if (settingsMenu) {
-            print("Settings menu");
             Animator anim = settingsMenu.GetComponent<Animator>();
             if (anim) {
                 if (enabled)
@@ -88,15 +73,9 @@ public class UI_Manager : Singleton<UI_Manager>
         EnableLevelSelectionMenu(true);
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        SceneLoad();
-    }
-
+/*
     void SceneLoad() {
         // Find menu objects
-
-        FindMenuObjects();
-        FindButtons();
 
         //DisableMenuObjects();
 
@@ -115,7 +94,7 @@ public class UI_Manager : Singleton<UI_Manager>
         EnableSettingsButton(inLevel);
         EnableRestartButton(inLevel);
     }
-
+*/
     private void UpdateMenuStatus() {
         bool menuOpen = isSettingsMenuOpen || isLevelSelectionMenuOpen;
         if (isMenuOpened != menuOpen) {
@@ -123,7 +102,7 @@ public class UI_Manager : Singleton<UI_Manager>
             GameManager.Instance.SetMenuOpened(isMenuOpened);
         }
     }
-
+/*
     private void FindMenuObjects() {
         ClearMenuObjects();
 
@@ -205,7 +184,7 @@ public class UI_Manager : Singleton<UI_Manager>
             }
         }
     }
-
+*/
     private void DisableLevelSelectionMenu() {
         EnableLevelSelectionMenu(false);
     }
@@ -217,17 +196,6 @@ public class UI_Manager : Singleton<UI_Manager>
     private void ClearMenuObjects() {
         settingsMenu = null;
         levelSelectionMenu = null;
-    }
-
-    public void EnableSettingsButton(bool enabled) {
-        if (settingsButtonLevelObj) {
-            settingsButtonLevelObj.SetActive(enabled);
-        }
-    }
-
-    public void EnableRestartButton(bool enabled) {
-        if (restartButtonObj)
-            restartButtonObj.SetActive(enabled);
     }
 
     public void OnRestartButton() {

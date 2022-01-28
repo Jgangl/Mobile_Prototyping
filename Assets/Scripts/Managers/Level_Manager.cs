@@ -95,8 +95,8 @@ public class Level_Manager : Singleton<Level_Manager> {
         // Load scene
         SceneManager.LoadScene(levelIndex);
 
-        UI_Manager.Instance.EnableSettingsButton(true);
-        UI_Manager.Instance.EnableRestartButton(true);
+        //UI_Manager.Instance.EnableSettingsButton(true);
+        //UI_Manager.Instance.EnableRestartButton(true);
 
         // Fade In
         if (fadeAnim)
