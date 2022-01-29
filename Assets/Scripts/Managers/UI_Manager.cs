@@ -1,33 +1,45 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using UnityEngine.UI;
-using Michsky.UI.ModernUIPack;
-
-
 public class UI_Manager : MonoBehaviour
 {
-    GameObject settingsMenu;
-    GameObject levelSelectionMenu;
+    [SerializeField] GameObject settingsMenu;
+    [SerializeField] GameObject levelSelectionMenu;
+    [SerializeField] GameObject inLevelUI;
     GameObject mainMenu;
 
     bool isLevelSelectionMenuOpen = false;
     bool isSettingsMenuOpen = false;
     bool isMenuOpened = false;
 
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    private void Start()
+    {
+
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+    }
+
     public void OnStartButtonPressed() {
         print("start game");
         GameManager.Instance.StartGame();
     }
-    
-    public void OnLevelSelectionButtonPressed() {
-        print("Open level select menu");
-    }
-    
-    public void OnSettingsButtonPressed() {
-        print("Open settings menu");
+
+    public void OnLevelSettingsButtonPressed()
+    {
+        // Pause game
+        GameManager.Instance.PauseGame(true);
+        EnableSettingsMenu(true);
     }
 
     public void OnQuitButtonPressed() {
@@ -64,21 +76,12 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
-    public void OpenSettingsMenu() {
-        print("Open setting menu");
-        EnableSettingsMenu(true);
+    private void EnableInLevelUI(bool enabled)
+    {
+        inLevelUI.SetActive(enabled);
     }
-
-    public void OpenLevelSelectionMenu() {
-        EnableLevelSelectionMenu(true);
-    }
-
-/*
-    void SceneLoad() {
-        // Find menu objects
-
-        //DisableMenuObjects();
-
+    
+    void OnSceneLoad(Scene scene, LoadSceneMode mode) {
         string[] splitName = SceneManager.GetActiveScene().name.Split('_');
         bool inLevel = false;
         foreach(string val in splitName) {
@@ -91,10 +94,9 @@ public class UI_Manager : MonoBehaviour
             }
         }
 
-        EnableSettingsButton(inLevel);
-        EnableRestartButton(inLevel);
+        EnableInLevelUI(inLevel);
     }
-*/
+
     private void UpdateMenuStatus() {
         bool menuOpen = isSettingsMenuOpen || isLevelSelectionMenuOpen;
         if (isMenuOpened != menuOpen) {
@@ -102,120 +104,52 @@ public class UI_Manager : MonoBehaviour
             GameManager.Instance.SetMenuOpened(isMenuOpened);
         }
     }
-/*
-    private void FindMenuObjects() {
-        ClearMenuObjects();
-
-        settingsMenu = GameObject.Find("SettingsMenu");
-        levelSelectionMenu = GameObject.Find("LevelSelectionMenu");
+    
+    public void OpenLevelSelectionMenu() {
+        EnableLevelSelectionMenu(true);
     }
-
-    private void FindButtons() {
-        levelSelectionButtonObj = GameObject.Find("LevelSelectionButton");
-        settingsButtonObj = GameObject.Find("SettingsButton");
-        settingsButtonLevelObj = GameObject.Find("SettingsButtonLevel");
-        restartButtonObj = GameObject.Find("RestartButton");
-        levelSelectExitButtonObj = levelSelectionMenu.transform.Find("LevelsPanel").transform.Find("LevelSelectExitButton").gameObject;
-        settingsExitButtonObj = settingsMenu.transform.Find("SettingsPanel").transform.Find("SettingsExitButton").gameObject;
-        musicSwitchObj = GameObject.Find("Music_Switch");
-        soundFXSwitchObj = GameObject.Find("SoundFX_Switch");
-
-        Button levelSelectionButton;
-        if (levelSelectionButtonObj) {
-            levelSelectionButton = levelSelectionButtonObj.GetComponent<Button>();
-            if (levelSelectionButton) {
-                levelSelectionButton.onClick.AddListener(OpenLevelSelectionMenu);
-            }
-        }
-
-        Button settingsButton;
-        if (settingsButtonObj) {
-            settingsButton = settingsButtonObj.GetComponent<Button>();
-            if (settingsButton)
-                settingsButton.onClick.AddListener(OpenSettingsMenu);
-        }
-
-        Button settingsButtonLevel;
-        if (settingsButtonLevelObj) {
-            settingsButtonLevel = settingsButtonLevelObj.GetComponent<Button>();
-            if (settingsButtonLevel)
-                settingsButtonLevel.onClick.AddListener(OpenSettingsMenu);
-        }
-
-        Button restartButton;
-        if (restartButtonObj) {
-            restartButton = restartButtonObj.GetComponent<Button>();
-            if (restartButton) {
-                restartButton.onClick.AddListener(OnRestartButton);
-            }
-        }
-
-        Button levelSelectExitButton;
-        if (levelSelectExitButtonObj) {
-            levelSelectExitButton = levelSelectExitButtonObj.GetComponent<Button>();
-            if (levelSelectExitButton)
-                levelSelectExitButton.onClick.AddListener(DisableLevelSelectionMenu);
-        }
-
-        Button settingsExitButton;
-        if (settingsExitButtonObj) {
-            settingsExitButton = settingsExitButtonObj.GetComponent<Button>();
-            if (settingsExitButton)
-                settingsExitButton.onClick.AddListener(DisableSettingsMenu);
-        }
-
-        SwitchManager musicSwitch;
-        if (musicSwitchObj) {
-            musicSwitch = musicSwitchObj.GetComponent<SwitchManager>();
-            if (musicSwitch) {
-                musicSwitch.OnEvents.AddListener(OnMusicSwitch_On);
-                musicSwitch.OffEvents.AddListener(OnMusicSwitch_Off);
-                Sound_Manager.Instance.UpdateMusicEnabled(musicSwitch.isOn);
-            }
-        }
-
-        SwitchManager soundFXSwitch;
-        if (soundFXSwitchObj) {
-            soundFXSwitch = soundFXSwitchObj.GetComponent<SwitchManager>();
-            if (soundFXSwitch) {
-                soundFXSwitch.OnEvents.AddListener(OnSoundFXSwitch_On);
-                soundFXSwitch.OffEvents.AddListener(OnSoundFXSwitch_Off);
-                Sound_Manager.Instance.UpdateSoundFXEnabled(soundFXSwitch.isOn);
-            }
-        }
-    }
-*/
-    private void DisableLevelSelectionMenu() {
+    
+    public void CloseLevelSelectionMenu() {
         EnableLevelSelectionMenu(false);
     }
 
-    private void DisableSettingsMenu() {
+    public void OpenSettingsMenu()
+    {
+        EnableSettingsMenu(true);
+    }
+
+    public void CloseSettingsMenu() {
+        GameManager.Instance.PauseGame(false);
         EnableSettingsMenu(false);
     }
 
-    private void ClearMenuObjects() {
-        settingsMenu = null;
-        levelSelectionMenu = null;
+    public void OnExitButtonPressed()
+    {
+        
     }
 
-    public void OnRestartButton() {
+    public void OnRestartButtonPressed() {
         Debug.Log("RESTART BUTTON");
         Level_Manager.Instance.RestartLevel();
     }
 
     public void OnMusicSwitch_On() {
+        print("Music Switch ON");
         Sound_Manager.Instance.OnMusicChecked(true);
     }
 
     public void OnMusicSwitch_Off() {
+        print("Music Switch OFF");
         Sound_Manager.Instance.OnMusicChecked(false);
     }
 
     public void OnSoundFXSwitch_On() {
+        print("SFX Switch ON");
         Sound_Manager.Instance.OnSoundFXChecked(true);
     }
 
     public void OnSoundFXSwitch_Off() {
+        print("SFX Switch OFF");
         Sound_Manager.Instance.OnSoundFXChecked(false);
     }
 }

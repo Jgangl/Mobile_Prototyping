@@ -24,12 +24,12 @@ public class LevelSelection : MonoBehaviour
         levelButtons = new List<GameObject>();
 
         AddLevelButtons();
-        Debug.Log("Update Level completion icons");
+        //Debug.Log("Update Level completion icons");
         UpdateLevelCompletionIcons();
     }
 
     private void AddLevelButtons() {
-        Debug.Log("Adding " + numLevels + " level buttons");
+        //Debug.Log("Adding " + numLevels + " level buttons");
         for(int i = 0; i < numLevels; i++) {
             GameObject levelButtonObject = Instantiate(levelButtonPrefab, levelsPanel.transform);
             levelButtonObject.name = "Level_" + (i + 1).ToString();

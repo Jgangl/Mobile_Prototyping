@@ -6,33 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Managers_UI.unity
+    guid: d0ced2576759c564e9dc85ebd642b071
+  - enabled: 1
     path: Assets/Scenes/Level_1_Landscape.unity
     guid: 81b301a3a1943b242a008b9c4c8800dc
   - enabled: 1
-    path: Assets/Scenes/Start_Screen.unity
-    guid: d2b12203811423e42ac40ba70c11cc39
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level_1_Portrait.unity
-    guid: 85a76121614fa984e98591b08a50c8b6
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level_2_Portrait.unity
-    guid: d335f6eabe484db4599d331ddb622db1
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level_3_Portrait.unity
-    guid: 077441a553c00e647a29631b2fed1c2d
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level_4_Portrait.unity
-    guid: b6b45995dc756b94a9cdb610c85a71ba
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level_5_Portrait.unity
-    guid: 2cd2af9d868c62b4db1d67b288d627ec
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level_6_Portrait.unity
-    guid: 28383680eec57cb42b44340d38b55ba2
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level_7_Portrait.unity
-    guid: 9894e0c8703b15f449eeb91d4dc52545
-  - enabled: 1
-    path: Assets/Scenes/TEST/Art_Test.unity
-    guid: bc29db9170425a542afe349899883dea
+    path: Assets/Scenes/Level_2_Landscape.unity
+    guid: 431547382fe61174791143c9dee13a8a
   m_configObjects: {}

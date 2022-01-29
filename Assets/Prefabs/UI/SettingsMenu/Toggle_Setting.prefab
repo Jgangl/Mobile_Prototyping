@@ -490,7 +490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8303699275548677088}
   m_Layer: 5
-  m_Name: Music_Switch
+  m_Name: Switch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

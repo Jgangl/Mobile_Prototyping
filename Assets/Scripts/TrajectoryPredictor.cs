@@ -52,11 +52,10 @@ public class TrajectoryPredictor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int lineWidthLength = _steps;
+        int lineWidthLength = _steps - 1;
         lineWidths = new List<float>(new float[lineWidthLength]);
         float stepSize = (lineWidthStart - lineWidthEnd) / lineWidthLength;
-
-        //lineWidths[0] = lineWidthStart;
+        
         for (int i = 0; i < lineWidths.Count; i++) {
             lineWidths[i] = Mathf.Clamp(lineWidthStart - (i * stepSize), lineWidthEnd, lineWidthStart);
         }
@@ -69,15 +68,6 @@ public class TrajectoryPredictor : MonoBehaviour
         UpdateSimObjects(collidablesRoot);
     }
 
-    private void Update() {
-        // width is the width of the line
-        //float width = line.startWidth;
-        //line.material.mainTextureScale = new Vector2(1f / width, 1.0f);
-        //line.material.SetTextureScale("_MainTex", new Vector2(1f / width, 1.0f));
-
-        // 1/width is the repetition of the texture per unit (thus you can also do double
-        // lines)
-    }
     /*
         private void CreateSimObjects(GameObject obstaclesRoot)  //all objects start in regulare scene, and get sent over on start. this way colliders are dynamic and we can grab refrence to simulated player in first scene.
         {

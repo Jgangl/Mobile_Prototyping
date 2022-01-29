@@ -40,7 +40,10 @@ public class GameManager : Singleton<GameManager>
         }
 
         if (Input.GetKeyDown(KeyCode.P)) {
-            PauseGame();
+            if (currentGameState == GameState.Paused)
+                PauseGame(false);
+            else
+                PauseGame(true);
         }
     }
 
@@ -65,12 +68,14 @@ public class GameManager : Singleton<GameManager>
         Level_Manager.Instance.LoadCurrentLevel();
     }
 
-    public void PauseGame() {
-        if (currentGameState == GameState.Playing) {
+    public void PauseGame(bool pause) {
+        if (pause && currentGameState == GameState.Playing)
+        {
             Time.timeScale = 0.0f;
             currentGameState = GameState.Paused;
         }
-        else if (currentGameState == GameState.Paused) {
+        else if (!pause && currentGameState == GameState.Paused) 
+        {
             Time.timeScale = 1.0f;
             currentGameState = GameState.Playing;
         }

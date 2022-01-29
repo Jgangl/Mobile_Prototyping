@@ -19,8 +19,19 @@ public class Level_Manager : Singleton<Level_Manager> {
     public GameObject fadeCanvasPrefab;
     private GameObject fadeCanvas;
 
+    private Scene managersUIScene;
+    private Scene openLevelScene;
+
     private void Start() {
         completedLevels = new List<int>();
+
+        managersUIScene = SceneManager.GetSceneAt(0);
+        openLevelScene = GetCurrentOpenScene();
+        currentLevel = openLevelScene.buildIndex;
+        
+        print(currentLevel);
+
+        //StartCoroutine(LoadLevelCoroutine(3));
     }
 
     private void Update() {
@@ -44,15 +55,15 @@ public class Level_Manager : Singleton<Level_Manager> {
     }
 
     public void SetCompletedLevels(List<int> completedLevels) {
-        //Debug.Log("Setting completed levels length  " + completedLevels.Count);
         this.completedLevels = completedLevels;
     }
 
     public void LoadNextLevel() {
+        print(currentLevel);
         if (currentLevel < numLevels) {
             currentLevel++;
             // Load scene at the next build index
-            StartCoroutine(LoadLevelCoroutine(currentLevel));
+            LoadLevel(currentLevel);
         }
         else {
             Debug.Log("No more levels");
@@ -60,24 +71,47 @@ public class Level_Manager : Singleton<Level_Manager> {
     }
 
     public void RestartLevel() {
-        LoadLevel(currentLevel);
+        LoadCurrentLevel();
     }
 
     public void LoadCurrentLevel() {
-        //Debug.Log("LOADING CURRENT LEVEL");
-
-        StartCoroutine(LoadLevelCoroutine(SceneManager.GetActiveScene().buildIndex));
-        //StartCoroutine(LoadLevelCoroutine(currentLevel));
+        LoadLevel(currentLevel);
     }
 
     public void LoadLevel(int levelIndex) {
-        //Debug.Log("TRYING TO LOAD LEVEL: " + levelIndex);
         currentLevel = levelIndex;
         if (currentLevel > numLevels)
             return;
+        
+        print(currentLevel);
 
-        //Debug.Log("LOADING LEVEL " + levelIndex);
+        print("Load level: " + levelIndex);
         StartCoroutine(LoadLevelCoroutine(levelIndex));
+    }
+
+    private Scene GetCurrentOpenScene()
+    {
+        if (SceneManager.sceneCount > 2)
+            return SceneManager.GetSceneAt(1);
+
+        return new Scene();
+    }
+
+    private void UnloadPreviousScenes()
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            if (scene == managersUIScene) continue;
+            
+            UnloadScene(scene);
+        }
+    }
+    
+    private void UnloadScene(Scene sceneToUnload)
+    {
+        AsyncOperation asyncOperation = SceneManager.UnloadSceneAsync(sceneToUnload);
+        //asyncOperation.completed += 
     }
 
     IEnumerator LoadLevelCoroutine(int levelIndex) {
@@ -91,9 +125,14 @@ public class Level_Manager : Singleton<Level_Manager> {
 
         // Wait time for fade out
         yield return new WaitForSeconds(transitionTime);
+        
+        // Unload previous scenes
+        UnloadPreviousScenes();
 
-        // Load scene
-        SceneManager.LoadScene(levelIndex);
+        // Load new scene
+        SceneManager.LoadScene(levelIndex, LoadSceneMode.Additive);
+
+        openLevelScene = GetCurrentOpenScene();
 
         //UI_Manager.Instance.EnableSettingsButton(true);
         //UI_Manager.Instance.EnableRestartButton(true);
