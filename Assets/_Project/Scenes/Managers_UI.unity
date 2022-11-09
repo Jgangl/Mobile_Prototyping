@@ -1047,7 +1047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7366699435684704052, guid: 267f2af6a49201743a54d17754d58484, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7366699435684704056, guid: 267f2af6a49201743a54d17754d58484, type: 3}
       propertyPath: m_Pivot.x
@@ -1914,13 +1914,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: AfterLevelMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 1141687859112027554, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1141687859177939898, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_Name
       value: AfterLevelMenu
       objectReference: {fileID: 0}
     - target: {fileID: 1141687859177939898, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1141687859177939899, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_Pivot.x
@@ -2009,6 +2013,10 @@ PrefabInstance:
     - target: {fileID: 1141687859674879524, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_Name
       value: Title
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141687859916700305, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7294623615636969662, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_Name

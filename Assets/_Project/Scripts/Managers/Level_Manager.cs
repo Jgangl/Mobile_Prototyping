@@ -61,7 +61,8 @@ public class Level_Manager : Singleton<Level_Manager> {
 
         OnLevelCompleted?.Invoke(level);
         completedLevels.Add(level);
-        LoadNextLevel();
+        
+        //LoadNextLevel();
     }
 
     private void UpdateHighestCompletedLevel(int newHighLevel)
