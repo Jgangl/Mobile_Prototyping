@@ -5,6 +5,9 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 
+Assets/*
+!Assets/_Project/
+
 # Visual Studio cache directory
 .vs/
 
@@ -38,5 +41,3 @@ sysinfo.txt
 
 [Ll]ogs/
 Assets/Packages
-Sounds/
-Textures/
