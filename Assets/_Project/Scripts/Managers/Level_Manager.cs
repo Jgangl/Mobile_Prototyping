@@ -30,7 +30,18 @@ public class Level_Manager : Singleton<Level_Manager> {
 
         managersUIScene = SceneManager.GetSceneAt(0);
 
-        currentLevel = SceneManager.GetActiveScene().buildIndex;
+        Scene currentOpenScene = managersUIScene;
+        if (SceneManager.sceneCount > 2)
+            currentOpenScene = SceneManager.GetSceneAt(1);
+        
+        if (currentOpenScene != managersUIScene)
+        {
+            currentLevel = currentOpenScene.buildIndex;
+        }
+        else
+        {
+            currentLevel = 1;
+        }
 
         //UpdateCurrentLevel();
     }
