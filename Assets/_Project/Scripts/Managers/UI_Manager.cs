@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class UI_Manager : MonoBehaviour
 {
     [SerializeField] SettingsMenu settingsMenu;
+    [SerializeField] AfterLevelMenu afterLevelMenu;
     [SerializeField] LevelSelection levelSelection;
     [SerializeField] GameObject inLevelUI;
     [SerializeField] GameObject mainMenu;
@@ -20,6 +21,7 @@ public class UI_Manager : MonoBehaviour
     private void Start()
     {
         Level_Manager.Instance.OnLevelLoaded += OnLevelLoaded;
+        Level_Manager.Instance.OnLevelCompleted += LevelManager_OnLevelCompleted;
     }
 
     public void OnStartButtonPressed() {
@@ -63,6 +65,11 @@ public class UI_Manager : MonoBehaviour
         EnableInLevelUI(true);
     }
 
+    void LevelManager_OnLevelCompleted(int levelCompleted)
+    {
+        afterLevelMenu.Open();
+    }
+
     private void EnableMainMenu(bool enabled)
     {
         isMainMenuOpened = enabled;
@@ -83,6 +90,16 @@ public class UI_Manager : MonoBehaviour
     
     public void CloseLevelSelectionMenu() {
         EnableLevelSelectionMenu(false, true);
+    }
+
+    public void OpenAfterLevelMenu()
+    {
+        afterLevelMenu.Open();
+    }
+
+    public void CloseAfterLevelMenu()
+    {
+        afterLevelMenu.Close();
     }
 
     public void OpenSettingsMenu()

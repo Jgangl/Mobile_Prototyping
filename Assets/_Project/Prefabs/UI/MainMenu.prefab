@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 5600686363455271754}
+  afterLevelMenu: {fileID: 0}
   levelSelection: {fileID: 0}
   inLevelUI: {fileID: 2693624721466010162}
   mainMenu: {fileID: 0}
