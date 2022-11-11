@@ -32,20 +32,22 @@ public class UI_Manager : MonoBehaviour
     {
         // Pause game
         GameManager.Instance.PauseGame(true);
-        EnableSettingsMenu(true, true);
+        settingsMenu.Open();
+        settingsMenu.EnableHomeButton(true);
+        //EnableSettingsMenu(true, true);
     }
 
     public void OnQuitButtonPressed() {
         GameManager.Instance.QuitGame();
     }
-
+/*
     private void EnableSettingsMenu(bool enabled, bool homeButtonEnabled) {
-        settingsMenu.Enable(enabled, homeButtonEnabled);
-        
+        settingsMenu.Enable(enabled);
+        settingsMenu.EnableHomeButton(homeButtonEnabled);
         isSettingsMenuOpen = enabled;
         UpdateMenuStatus();
     }
-
+*/
     private void EnableLevelSelectionMenu(bool enabled, bool withAnimation)
     {
         levelSelection.EnableLevelSelectionMenu(enabled, withAnimation);
@@ -104,12 +106,16 @@ public class UI_Manager : MonoBehaviour
 
     public void OpenSettingsMenu()
     {
-        EnableSettingsMenu(true, !isMainMenuOpened);
+        settingsMenu.Open();
+        settingsMenu.EnableHomeButton(!isMainMenuOpened);
+        //EnableSettingsMenu(true, !isMainMenuOpened);
     }
 
     public void CloseSettingsMenu() {
         GameManager.Instance.PauseGame(false);
-        EnableSettingsMenu(false, !isMainMenuOpened);
+        settingsMenu.Close();
+        settingsMenu.EnableHomeButton(!isMainMenuOpened);
+        //EnableSettingsMenu(false, !isMainMenuOpened);
     }
 
     public void OnExitButtonPressed()

@@ -2,23 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingsMenu : MonoBehaviour
+public class SettingsMenu : Menu
 {
     [SerializeField] private Transform homeButton;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void Enable(bool enabled, bool homeButtonEnabled)
+    /*
+    public void Enable(bool enabled)
     {
         Animator anim = GetComponent<Animator>();
         if (anim) {
@@ -28,6 +16,11 @@ public class SettingsMenu : MonoBehaviour
                 anim.SetTrigger("Close");
         }
 
-        homeButton.gameObject.SetActive(homeButtonEnabled);
+        //homeButton.gameObject.SetActive(homeButtonEnabled);
+    }
+    */
+    public void EnableHomeButton(bool enabled)
+    {
+        homeButton.gameObject.SetActive(enabled);
     }
 }

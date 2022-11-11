@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 1141687859112027581}
   - component: {fileID: 7678793289099246086}
   m_Layer: 5
-  m_Name: SettingsPanel
+  m_Name: AfterLevelMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1141687859112027555
 RectTransform:
   m_ObjectHideFlags: 0
@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 1141687859177939899}
   - component: {fileID: 1141687859177939894}
   - component: {fileID: 1141687859177939892}
+  - component: {fileID: 507303782}
   m_Layer: 5
   m_Name: AfterLevelMenu
   m_TagString: Untagged
@@ -166,7 +167,7 @@ Animator:
   m_GameObject: {fileID: 1141687859177939898}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ebe69ef31e146b341a594890eccd919b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3c32a1e73efc35f41a7742f44e0a0f2f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -176,6 +177,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &507303782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141687859177939898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57238cd457049924fa36539ff1f09335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitButton: {fileID: 2086573092699652194}
 --- !u!1 &1141687859674879524
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +203,7 @@ GameObject:
   - component: {fileID: 1141687859674879527}
   - component: {fileID: 1141687859674879526}
   m_Layer: 5
-  m_Name: SettingsTitle
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1141687859916700306
 RectTransform:
   m_ObjectHideFlags: 0
@@ -674,8 +688,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
-        m_MethodName: OnMainMenuButtonPressed
+        m_TargetAssemblyTypeName: Level_Manager, Assembly-CSharp
+        m_MethodName: LoadNextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -833,7 +847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7082510090582546551, guid: 2c2d9edf31e72eb4886169e97c7ae33c, type: 3}
       propertyPath: m_Name
-      value: SettingsExitButton
+      value: ExitButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -843,6 +857,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1447139268480166184, guid: 2c2d9edf31e72eb4886169e97c7ae33c, type: 3}
   m_PrefabInstance: {fileID: 536373523505823945}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2086573092699652194 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1983109737045885099, guid: 2c2d9edf31e72eb4886169e97c7ae33c, type: 3}
+  m_PrefabInstance: {fileID: 536373523505823945}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &958044246433018297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -921,7 +946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 218839367417839489, guid: c35686c81d8ffed4a927b17f16391311, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 56.1
+      value: 56.100098
       objectReference: {fileID: 0}
     - target: {fileID: 218839367417839489, guid: c35686c81d8ffed4a927b17f16391311, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -939,6 +964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuButton
       objectReference: {fileID: 0}
+    - target: {fileID: 218839367417839502, guid: c35686c81d8ffed4a927b17f16391311, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 166716819127539919, guid: 267f2af6a49201743a54d17754d58484, type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: c35686c81d8ffed4a927b17f16391311, type: 3}
