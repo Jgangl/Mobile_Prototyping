@@ -15,10 +15,9 @@ public class Level_Manager : Singleton<Level_Manager> {
     private int currentLevel = 1;
     private int highestCompletedLevel = 0;
     private List<int> completedLevels;
-    private GameObject fadeCanvas;
     private Scene managersUIScene;
     private bool loadingLevel = false;
-    
+    private bool levelCompleted = false;
     public float transitionTime = 1f;
     public GameObject fadeCanvasPrefab;
     public Action OnLevelLoaded;
@@ -62,7 +61,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         OnLevelCompleted?.Invoke(level);
         completedLevels.Add(level);
         
-        //LoadNextLevel();
+        levelCompleted = true;
     }
 
     private void UpdateHighestCompletedLevel(int newHighLevel)
@@ -152,6 +151,11 @@ public class Level_Manager : Singleton<Level_Manager> {
         }
     }
 
+    public bool IsLevelCompleted()
+    {
+        return levelCompleted;
+    }
+
     public void UnloadPreviousScenes()
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -183,12 +187,13 @@ public class Level_Manager : Singleton<Level_Manager> {
         yield return new WaitForSeconds(0.05f);
         UpdateCurrentLevel();
 
+        levelCompleted = false;
         loadingLevel = false;
         
         Fader.Instance.FadeIn(1f);
 
         // Wait time for fade in
-        yield return new WaitForSeconds(transitionTime);
+        yield return new WaitForSeconds(transitionTime);  
     }
 
     public int GetHighestCompletedLevel()

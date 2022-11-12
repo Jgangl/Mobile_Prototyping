@@ -53,7 +53,7 @@ public class UI_Manager : MonoBehaviour
         levelSelection.EnableLevelSelectionMenu(enabled, withAnimation);
         
         isLevelSelectionMenuOpen = enabled;
-        UpdateMenuStatus();
+        UpdateMenuStatus(enabled);
     }
 
     private void EnableInLevelUI(bool enabled)
@@ -64,12 +64,14 @@ public class UI_Manager : MonoBehaviour
     void OnLevelLoaded() {
         EnableMainMenu(false);
         EnableLevelSelectionMenu(false, false);
+        afterLevelMenu.CloseInstant();
         EnableInLevelUI(true);
     }
 
     void LevelManager_OnLevelCompleted(int levelCompleted)
     {
         afterLevelMenu.Open();
+        UpdateMenuStatus(true);
     }
 
     private void EnableMainMenu(bool enabled)
@@ -78,12 +80,12 @@ public class UI_Manager : MonoBehaviour
         mainMenu.SetActive(enabled);
     }
 
-    private void UpdateMenuStatus() {
-        bool menuOpen = isSettingsMenuOpen || isLevelSelectionMenuOpen;
-        if (isMenuOpened != menuOpen) {
-            isMenuOpened = menuOpen;
-            GameManager.Instance.SetMenuOpened(isMenuOpened);
-        }
+    private void UpdateMenuStatus(bool menuOpened) {
+        //bool menuOpen = isSettingsMenuOpen || isLevelSelectionMenuOpen;
+        //if (isMenuOpened != menuOpen) {
+        isMenuOpened = menuOpened;
+        GameManager.Instance.SetMenuOpened(isMenuOpened);
+        //}
     }
     
     public void OpenLevelSelectionMenu() {
@@ -109,18 +111,15 @@ public class UI_Manager : MonoBehaviour
         settingsMenu.Open();
         settingsMenu.EnableHomeButton(!isMainMenuOpened);
         //EnableSettingsMenu(true, !isMainMenuOpened);
+        UpdateMenuStatus(true);
     }
 
     public void CloseSettingsMenu() {
         GameManager.Instance.PauseGame(false);
         settingsMenu.Close();
         settingsMenu.EnableHomeButton(!isMainMenuOpened);
+        UpdateMenuStatus(false);
         //EnableSettingsMenu(false, !isMainMenuOpened);
-    }
-
-    public void OnExitButtonPressed()
-    {
-        
     }
 
     public void OnRestartButtonPressed() {

@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 prevPositionTwo;
 
     public bool isSimulated = false;
-    public bool disableInput = false;
+    private bool disableInput = false;
 
     private bool isDead;
 

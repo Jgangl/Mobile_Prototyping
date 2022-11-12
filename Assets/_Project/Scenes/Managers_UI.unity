@@ -2017,6 +2017,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7294623615636969662, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8794365200088466463, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2038,6 +2042,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57238cd457049924fa36539ff1f09335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &928295131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6815435738500108434, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+  m_PrefabInstance: {fileID: 223188170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1306773355 stripped
@@ -2222,7 +2237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd200ec968b6af468b1bfd5796f1094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitButton: {fileID: 0}
+  exitButton: {fileID: 928295131}
   homeButton: {fileID: 1622076991}
 --- !u!1 &2057662319 stripped
 GameObject:

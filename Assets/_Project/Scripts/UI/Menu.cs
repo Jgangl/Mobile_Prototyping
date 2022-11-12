@@ -12,7 +12,9 @@ public class Menu : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        exitButton.onClick.AddListener(Close);
+        
+        if (exitButton)
+            exitButton.onClick.AddListener(Close);
     }
 
     public void Open()

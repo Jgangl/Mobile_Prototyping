@@ -29,11 +29,13 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) {
+        if (Input.GetKeyDown(KeyCode.R)) 
+        {
             GameOver();
         }
 
-        if (Input.GetKeyDown(KeyCode.P)) {
+        if (Input.GetKeyDown(KeyCode.P)) 
+        {
             if (currentGameState == GameState.Paused)
                 PauseGame(false);
             else
@@ -55,7 +57,12 @@ public class GameManager : Singleton<GameManager>
 
     public void GameOver()
     {
-        if (gameOver || Level_Manager.Instance.IsLoadingLevel()) return;
+        if (gameOver || 
+            Level_Manager.Instance.IsLoadingLevel() || 
+            Level_Manager.Instance.IsLevelCompleted())
+        {
+            return;
+        }
 
         gameOver = true;
         Debug.Log("Game Over");
@@ -132,6 +139,20 @@ public class GameManager : Singleton<GameManager>
         else {
             //Debug.Log("DID NOT LOAD Game");
             return false;
+        }
+    }
+
+    public void EnablePlayerMovement()
+    {
+        if (player) {
+            player.GetComponent<PlayerController>().EnableMovement(true);
+        }
+    }
+
+    public void DisablePlayerMovement()
+    {
+        if (player) {
+            player.GetComponent<PlayerController>().EnableMovement(false);
         }
     }
 
