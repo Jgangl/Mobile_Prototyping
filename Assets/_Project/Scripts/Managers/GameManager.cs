@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    GameData gameData;
+    private GameData gameData;
+    private PlayerController player;
     private GameState currentGameState;
-    bool isMenuOpened = false;
-    GameObject player;
+    private bool isMenuOpened = false;
     private bool gameOver = false;
 
     void Start()
@@ -20,13 +20,15 @@ public class GameManager : Singleton<GameManager>
         //if (LoadGame())
         //    Level_Manager.Instance.SetCompletedLevels(gameData.GetCompletedLevels());
 
-        // Find Player
-        player = GameObject.FindGameObjectWithTag("Player");
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj)
+        {
+            player = playerObj.GetComponent<PlayerController>();
+        }
         
         Level_Manager.Instance.OnLevelLoaded += OnLevelLoaded;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) 
@@ -44,9 +46,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void StartGame() {
-        // Start game at current uncompleted level
         Debug.Log("Started Game");
-        // Disable Main Menu
         Level_Manager.Instance.LoadCurrentLevel();
     }
 
@@ -64,11 +64,10 @@ public class GameManager : Singleton<GameManager>
             return;
         }
 
-        gameOver = true;
         Debug.Log("Game Over");
 
+        gameOver = true;
         TimeDilator.SlowTime(this, 0.3f, 2f);
-
         Level_Manager.Instance.LoadCurrentLevel();
     }
 
@@ -103,12 +102,17 @@ public class GameManager : Singleton<GameManager>
 
         // Enable/Disable player movement if a menu is open
         if (player) {
-            player.GetComponent<PlayerController>().EnableMovement(!isMenuOpened);
+            player.EnableMovement(!isMenuOpened);
         }
     }
 
     void OnLevelLoaded() {
-        player = GameObject.FindGameObjectWithTag("Player");
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj)
+        {
+            player = playerObj.GetComponent<PlayerController>();
+        }
+
         gameOver = false;
     }
 
@@ -145,22 +149,24 @@ public class GameManager : Singleton<GameManager>
     public void EnablePlayerMovement()
     {
         if (player) {
-            player.GetComponent<PlayerController>().EnableMovement(true);
+            player.EnableMovement(true);
         }
     }
 
     public void DisablePlayerMovement()
     {
         if (player) {
-            player.GetComponent<PlayerController>().EnableMovement(false);
+            player.EnableMovement(false);
         }
     }
 
-    private void OnApplicationQuit() {
+    private void OnApplicationQuit() 
+    {
         SaveGame();
     }
 
-    private void OnApplicationPause(bool pause) {
+    private void OnApplicationPause(bool pause) 
+    {
         if (pause)
             SaveGame();
         else
@@ -168,7 +174,8 @@ public class GameManager : Singleton<GameManager>
     }
 }
 
-public enum GameState {
+public enum GameState 
+{
     Playing,
     Paused,
     Menu

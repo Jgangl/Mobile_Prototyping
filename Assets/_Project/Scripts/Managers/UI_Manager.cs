@@ -15,7 +15,6 @@ public class UI_Manager : MonoBehaviour
     bool isLevelSelectionMenuOpen = false;
     bool isSettingsMenuOpen = false;
     bool isMenuOpened = false;
-
     bool isMainMenuOpened = true;
 
     private void Start()
@@ -61,7 +60,8 @@ public class UI_Manager : MonoBehaviour
         inLevelUI.SetActive(enabled);
     }
     
-    void OnLevelLoaded() {
+    void OnLevelLoaded() 
+    {
         EnableMainMenu(false);
         EnableLevelSelectionMenu(false, false);
         afterLevelMenu.CloseInstant();
@@ -70,8 +70,24 @@ public class UI_Manager : MonoBehaviour
 
     void LevelManager_OnLevelCompleted(int levelCompleted)
     {
-        afterLevelMenu.Open();
+        StartCoroutine("LevelCompleteRoutine");
+    }
+
+    private IEnumerator LevelCompleteRoutine()
+    {
         UpdateMenuStatus(true);
+
+        TimeDilator.SlowTimeIndefinitely(0.25f);
+
+        Fader.Instance.FadeOut(5f);
+
+        yield return new WaitForSeconds(0.5f);
+        // Need to add delay before opening menu
+        // Slowly fade out
+
+        Fader.Instance.FadeIn(0f);
+
+        afterLevelMenu.Open();
     }
 
     private void EnableMainMenu(bool enabled)
@@ -114,12 +130,15 @@ public class UI_Manager : MonoBehaviour
         UpdateMenuStatus(true);
     }
 
-    public void CloseSettingsMenu() {
-        GameManager.Instance.PauseGame(false);
-        settingsMenu.Close();
-        settingsMenu.EnableHomeButton(!isMainMenuOpened);
-        UpdateMenuStatus(false);
-        //EnableSettingsMenu(false, !isMainMenuOpened);
+    public void CloseSettingsMenu()
+    {
+        if (settingsMenu)
+        {
+            GameManager.Instance.PauseGame(false);
+            settingsMenu.Close();
+            settingsMenu.EnableHomeButton(!isMainMenuOpened);
+            UpdateMenuStatus(false);
+        }
     }
 
     public void OnRestartButtonPressed() {

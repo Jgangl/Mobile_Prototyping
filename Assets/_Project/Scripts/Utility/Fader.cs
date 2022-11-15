@@ -15,7 +15,8 @@ public class Fader : Singleton<Fader>
 
     public void FadeOut(float time)
     {
-        StartCoroutine(FadeRoutine(0f, 1f, time));
+        StopAllCoroutines();
+        StartCoroutine(FadeRoutine(canvasGroup.alpha, 1f, time));
     }
     
     public IEnumerator FadeOutCoroutine(float time)
@@ -25,7 +26,8 @@ public class Fader : Singleton<Fader>
 
     public void FadeIn(float time)
     {
-        StartCoroutine(FadeRoutine(1f, 0f, time));
+        StopAllCoroutines();
+        StartCoroutine(FadeRoutine(canvasGroup.alpha, 0f, time));
     }
     
     public IEnumerator FadeInCoroutine(float time)

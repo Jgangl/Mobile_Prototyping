@@ -20,11 +20,12 @@ public class Level_Manager : Singleton<Level_Manager> {
     private bool levelCompleted = false;
     public float transitionTime = 1f;
     public GameObject fadeCanvasPrefab;
-    public Action OnLevelLoaded;
 
+    public Action OnLevelLoaded;
     public Action<int> OnLevelCompleted;
 
-    private void Start() {
+    private void Start() 
+    {
         completedLevels = new List<int>();
 
         managersUIScene = SceneManager.GetSceneAt(0);
@@ -45,13 +46,15 @@ public class Level_Manager : Singleton<Level_Manager> {
         //UpdateCurrentLevel();
     }
 
-    private void Update() {
+    private void Update() 
+    {
         if (Input.GetKeyDown(KeyCode.N)) {
             LoadNextLevel();
         }
     }
 
-    public void CompleteLevel(int level) {
+    public void CompleteLevel(int level) 
+    {
         Debug.Log("Level " + level + " completed");
         if (level > highestCompletedLevel)
         {
@@ -189,6 +192,8 @@ public class Level_Manager : Singleton<Level_Manager> {
 
         levelCompleted = false;
         loadingLevel = false;
+
+        TimeDilator.ResumeNormalTime();
         
         Fader.Instance.FadeIn(1f);
 
