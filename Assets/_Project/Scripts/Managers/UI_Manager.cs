@@ -169,11 +169,27 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void OnMainMenuButtonPressed()
     {
-        currentOpenMenu.Close();
+        StartCoroutine(ReturnToMainMenuRoutine());
+    }
+
+    private IEnumerator ReturnToMainMenuRoutine()
+    {
+        yield return StartCoroutine(Fader.Instance.FadeOutCoroutine(1f));
+
+        currentOpenMenu.CloseInstant();
+        // Unload previous scenes
+        Level_Manager.Instance.UnloadPreviousScenes();
+        
         EnableMainMenu(true);
         EnableLevelSelectionMenu(false, false);
         EnableInLevelUI(false);
-        Level_Manager.Instance.UnloadPreviousScenes();
+        TimeDilator.ResumeNormalTime();
+        
+        yield return new WaitForSeconds(0.2f);
+
+
+        
+        yield return StartCoroutine(Fader.Instance.FadeInCoroutine(1f));
     }
 
     public void SetCurrentOpenMenu(Menu openMenu)
