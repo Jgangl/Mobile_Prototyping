@@ -19,6 +19,7 @@ public class Menu : MonoBehaviour
 
     public void Open()
     {
+        UI_Manager.Instance.SetCurrentOpenMenu(this);
         if (anim) 
         {
             anim.SetTrigger("Open");

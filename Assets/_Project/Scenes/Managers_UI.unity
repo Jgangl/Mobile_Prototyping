@@ -1137,6 +1137,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7366699435684704058, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366699435684704058, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366699435684704058, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 2400
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366699435684704058, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366699435684704058, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7366699436083758475, guid: 267f2af6a49201743a54d17754d58484, type: 3}
       propertyPath: m_text
       value: Squishump
@@ -1921,6 +1941,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1852654010}
     m_Modifications:
+    - target: {fileID: 1027613550139444791, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1350555274}
+    - target: {fileID: 1027613550139444791, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnMainMenuButtonPressed
+      objectReference: {fileID: 0}
     - target: {fileID: 1141687859112027554, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_Name
       value: Menu

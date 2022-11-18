@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UI_Manager : MonoBehaviour
+public class UI_Manager : Singleton<UI_Manager>
 {
     [SerializeField] SettingsMenu settingsMenu;
     [SerializeField] AfterLevelMenu afterLevelMenu;
     [SerializeField] LevelSelection levelSelection;
     [SerializeField] GameObject inLevelUI;
     [SerializeField] GameObject mainMenu;
+
+    private Menu currentOpenMenu;
 
     bool isLevelSelectionMenuOpen = false;
     bool isSettingsMenuOpen = false;
@@ -86,7 +88,6 @@ public class UI_Manager : MonoBehaviour
         // Slowly fade out
 
         Fader.Instance.FadeIn(0f);
-
         afterLevelMenu.Open();
     }
 
@@ -168,10 +169,15 @@ public class UI_Manager : MonoBehaviour
 
     public void OnMainMenuButtonPressed()
     {
-        CloseSettingsMenu();
+        currentOpenMenu.Close();
         EnableMainMenu(true);
         EnableLevelSelectionMenu(false, false);
         EnableInLevelUI(false);
         Level_Manager.Instance.UnloadPreviousScenes();
+    }
+
+    public void SetCurrentOpenMenu(Menu openMenu)
+    {
+        currentOpenMenu = openMenu;
     }
 }
