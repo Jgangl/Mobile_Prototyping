@@ -29,6 +29,18 @@ public class Fader : Singleton<Fader>
         //StartCoroutine(FadeRoutine(canvasGroup.alpha, 1f, time));
     }
     
+    public void FadeOutInstant()
+    {
+        StopAllCoroutines();
+        canvasGroup.alpha = 1f;
+    }
+    
+    public void FadeInInstant()
+    {
+        StopAllCoroutines();
+        canvasGroup.alpha = 0f;
+    }
+    
     public void FadeTo(float target, float time)
     {
         StopAllCoroutines();
@@ -44,6 +56,12 @@ public class Fader : Singleton<Fader>
     public IEnumerator FadeOutCoroutine(float time)
     {
         return DOFadeRoutine(1f, time);
+        //return FadeRoutine(0f, 1f, time);
+    }
+    
+    public IEnumerator FadeToCoroutine(float target, float time)
+    {
+        return DOFadeRoutine(target, time);
         //return FadeRoutine(0f, 1f, time);
     }
     /*

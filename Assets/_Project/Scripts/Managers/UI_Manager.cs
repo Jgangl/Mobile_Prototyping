@@ -81,14 +81,11 @@ public class UI_Manager : Singleton<UI_Manager>
 
         TimeDilator.SlowTimeIndefinitely(0.25f);
 
-        Fader.Instance.FadeOut(5f);
+        yield return Fader.Instance.FadeToCoroutine(0.35f, 0.75f);
 
-        yield return new WaitForSeconds(0.5f);
-        // Need to add delay before opening menu
-        // Slowly fade out
-
-        Fader.Instance.FadeIn(0f);
         afterLevelMenu.Open();
+        
+        Fader.Instance.FadeInInstant();
     }
 
     private void EnableMainMenu(bool enabled)
@@ -174,7 +171,7 @@ public class UI_Manager : Singleton<UI_Manager>
 
     private IEnumerator ReturnToMainMenuRoutine()
     {
-        yield return StartCoroutine(Fader.Instance.FadeOutCoroutine(1f));
+        yield return Fader.Instance.FadeOutCoroutine(0.5f);
 
         currentOpenMenu.CloseInstant();
         // Unload previous scenes
