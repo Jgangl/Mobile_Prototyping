@@ -86,7 +86,8 @@ public class Fader : Singleton<Fader>
     
     private IEnumerator DOFadeRoutine(float target, float time)
     {
-        Tween tween = canvasGroup.DOFade(target, time);
+        // Fade while ignoring timescale
+        Tween tween = canvasGroup.DOFade(target, time).SetUpdate(true);
         yield return tween.WaitForCompletion();
     }
     /*

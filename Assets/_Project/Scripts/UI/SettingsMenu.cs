@@ -1,24 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using Michsky.UI.ModernUIPack;
 using UnityEngine;
 
 public class SettingsMenu : Menu
 {
     [SerializeField] private Transform homeButton;
-    /*
-    public void Enable(bool enabled)
-    {
-        Animator anim = GetComponent<Animator>();
-        if (anim) {
-            if (enabled)
-                anim.SetTrigger("Open");
-            else
-                anim.SetTrigger("Close");
-        }
 
-        //homeButton.gameObject.SetActive(homeButtonEnabled);
+    [SerializeField] private SwitchManager musicSwitch;
+    [SerializeField] private SwitchManager sfxSwitch;
+
+    private bool isMusicSwitchON;
+    private bool isSFXSwitchON;
+
+    private void Start()
+    {
+        musicSwitch.Start();
+        sfxSwitch.Start();
+        
+        isMusicSwitchON = musicSwitch.isOn;
+        isSFXSwitchON = sfxSwitch.isOn;
+        
+        AudioManager.Instance.UpdateMusicEnabled(isMusicSwitchON);
+        AudioManager.Instance.UpdateSoundFXEnabled(isSFXSwitchON);
     }
-    */
+
     public void EnableHomeButton(bool enabled)
     {
         homeButton.gameObject.SetActive(enabled);

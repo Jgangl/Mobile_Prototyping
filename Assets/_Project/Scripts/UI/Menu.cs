@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting;
 using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
@@ -9,7 +11,7 @@ public class Menu : MonoBehaviour
 
     private Animator anim;
 
-    void Start()
+    protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
         

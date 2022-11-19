@@ -31,24 +31,16 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void OnLevelSettingsButtonPressed()
     {
-        // Pause game
         GameManager.Instance.PauseGame(true);
+        
         settingsMenu.Open();
         settingsMenu.EnableHomeButton(true);
-        //EnableSettingsMenu(true, true);
     }
 
     public void OnQuitButtonPressed() {
         GameManager.Instance.QuitGame();
     }
-/*
-    private void EnableSettingsMenu(bool enabled, bool homeButtonEnabled) {
-        settingsMenu.Enable(enabled);
-        settingsMenu.EnableHomeButton(homeButtonEnabled);
-        isSettingsMenuOpen = enabled;
-        UpdateMenuStatus();
-    }
-*/
+
     private void EnableLevelSelectionMenu(bool enabled, bool withAnimation)
     {
         levelSelection.EnableLevelSelectionMenu(enabled, withAnimation);
@@ -81,7 +73,7 @@ public class UI_Manager : Singleton<UI_Manager>
 
         TimeDilator.SlowTimeIndefinitely(0.25f);
 
-        yield return Fader.Instance.FadeToCoroutine(0.35f, 0.75f);
+        yield return Fader.Instance.FadeToCoroutine(0.35f, 1f);
 
         afterLevelMenu.Open();
         
@@ -95,11 +87,8 @@ public class UI_Manager : Singleton<UI_Manager>
     }
 
     private void UpdateMenuStatus(bool menuOpened) {
-        //bool menuOpen = isSettingsMenuOpen || isLevelSelectionMenuOpen;
-        //if (isMenuOpened != menuOpen) {
         isMenuOpened = menuOpened;
         GameManager.Instance.SetMenuOpened(isMenuOpened);
-        //}
     }
     
     public void OpenLevelSelectionMenu() {
@@ -110,21 +99,10 @@ public class UI_Manager : Singleton<UI_Manager>
         EnableLevelSelectionMenu(false, true);
     }
 
-    public void OpenAfterLevelMenu()
-    {
-        afterLevelMenu.Open();
-    }
-
-    public void CloseAfterLevelMenu()
-    {
-        afterLevelMenu.Close();
-    }
-    
     public void OpenSettingsMenu()
     {
         settingsMenu.Open();
         settingsMenu.EnableHomeButton(!isMainMenuOpened);
-        //EnableSettingsMenu(true, !isMainMenuOpened);
         UpdateMenuStatus(true);
     }
 
@@ -183,8 +161,6 @@ public class UI_Manager : Singleton<UI_Manager>
         TimeDilator.ResumeNormalTime();
         
         yield return new WaitForSeconds(0.2f);
-
-
         
         yield return StartCoroutine(Fader.Instance.FadeInCoroutine(1f));
     }
