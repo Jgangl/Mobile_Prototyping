@@ -7,6 +7,7 @@ Assets/AssetStoreTools*
 
 Assets/*
 !Assets/_Project/
+!Assets/Editor/
 
 # Visual Studio cache directory
 .vs/
