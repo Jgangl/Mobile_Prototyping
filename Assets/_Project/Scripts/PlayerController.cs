@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
         float velocityMagnitude = GetObjectAverageVelocity().magnitude;
         if (velocityMagnitude > 0.25f && bonesCanCollide) {
             if (tag == "Player") {
-                Sound_Manager.Instance.PlaySquishSound();
+                AudioManager.Instance.PlaySquishSound();
                 CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
                 //StartCoroutine("SquishSoundTimer");
                 StartCoroutine("IgnoreBonesTimer");

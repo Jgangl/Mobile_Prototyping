@@ -1711,6 +1711,10 @@ PrefabInstance:
       propertyPath: squishClips.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: 2ddfa2342fa56f049a0588af654c6357, type: 3}
+    - target: {fileID: 1045177683791901879, guid: 6284634264d625b45ab17354dab01364, type: 3}
+      propertyPath: m_Name
+      value: _AudioManager
+      objectReference: {fileID: 0}
     - target: {fileID: 5303874046333041262, guid: 6284634264d625b45ab17354dab01364, type: 3}
       propertyPath: keepAlive
       value: 0
@@ -1795,7 +1799,8 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1045177683791901873, guid: 6284634264d625b45ab17354dab01364, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5303874046553163719, guid: 6284634264d625b45ab17354dab01364, type: 3}
       insertIndex: -1

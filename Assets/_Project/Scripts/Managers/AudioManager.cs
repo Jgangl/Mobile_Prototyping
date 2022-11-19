@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class Sound_Manager : Singleton<Sound_Manager>
+public class AudioManager : Singleton<AudioManager>
 {
     public AudioClip backgroundMusicClip;
 
-    [SerializeField]
-    private bool enableMusic;
-    [SerializeField]
-    private bool enableSoundFX;
-
+    [SerializeField] private bool enableMusic;
+    [SerializeField] private bool enableSoundFX;
+    [SerializeField] private List<AudioSource> backgroundSources;
+    [SerializeField] private AudioSource squishSource;
+    
     public float[] pitchValues;
     public AudioClip[] squishClips;
-
-    [SerializeField]
-    private List<AudioSource> backgroundSources;
-
-    [SerializeField]
-    private AudioSource squishSource;
-
+    
     // Start is called before the first frame update
     void Start()
     {

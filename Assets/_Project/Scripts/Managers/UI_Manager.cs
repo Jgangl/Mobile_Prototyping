@@ -119,7 +119,7 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         afterLevelMenu.Close();
     }
-
+    
     public void OpenSettingsMenu()
     {
         settingsMenu.Open();
@@ -146,22 +146,22 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void OnMusicSwitch_On() {
         print("Music Switch ON");
-        Sound_Manager.Instance.OnMusicChecked(true);
+        AudioManager.Instance.OnMusicChecked(true);
     }
 
     public void OnMusicSwitch_Off() {
         print("Music Switch OFF");
-        Sound_Manager.Instance.OnMusicChecked(false);
+        AudioManager.Instance.OnMusicChecked(false);
     }
 
     public void OnSoundFXSwitch_On() {
         print("SFX Switch ON");
-        Sound_Manager.Instance.OnSoundFXChecked(true);
+        AudioManager.Instance.OnSoundFXChecked(true);
     }
 
     public void OnSoundFXSwitch_Off() {
         print("SFX Switch OFF");
-        Sound_Manager.Instance.OnSoundFXChecked(false);
+        AudioManager.Instance.OnSoundFXChecked(false);
     }
 
     public void OnMainMenuButtonPressed()
