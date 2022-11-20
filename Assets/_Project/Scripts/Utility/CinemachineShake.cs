@@ -9,14 +9,13 @@ public class CinemachineShake : Singleton<CinemachineShake>
     private CinemachineBasicMultiChannelPerlin cmPerlin;
 
     [SerializeField] private bool cameraShakeEnabled;
-    [SerializeField] private bool saveCameraShakeEnabled;
 
     // Start is called before the first frame update
     void Start()
     {
         cmVirtualCam = GetComponent<CinemachineVirtualCamera>();
         cmPerlin = cmVirtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
+/*
         if (saveCameraShakeEnabled)
         {
             if (PlayerPrefs.GetString("CameraShake_Enabled") == "")
@@ -32,6 +31,7 @@ public class CinemachineShake : Singleton<CinemachineShake>
                 cameraShakeEnabled = false;
             }
         }
+        */
     }
 
     public void ShakeCamera(float intensity, float duration) {
@@ -56,21 +56,18 @@ public class CinemachineShake : Singleton<CinemachineShake>
         yield return 0;
     }
 
+    public void UpdateCameraShakeEnabled(bool enabled)
+    {
+        cameraShakeEnabled = enabled;
+    }
+
     public void EnableCameraShake()
     {
         cameraShakeEnabled = true;
-        if (saveCameraShakeEnabled)
-        {
-            PlayerPrefs.SetString("CameraShake_Enabled", "true");
-        }
     }
     
     public void DisableCameraShake()
     {
         cameraShakeEnabled = false;
-        if (saveCameraShakeEnabled)
-        {
-            PlayerPrefs.SetString("CameraShake_Enabled", "false");
-        }
     }
 }

@@ -141,6 +141,16 @@ public class UI_Manager : Singleton<UI_Manager>
         print("SFX Switch OFF");
         AudioManager.Instance.OnSoundFXChecked(false);
     }
+    
+    public void OnCameraShakeSwitch_On() {
+        print("Camera Shake Switch ON");
+        CinemachineShake.Instance.EnableCameraShake();
+    }
+
+    public void OnCameraShakeSwitch_Off() {
+        print("Camera Shake Switch OFF");
+        CinemachineShake.Instance.DisableCameraShake();
+    }
 
     public void OnMainMenuButtonPressed()
     {

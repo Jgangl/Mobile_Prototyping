@@ -55,8 +55,11 @@ public class PlayerController : MonoBehaviour
 
     private bool isDead;
 
+    private SlimeGenerator slimeGenerator;
+
     void Start()
     {
+        slimeGenerator = GetComponent<SlimeGenerator>();
         rb = GetComponent<Rigidbody2D>();
 
         trajectoryPredictor = TrajectoryPredictor.Instance;
@@ -241,6 +244,9 @@ public class PlayerController : MonoBehaviour
             if (tag == "Player") {
                 AudioManager.Instance.PlaySquishSound();
                 CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
+                
+                slimeGenerator.Generate(collision.contacts[0].point);
+                
                 //StartCoroutine("SquishSoundTimer");
                 StartCoroutine("IgnoreBonesTimer");
 

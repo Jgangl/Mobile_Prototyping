@@ -758,6 +758,7 @@ GameObject:
   - component: {fileID: 6119821868485345444}
   - component: {fileID: 969940170}
   - component: {fileID: 156612942}
+  - component: {fileID: 8008988044100477606}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -930,7 +931,6 @@ MonoBehaviour:
   bonesCollisionTime: 0.2
   hitParticles: {fileID: 9014898375944429613, guid: dad80a64aeaa07f41a0dca929618bb67, type: 3}
   isSimulated: 0
-  disableInput: 0
 --- !u!58 &156612942
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -947,6 +947,19 @@ CircleCollider2D:
   m_Offset: {x: -0.006214738, y: 0.00079989433}
   serializedVersion: 2
   m_Radius: 0.87
+--- !u!114 &8008988044100477606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868485345451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9031363934d6a244290296f20ef7b130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slimeBallPrefab: {fileID: 7473275929454565281, guid: b526c3ffdaaa15f438f53257d90f7e1c, type: 3}
 --- !u!1 &6119821868657880184
 GameObject:
   m_ObjectHideFlags: 0
