@@ -16,11 +16,13 @@ public class SlimeBall : MonoBehaviour
         //rb  = GetComponent<Rigidbody2D>();
         col = GetComponentInChildren<Collider2D>();
         
-        float randXScale = Random.Range(0.8f, 1.2f);
-        float randYScale = Random.Range(0.8f, 1.2f);
-        Vector2 randScale = new Vector2(randXScale, randYScale);
+        float randScaleXY = Random.Range(0.8f, 1.2f);
+        Vector2 randScale = new Vector2(randScaleXY, randScaleXY);
         
         transform.localScale = new Vector3(randScale.x, randScale.y, 1f);
+        
+        float randZRotation = Random.Range(0f, 360f);
+        transform.rotation = Quaternion.Euler(0f, 0f, randZRotation);
     }
 /*
     private void OnCollisionEnter2D(Collision2D collision)

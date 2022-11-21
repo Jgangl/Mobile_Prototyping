@@ -11,7 +11,6 @@ public class SlimeGenerator : MonoBehaviour
     public void Generate(Vector3 position)
     {
         GameObject slimeBall = Instantiate(slimeBallPrefab, position, Quaternion.identity);
-        
         /*
         int randNumBalls = Random.Range(2, 4);
 

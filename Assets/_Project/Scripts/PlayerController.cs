@@ -123,8 +123,8 @@ public class PlayerController : MonoBehaviour
                 mouseHeldDown = false;
                 if (trajectoryPredictor)
                     trajectoryPredictor.ClearSimulation();
-
-                if (currentSwipeForce.x >= 0.01f || currentSwipeForce.y >= 0.01f) {
+                
+                if (Mathf.Abs(currentSwipeForce.x) >= 0.01f || Mathf.Abs(currentSwipeForce.y) >= 0.01f) {
                     // Enable Movement
                     Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
                     StartMovement();

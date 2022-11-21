@@ -170,9 +170,41 @@ public class Level_Manager : Singleton<Level_Manager> {
         }
     }
     
+    public Scene GetCurrentOpenScene()
+    {
+        Scene scene = new Scene();
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene currScene = SceneManager.GetSceneAt(i);
+            if (currScene == managersUIScene) continue;
+
+            scene = currScene;
+            return scene;
+        }
+
+        return scene;
+    }
+    
     private void UnloadScene(Scene sceneToUnload)
     {
         AsyncOperation asyncOperation = SceneManager.UnloadSceneAsync(sceneToUnload);
+    }
+    
+    private void LoadScene(int sceneToLoad)
+    {
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
+        asyncOperation.completed += SceneDoneLoading;
+    }
+
+    private void SceneDoneLoading(AsyncOperation asyncOperation)
+    {
+        asyncOperation.completed -= SceneDoneLoading;
+        
+        Scene openScene = GetCurrentOpenScene();
+        if (openScene.rootCount > 0)
+        {
+            SceneManager.SetActiveScene(openScene);
+        }
     }
 
     IEnumerator LoadLevelCoroutine(int levelIndex)
@@ -185,7 +217,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         UnloadPreviousScenes();
         
         // Load new scene
-        SceneManager.LoadScene(levelIndex, LoadSceneMode.Additive);
+        LoadScene(levelIndex);
 
         yield return new WaitForSeconds(0.05f);
         UpdateCurrentLevel();

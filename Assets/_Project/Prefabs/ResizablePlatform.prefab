@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4821589866603533374}
   m_Layer: 6
   m_Name: CornerBottomRight
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 4821589866644960213}
   m_Layer: 6
   m_Name: LeftRightRectangle
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 4821589866681845366}
   m_Layer: 6
   m_Name: CornerBottomLeft
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 4821589867306474506}
   m_Layer: 6
   m_Name: CornerTopLeft
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 4821589867722608760}
   m_Layer: 6
   m_Name: TopBottomRectangle
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -799,7 +799,7 @@ GameObject:
   - component: {fileID: 4821589868286255404}
   m_Layer: 6
   m_Name: CornerTopRight
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -952,7 +952,7 @@ GameObject:
   - component: {fileID: 4821589867783975054}
   m_Layer: 6
   m_Name: ResizablePlatform
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
