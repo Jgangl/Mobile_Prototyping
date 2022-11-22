@@ -52,6 +52,8 @@ public class TrajectoryPredictor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        collidablesRoot = GameObject.Find("Collidables");
+        
         int lineWidthLength = _steps - 1;
         lineWidths = new List<float>(new float[lineWidthLength]);
         float stepSize = (lineWidthStart - lineWidthEnd) / lineWidthLength;
