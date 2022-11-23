@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vectrosity;
 
-public class BasicTrajectory : MonoBehaviour
+public class BasicTrajectory : Singleton<BasicTrajectory>
 {
     
     //[SerializeField] float maxDuration = 1f;
@@ -21,14 +21,19 @@ public class BasicTrajectory : MonoBehaviour
     
     private List<float> lineWidths;
 
-    [SerializeField] private int maxSteps = 15;
+    [SerializeField] private int maxSteps = 10;
+    [SerializeField] private float gravityScale = 2f;
+    [SerializeField] private LayerMask collisionLayers;
+
+    private List<Vector2> linePositions;
 
     private Camera mainCam;
     
     private void Awake()
     {
-        //lineRenderer = GetComponent<LineRenderer>();
+        linePositions = new List<Vector2>();
         mainCam = Camera.main;
+        //Debug.Log("Basic Trajectory awake");
     }
 
     private void Start()
@@ -50,36 +55,44 @@ public class BasicTrajectory : MonoBehaviour
         trajectoryVisualLine.smoothWidth = true;
     }
 
-    public void SimulateArc(Vector2 position, Vector2 directionVector, Vector2 force, float mass, float gravityScale)
+    public void SimulateArc(Vector2 launchPosition, Vector2 directionVector, float velocity, float mass)
     {
-        //if (trajectoryVisualLine.points2.Count > 0)
-            //trajectoryVisualLine.points2.Clear();
-        
-        Vector3[] lineRendererPoints = new Vector3[maxSteps];
+        linePositions.Clear();
+        linePositions.Add(launchPosition);
+        float initialVelocity = velocity / mass * Time.fixedDeltaTime;
 
-        Vector2 initialVelocity = force / mass * Time.fixedDeltaTime;
-
-        for (int i = 0; i < maxSteps; i++)
+        for (int i = 1; i < maxSteps; i++)
         {
-            Vector2 calculatedPosition = position + directionVector * initialVelocity * i * timeStepInterval;
-            calculatedPosition.y += Physics2D.gravity.y * gravityScale / 2 * Mathf.Pow(i * timeStepInterval, 2);
+            Vector2 calculatedPosition = launchPosition + directionVector * (initialVelocity * i * timeStepInterval);
+            calculatedPosition.y += (Physics2D.gravity.y * gravityScale) / 2 * Mathf.Pow(i * timeStepInterval, 2);
 
+            Vector2 previousPos = linePositions[i - 1];
+            Vector2 rayDirection = calculatedPosition - previousPos;
+            
+            RaycastHit2D hit = Physics2D.Raycast(previousPos, rayDirection, rayDirection.magnitude, collisionLayers);
+            if (hit.collider)
+            {
+                // Collided with something
+                break;
+            }
+            
             Vector2 uiPoint = mainCam.WorldToScreenPoint(calculatedPosition);
             trajectoryVisualLine.points2.Add(uiPoint);
-            
-            // if (CheckForCollision(calculatedPosition))
-            //     break;
+
+
+
+            linePositions.Add(calculatedPosition);
         }
         
-        trajectoryVisualLine.SetWidths(lineWidths);
+        //trajectoryVisualLine.SetWidths(lineWidths);
         trajectoryVisualLine.Draw();
         trajectoryVisualLine.points2.Clear();
     }
 
     public void ClearArc()
     {
+        linePositions.Clear();
         trajectoryVisualLine.points2.Clear();
         trajectoryVisualLine.Draw();
-        //lineRenderer.SetPositions(new Vector3[0]);
     }
 }

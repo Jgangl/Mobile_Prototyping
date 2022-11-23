@@ -38,7 +38,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentSwipeForce;
 
     private TrajectoryPredictor trajectoryPredictor;
-
+    [SerializeField] private BasicTrajectory basicTrajectory;
+    
     public float squishSoundTime = 0.25f;
     //private bool canPlaySquishSound = true;
 
@@ -62,7 +63,9 @@ public class PlayerController : MonoBehaviour
         slimeGenerator = GetComponent<SlimeGenerator>();
         rb = GetComponent<Rigidbody2D>();
 
-        trajectoryPredictor = TrajectoryPredictor.Instance;
+        //trajectoryPredictor = TrajectoryPredictor.Instance;
+        //basicTrajectory = BasicTrajectory.Instance;
+        //Debug.Log(basicTrajectory);
 
         canMove = false;
 
@@ -124,6 +127,9 @@ public class PlayerController : MonoBehaviour
                 if (trajectoryPredictor)
                     trajectoryPredictor.ClearSimulation();
                 
+                if (basicTrajectory)
+                    basicTrajectory.ClearArc();
+                
                 if (Mathf.Abs(currentSwipeForce.x) >= 0.01f || Mathf.Abs(currentSwipeForce.y) >= 0.01f) {
                     // Enable Movement
                     Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
@@ -155,6 +161,15 @@ public class PlayerController : MonoBehaviour
                     // Simulate launch
                     if (trajectoryPredictor)
                         trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+
+                    if (basicTrajectory)
+                    {
+                        //Debug.Log("Trying to simulate arc");
+                        basicTrajectory.SimulateArc(gameObject.transform.position, 
+                            currentSwipeForce.normalized,
+                            currentSwipeForce.magnitude,
+                            1f);
+                    }
                 }
             }
         }
