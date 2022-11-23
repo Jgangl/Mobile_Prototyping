@@ -164,7 +164,6 @@ public class PlayerController : MonoBehaviour
 
                     if (basicTrajectory)
                     {
-                        //Debug.Log("Trying to simulate arc");
                         basicTrajectory.SimulateArc(gameObject.transform.position, 
                             currentSwipeForce.normalized,
                             currentSwipeForce.magnitude,

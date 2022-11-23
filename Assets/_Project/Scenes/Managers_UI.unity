@@ -2007,6 +2007,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1488721812551170811, guid: 329e532c2267ba445ba3f2c5424e60e4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1488721812551170811, guid: 329e532c2267ba445ba3f2c5424e60e4, type: 3}
       propertyPath: m_Lens.OrthographicSize
       value: 5.61
       objectReference: {fileID: 0}

@@ -85,7 +85,7 @@ public class BasicTrajectory : Singleton<BasicTrajectory>
         }
         
         //trajectoryVisualLine.SetWidths(lineWidths);
-        trajectoryVisualLine.Draw();
+        //trajectoryVisualLine.Draw();
         trajectoryVisualLine.points2.Clear();
     }
 
@@ -93,6 +93,6 @@ public class BasicTrajectory : Singleton<BasicTrajectory>
     {
         linePositions.Clear();
         trajectoryVisualLine.points2.Clear();
-        trajectoryVisualLine.Draw();
+        //trajectoryVisualLine.Draw();
     }
 }
