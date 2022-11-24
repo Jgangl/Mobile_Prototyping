@@ -866,6 +866,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5600686363389392211, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -62.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5600686363455271754, guid: 267f2af6a49201743a54d17754d58484, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1217,6 +1221,10 @@ PrefabInstance:
     - target: {fileID: 7366699436289124610, guid: 267f2af6a49201743a54d17754d58484, type: 3}
       propertyPath: m_Color.r
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366699436289124636, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -62.5
       objectReference: {fileID: 0}
     - target: {fileID: 7366699436289124637, guid: 267f2af6a49201743a54d17754d58484, type: 3}
       propertyPath: m_IsActive
@@ -2040,6 +2048,10 @@ PrefabInstance:
     - target: {fileID: 1141687859112027554, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_Name
       value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141687859112027555, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -62.5
       objectReference: {fileID: 0}
     - target: {fileID: 1141687859177939892, guid: eeb7cfd4ad563dd4d832082121611ee3, type: 3}
       propertyPath: m_Controller
