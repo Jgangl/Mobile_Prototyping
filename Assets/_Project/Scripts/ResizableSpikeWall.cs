@@ -12,9 +12,7 @@ public class ResizableSpikeWall : MonoBehaviour
     [SerializeField] private float yOffset;
 
     private Vector2 prevSpriteRendererSize;
-
-    private bool prevLeftMouseButtonDown = false;
-
+    
     private List<Transform> spikes = new List<Transform>();
 
     private SpriteRenderer sprite;
@@ -233,8 +231,6 @@ public class ResizableSpikeWall : MonoBehaviour
                 spikes.Add(rightSpike);
             }
         }
-
-            //prevLeftMouseButtonDown = leftMouseButtonDown;
     }
 
     private void DeleteAllSpikes()
