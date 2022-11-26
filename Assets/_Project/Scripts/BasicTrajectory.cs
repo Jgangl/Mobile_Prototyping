@@ -1,50 +1,28 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Vectrosity;
 using Shapes;
 
 public class BasicTrajectory : ImmediateModeShapeDrawer
 {
-    
-    //[SerializeField] float maxDuration = 1f;
     [SerializeField] float timeStepInterval = 0.1f;
-
-    [SerializeField] Texture lineTex;
-    [SerializeField] Color lineColor = Color.green;
-    [SerializeField] LineType lineType = LineType.Continuous;
     [SerializeField] float lineWidthStart = 13.0f;
     [SerializeField] float lineWidthEnd = 5.0f;
-    
-    LineRenderer lineRenderer;
-    VectorLine trajectoryVisualLine;
-    private PolylinePath polyPath;
-    
-    private List<float> lineWidths;
-
     [SerializeField] private int maxSteps = 10;
     [SerializeField] private float gravityScale = 2f;
     [SerializeField] private LayerMask collisionLayers;
 
-    //[SerializeField] private Polyline polyline;
-
     private List<Vector2> linePositions;
+    private PolylinePath polyPath;
+    private List<float> lineWidths;
 
-    private Camera mainCam;
-    
     private void Awake()
     {
         polyPath = new PolylinePath();
         linePositions = new List<Vector2>();
-        mainCam = Camera.main;
-        //Debug.Log("Basic Trajectory awake");
     }
 
     private void Start()
     {
-        //int maxSteps = (int)(maxDuration / timeStepInterval);
-
         int lineWidthLength = maxSteps - 1;
         lineWidths = new List<float>(new float[lineWidthLength]);
         float stepSize = (lineWidthStart - lineWidthEnd) / lineWidthLength;
@@ -52,12 +30,6 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
         for (int i = 0; i < lineWidths.Count; i++) {
             lineWidths[i] = Mathf.Clamp(lineWidthStart - (i * stepSize), lineWidthEnd, lineWidthStart);
         }
-        
-        //trajectoryVisualLine = new VectorLine("Trajectory", new List<Vector2>(), lineTex, lineWidthStart, lineType);
-        
-        //trajectoryVisualLine.color = lineColor;
-        //trajectoryVisualLine.textureScale = 1.0f;
-        //trajectoryVisualLine.smoothWidth = true;
     }
 
     public void SimulateArc(Vector2 launchPosition, Vector2 directionVector, float velocity, float mass)
@@ -90,30 +62,17 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
                 
                 break;
             }
-            
-            //Vector2 uiPoint = mainCam.WorldToScreenPoint(calculatedPosition);
-            //trajectoryVisualLine.points2.Add(uiPoint);
 
-            
-            //polyline.points.Add(point);
             polyPath.AddPoint(point);
             
             linePositions.Add(calculatedPosition);
         }
-
-        //trajectoryVisualLine.SetWidths(lineWidths);
-        //trajectoryVisualLine.Draw();
-        //polyline.points.Clear();
-        //trajectoryVisualLine.points2.Clear();
     }
 
     public void ClearArc()
     {
         polyPath.ClearAllPoints();
-        //polyline.points.Clear();
         linePositions.Clear();
-        //trajectoryVisualLine.points2.Clear();
-        //trajectoryVisualLine.Draw();
     }
 
     public override void DrawShapes(Camera cam)
@@ -127,6 +86,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
 
             Draw.Polyline(polyPath,  false, 5f, Color.green);
             
+            // Draw circle at end of trajectory
             if (linePositions.Count > 0)
                 Draw.Disc(linePositions[^1], Vector3.forward, 0.1f, DiscColors.Flat(Color.green));
         }
