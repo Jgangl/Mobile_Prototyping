@@ -927,6 +927,7 @@ GameObject:
   - component: {fileID: 969940170}
   - component: {fileID: 156612942}
   - component: {fileID: 8008988044100477606}
+  - component: {fileID: 3452020396485294500}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1133,6 +1134,27 @@ MonoBehaviour:
   slimeBallPrefab: {fileID: 7473275929454565281, guid: b526c3ffdaaa15f438f53257d90f7e1c, type: 3}
   collectionChecks: 1
   slimePoolSize: 100
+--- !u!114 &3452020396485294500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868485345451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52c7343f4a1a4c47a55032f779c4ce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useCullingMasks: 0
+  timeStepInterval: 0.02
+  lineWidthStart: 13
+  lineWidthEnd: 5
+  maxSteps: 60
+  gravityScale: 1
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &6119821868657880184
 GameObject:
   m_ObjectHideFlags: 0

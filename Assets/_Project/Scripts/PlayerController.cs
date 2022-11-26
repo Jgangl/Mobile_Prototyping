@@ -62,10 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         slimeGenerator = GetComponent<SlimeGenerator>();
         rb = GetComponent<Rigidbody2D>();
-
-        //trajectoryPredictor = TrajectoryPredictor.Instance;
-        //basicTrajectory = BasicTrajectory.Instance;
-        //Debug.Log(basicTrajectory);
+        basicTrajectory = GetComponent<BasicTrajectory>();
 
         canMove = false;
 
