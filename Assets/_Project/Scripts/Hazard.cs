@@ -1,12 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Hazard : MonoBehaviour
 {
     public GameObject bloodSplatterPrefab;
 
     private bool collided = false;
+
+    private void Start()
+    {
+        Level_Manager.Instance.OnLevelReset += OnLevelReset;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.transform.root.tag != "Player")
@@ -39,5 +46,10 @@ public class Hazard : MonoBehaviour
             Instantiate(bloodSplatterPrefab, splatterPos, randomRot, transform.parent);
         else
             Instantiate(bloodSplatterPrefab, splatterPos, randomRot);
+    }
+
+    private void OnLevelReset()
+    {
+        collided = false;
     }
 }

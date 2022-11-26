@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7758301566282008969}
   - component: {fileID: 786578737299360529}
   - component: {fileID: 661650339678769896}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bouncer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 5735741001750855310}
   - component: {fileID: 1563014795598617959}
   - component: {fileID: 8787727325206761304}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 7830053037955091913}
   - component: {fileID: 47364940516344855}
   - component: {fileID: 3183414546331575041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MiddleSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 5942358832112483043}
   - component: {fileID: 1522899300811805175}
   - component: {fileID: 6558005644299910202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

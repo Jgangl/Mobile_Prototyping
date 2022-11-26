@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
 
     private SlimeGenerator slimeGenerator;
 
+    private Dictionary<Transform, Vector2> bonePositions;
+
     void Start()
     {
         slimeGenerator = GetComponent<SlimeGenerator>();
@@ -65,8 +67,10 @@ public class PlayerController : MonoBehaviour
         basicTrajectory = GetComponent<BasicTrajectory>();
 
         canMove = false;
-
         isDead = false;
+
+        bonePositions = new Dictionary<Transform, Vector2>();
+        SaveBonePositions();
     }
 
     // Update is called once per frame
@@ -284,11 +288,14 @@ public class PlayerController : MonoBehaviour
             if (collision.gameObject == previousPlatform) {
                 if (canCollideWithPreviousPlatform) {
                     StopMovement(rb);
+                    Debug.Log(collision.gameObject);
                 }
             }
             else {
                 StopMovement(rb);
             }
+            
+            Debug.Log("COLLISION: " + collision.gameObject);
 
             previousPlatform = collision.gameObject;
         }
@@ -299,6 +306,7 @@ public class PlayerController : MonoBehaviour
             if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
                 //StopMovement(bone.GetComponent<Rigidbody2D>());
                 StopMovement(this.rb);
+                Debug.Log("STAY: " + collision.gameObject);
             }
         }
     }
@@ -325,5 +333,36 @@ public class PlayerController : MonoBehaviour
     public void SetIsDead(bool isDead)
     {
         this.isDead = isDead;
+    }
+
+    public void Reset(Vector2 newPosition)
+    {
+        SetIsDead(false);
+        SetVelocity(Vector2.zero);
+
+        transform.position = newPosition;
+
+        ResetBonePositions();
+    }
+
+    private void SaveBonePositions()
+    {
+        bonePositions.Clear();
+        
+        foreach (Transform bone in transform)
+        {
+            if (bone.GetComponent<Rigidbody2D>())
+            {
+                bonePositions.Add(bone, bone.localPosition);
+            }
+        }
+    }
+
+    private void ResetBonePositions()
+    {
+        foreach ((Transform bone, Vector2 bonePos) in bonePositions)
+        {
+            bone.localPosition = bonePos;
+        }
     }
 }

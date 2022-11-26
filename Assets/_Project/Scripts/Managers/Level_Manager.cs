@@ -23,6 +23,10 @@ public class Level_Manager : Singleton<Level_Manager> {
 
     public Action OnLevelLoaded;
     public Action<int> OnLevelCompleted;
+    public Action OnLevelReset;
+
+    private Transform playerSpawnPoint;
+    private PlayerController player;
 
     private void Start() 
     {
@@ -42,6 +46,8 @@ public class Level_Manager : Singleton<Level_Manager> {
         {
             currentLevel = 1;
         }
+        
+        Initialize();
 
         //UpdateCurrentLevel();
     }
@@ -94,10 +100,6 @@ public class Level_Manager : Singleton<Level_Manager> {
         else {
             Debug.Log("No more levels");
         }
-    }
-
-    public void RestartLevel() {
-        LoadCurrentLevel();
     }
 
     public void LoadCurrentLevel() {
@@ -193,25 +195,34 @@ public class Level_Manager : Singleton<Level_Manager> {
     private void LoadScene(int sceneToLoad)
     {
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
-        asyncOperation.completed += SceneDoneLoading;
+        asyncOperation.completed += OnSceneDoneLoading;
     }
 
-    private void SceneDoneLoading(AsyncOperation asyncOperation)
+    private void OnSceneDoneLoading(AsyncOperation asyncOperation)
     {
-        asyncOperation.completed -= SceneDoneLoading;
+        asyncOperation.completed -= OnSceneDoneLoading;
         
         Scene openScene = GetCurrentOpenScene();
         if (openScene.rootCount > 0)
         {
             SceneManager.SetActiveScene(openScene);
         }
+        
+        // Get player spawn point
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        playerSpawnPoint = GameObject.Find("SpawnPoint").transform;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     IEnumerator LoadLevelCoroutine(int levelIndex)
     {
         loadingLevel = true;
 
-        yield return StartCoroutine(Fader.Instance.FadeOutCoroutine(2f));
+        yield return Fader.Instance.FadeOutCoroutine(2f);
 
         // Unload previous scenes
         UnloadPreviousScenes();
@@ -230,7 +241,26 @@ public class Level_Manager : Singleton<Level_Manager> {
         Fader.Instance.FadeIn(1f);
 
         // Wait time for fade in
-        yield return new WaitForSeconds(transitionTime);  
+        yield return new WaitForSeconds(transitionTime);
+    }
+
+    public void RestartCurrentLevel()
+    {
+        StartCoroutine(RestartLevelRoutine());
+    }
+
+    private IEnumerator RestartLevelRoutine()
+    {
+        yield return Fader.Instance.FadeOutCoroutine(2f);
+
+        // Reset player position
+        player.Reset(playerSpawnPoint.position);
+        
+        TimeDilator.ResumeNormalTime();
+        
+        OnLevelReset?.Invoke();
+
+        yield return Fader.Instance.FadeInCoroutine(1.5f);
     }
 
     public int GetHighestCompletedLevel()

@@ -119,7 +119,7 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void OnRestartButtonPressed() {
         Debug.Log("RESTART BUTTON");
-        Level_Manager.Instance.RestartLevel();
+        Level_Manager.Instance.RestartCurrentLevel();
     }
 
     public void OnMusicSwitch_On() {

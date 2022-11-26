@@ -25,10 +25,11 @@ public class GameManager : Singleton<GameManager>
         {
             player = playerObj.GetComponent<PlayerController>();
         }
-        
+
+        Level_Manager.Instance.OnLevelReset += OnLevelReset;
         Level_Manager.Instance.OnLevelLoaded += OnLevelLoaded;
     }
-
+/*
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) 
@@ -43,8 +44,8 @@ public class GameManager : Singleton<GameManager>
             else
                 PauseGame(true);
         }
-    }
-
+    }  
+*/
     public void StartGame() {
         Debug.Log("Started Game");
         Level_Manager.Instance.LoadCurrentLevel();
@@ -64,11 +65,9 @@ public class GameManager : Singleton<GameManager>
             return;
         }
 
-        Debug.Log("Game Over");
-
         gameOver = true;
         TimeDilator.SlowTime(this, 0.3f, 2f);
-        Level_Manager.Instance.LoadCurrentLevel();
+        Level_Manager.Instance.RestartCurrentLevel();
     }
 
     public void CompleteLevel()
@@ -104,6 +103,11 @@ public class GameManager : Singleton<GameManager>
         if (player) {
             player.EnableMovement(!isMenuOpened);
         }
+    }
+
+    public void OnLevelReset()
+    {
+        gameOver = false;
     }
 
     void OnLevelLoaded() {
