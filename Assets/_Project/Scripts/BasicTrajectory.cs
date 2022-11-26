@@ -33,6 +33,9 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
         for (int i = 0; i < lineWidths.Count; i++) {
             lineWidths[i] = Mathf.Clamp(lineWidthStart - (i * stepSize), lineWidthEnd, lineWidthStart);
         }
+
+        polyline = FindObjectOfType<Polyline>();
+        endOfTrajectoryDisc = FindObjectOfType<Disc>();
     }
 
     public void SimulateArc(Vector2 launchPosition, Vector2 directionVector, float velocity, float mass)
@@ -80,7 +83,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
         }
         
         if (linePositions.Count > 0)
-            endOfTrajectoryDisc.transform.position = linePositions[^1];
+            endOfTrajectoryDisc.transform.localPosition = linePositions[^1];
 
         polyline.meshOutOfDate = true;
     }

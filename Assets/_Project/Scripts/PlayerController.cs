@@ -280,7 +280,6 @@ public class PlayerController : MonoBehaviour
 
         float velocityMagnitude = GetObjectAverageVelocity().magnitude;
         if (velocityMagnitude > 1f && bonesCanCollide) {
-            Debug.Log("Particles: " + collision.gameObject);
             AudioManager.Instance.PlaySquishSound();
             CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
             
@@ -307,7 +306,7 @@ public class PlayerController : MonoBehaviour
             Destroy(particles, 0.5f);
         }
 
-        if (collision.gameObject.tag == "Platform" && (bonesCanCollide || !stuckToPlatform)) 
+        if (collision.gameObject.tag == "Platform" && canCollideWithPreviousPlatform && !stuckToPlatform) 
         {
             StopMovement(rb);
 
@@ -317,8 +316,6 @@ public class PlayerController : MonoBehaviour
             }
 
             stuckToPlatform = true;
-            
-            Debug.Log("COLLISION: " + collision.gameObject);
         }
     }
 
@@ -332,7 +329,6 @@ public class PlayerController : MonoBehaviour
             {
                 StopMovement(rb);
                 stuckToPlatform = true;
-                Debug.Log("STAY: " + collision.gameObject);
             }
         }
     }
@@ -361,23 +357,7 @@ public class PlayerController : MonoBehaviour
             if (!areThereCollisions)
             {
                 stuckToPlatform = false;
-                Debug.Log("Player left platform");
             }
-            /*
-            Rigidbody2D curentCollisionRb = boneCollisionDict[bone];
-
-            if (curentCollisionRb == collision.rigidbody)
-            {
-                //boneCollisionDict.Remove(bone);
-
-                //if (boneCollisionDict.Count == 0)
-                //{
-                    // Player no longer in contact with platform
-                //    stuckToPlatform = false;
-                //    Debug.Log("Player not in contact anymore");
-                //}
-            }
-            */
         }
     }
 
