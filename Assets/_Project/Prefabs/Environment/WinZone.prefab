@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 2560887039367791952}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4896578113080572423
 SpriteRenderer:
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 540159050531978573}
   - component: {fileID: 3907739967720255465}
   - component: {fileID: 1563290222102637058}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 9-Sliced (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 2560887039367791952}
   - component: {fileID: 6427043449884741690}
   - component: {fileID: 5319109420871440505}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 9-Sliced
   m_TagString: Untagged
   m_Icon: {fileID: 0}
