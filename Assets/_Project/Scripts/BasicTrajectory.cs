@@ -15,6 +15,9 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
     private PolylinePath polyPath;
     private List<float> lineWidths;
 
+    [SerializeField] private Polyline polyline;
+    [SerializeField] private Disc endOfTrajectoryDisc;
+
     private void Awake()
     {
         polyPath = new PolylinePath();
@@ -34,8 +37,13 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
 
     public void SimulateArc(Vector2 launchPosition, Vector2 directionVector, float velocity, float mass)
     {
+        endOfTrajectoryDisc.enabled = true;
+        polyline.points.Clear();
         polyPath.ClearAllPoints();
+        
         PolylinePoint polylinePoint = new PolylinePoint(launchPosition, Color.green, 1f);
+        
+        polyline.points.Add(polylinePoint);
         polyPath.AddPoint(polylinePoint);
         linePositions.Clear();
         linePositions.Add(launchPosition);
@@ -58,27 +66,40 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
                 
                 point = new PolylinePoint(hit.point, Color.green, 1f);
                 linePositions.Add(hit.point);
+                
+                polyline.points.Add(point);
                 polyPath.AddPoint(point);
                 
                 break;
             }
 
+            polyline.points.Add(point);
             polyPath.AddPoint(point);
             
             linePositions.Add(calculatedPosition);
         }
+        
+        if (linePositions.Count > 0)
+            endOfTrajectoryDisc.transform.position = linePositions[^1];
+
+        polyline.meshOutOfDate = true;
     }
 
     public void ClearArc()
     {
+        polyline.points.Clear();
         polyPath.ClearAllPoints();
         linePositions.Clear();
+
+        endOfTrajectoryDisc.enabled = false;
+        
+        polyline.meshOutOfDate = true;
     }
 
     public override void DrawShapes(Camera cam)
     {
         using( Draw.Command( cam ) ){
-
+            /*
             // set up static parameters. these are used for all following Draw.Line calls
             Draw.LineGeometry = LineGeometry.Flat2D;
             Draw.ThicknessSpace = ThicknessSpace.Pixels;
@@ -89,6 +110,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
             // Draw circle at end of trajectory
             if (linePositions.Count > 0)
                 Draw.Disc(linePositions[^1], Vector3.forward, 0.1f, DiscColors.Flat(Color.green));
+            */
         }
     }
 }

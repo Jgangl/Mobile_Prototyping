@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class Bone_Softbody : MonoBehaviour
 {
-    PlayerController player;
+    private PlayerController player;
+    private Rigidbody2D rb;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponentInParent<PlayerController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -39,5 +36,15 @@ public class Bone_Softbody : MonoBehaviour
         }
 
         player.OnChildCollisionExit2D(this, collision);
+    }
+
+    public void SetRigidbodyIsKinematic(bool isKinematic)
+    {
+        rb.isKinematic = isKinematic;
+    }
+
+    public Rigidbody2D GetRigidbody()
+    {
+        return rb;
     }
 }

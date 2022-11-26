@@ -60,6 +60,12 @@ public class PlayerController : MonoBehaviour
 
     private Dictionary<Transform, Vector2> bonePositions;
 
+    private List<Bone_Softbody> bones;
+
+    private Dictionary<Bone_Softbody, List<Rigidbody2D>> boneCollisionDict; 
+
+    private bool stuckToPlatform = false;
+
     void Start()
     {
         slimeGenerator = GetComponent<SlimeGenerator>();
@@ -71,9 +77,20 @@ public class PlayerController : MonoBehaviour
 
         bonePositions = new Dictionary<Transform, Vector2>();
         SaveBonePositions();
+
+        boneCollisionDict = new Dictionary<Bone_Softbody, List<Rigidbody2D>>();
+
+        bones = new List<Bone_Softbody>();
+        foreach (Transform t in transform)
+        {
+            if (t.TryGetComponent(out Bone_Softbody bone))
+            {
+                bones.Add(bone);
+                boneCollisionDict.Add(bone, new List<Rigidbody2D>());
+            }
+        }
     }
 
-    // Update is called once per frame
     void Update() {
         if (tag != "Player")
             return;
@@ -193,12 +210,16 @@ public class PlayerController : MonoBehaviour
 
     public void StartMovement() {
         StartCoroutine("IgnorePlatformTimer");
+        StartCoroutine("IgnoreBonesTimer");
 
-        if (!rb)
-            rb = GetComponent<Rigidbody2D>();
-
+        stuckToPlatform = false;
         rb.isKinematic = false;
         canMove = false;
+
+        foreach (Bone_Softbody bone in bones)
+        {
+            bone.SetRigidbodyIsKinematic(false);
+        }
     }
 
     public void EnableMovement(bool enabled) {
@@ -251,79 +272,124 @@ public class PlayerController : MonoBehaviour
 
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
         // Don't collide with other bones
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PlayerSim" || isDead)
+        if (collision.gameObject.tag == "Player" || isDead)
+            return;
+
+        if (stuckToPlatform)
             return;
 
         float velocityMagnitude = GetObjectAverageVelocity().magnitude;
-        if (velocityMagnitude > 0.25f && bonesCanCollide) {
-            if (tag == "Player") {
-                AudioManager.Instance.PlaySquishSound();
-                CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
-                
-                slimeGenerator.Generate(collision.contacts[0].point);
-                
-                //StartCoroutine("SquishSoundTimer");
-                StartCoroutine("IgnoreBonesTimer");
+        if (velocityMagnitude > 1f && bonesCanCollide) {
+            Debug.Log("Particles: " + collision.gameObject);
+            AudioManager.Instance.PlaySquishSound();
+            CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
+            
+            slimeGenerator.Generate(collision.contacts[0].point);
+            
+            //StartCoroutine("SquishSoundTimer");
+            //StartCoroutine("IgnoreBonesTimer");
 
-                //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
-                Vector2 currentPosition = transform.position;
-                Vector2 dirOfTravel = (currentPosition - prevPositionTwo).normalized;
+            //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
+            Vector2 currentPosition = transform.position;
+            Vector2 dirOfTravel = (currentPosition - prevPositionTwo).normalized;
 
-                // Find angle between x axis and direction of travel
-                float angle = Mathf.Atan2(dirOfTravel.y, dirOfTravel.x) * Mathf.Rad2Deg;
+            // Find angle between x axis and direction of travel
+            float angle = Mathf.Atan2(dirOfTravel.y, dirOfTravel.x) * Mathf.Rad2Deg;
 
-                // Rotating the angle around an axis (Similar to applying the rotation to a specfic axis)
-                Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+            // Rotating the angle around an axis (Similar to applying the rotation to a specfic axis)
+            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
-                Vector2 colPoint = collision.contacts[0].point;
+            Vector2 colPoint = collision.contacts[0].point;
 
-                // Create particles and apply rotation
-                GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
-                particles.transform.rotation = q;
-                Destroy(particles, 0.5f);
-            }
+            // Create particles and apply rotation
+            GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
+            particles.transform.rotation = q;
+            Destroy(particles, 0.5f);
         }
 
-        if (collision.gameObject.tag == "Platform") {            
-            if (collision.gameObject == previousPlatform) {
-                if (canCollideWithPreviousPlatform) {
-                    StopMovement(rb);
-                    Debug.Log(collision.gameObject);
-                }
+        if (collision.gameObject.tag == "Platform" && (bonesCanCollide || !stuckToPlatform)) 
+        {
+            StopMovement(rb);
+
+            if (boneCollisionDict.ContainsKey(bone))
+            {
+                boneCollisionDict[bone].Add(collision.rigidbody);
             }
-            else {
-                StopMovement(rb);
-            }
+
+            stuckToPlatform = true;
             
             Debug.Log("COLLISION: " + collision.gameObject);
-
-            previousPlatform = collision.gameObject;
         }
     }
 
     public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) {
-        if (collision.gameObject.tag == "Platform") {
-            if (collision.gameObject == previousPlatform && canCollideWithPreviousPlatform) {
-                //StopMovement(bone.GetComponent<Rigidbody2D>());
-                StopMovement(this.rb);
+        if (collision.gameObject.tag == "Platform")
+        {
+            if (stuckToPlatform)
+                return;
+            
+            if (bonesCanCollide)
+            {
+                StopMovement(rb);
+                stuckToPlatform = true;
                 Debug.Log("STAY: " + collision.gameObject);
             }
         }
     }
 
     public void OnChildCollisionExit2D(Bone_Softbody bone, Collision2D collision) {
-        if (collision.gameObject.tag == "Platform") {
-            //Debug.Log("Exit platform top");
+        if (collision.gameObject.tag == "Platform") 
+        {
+            if (boneCollisionDict.ContainsKey(bone))
+            {
+                if (boneCollisionDict[bone].Contains(collision.rigidbody))
+                {
+                    boneCollisionDict[bone].Remove(collision.rigidbody);
+                }
+            }
+
+            bool areThereCollisions = false;
+            foreach ((Bone_Softbody currBone, List<Rigidbody2D> collisions) in boneCollisionDict)
+            {
+                if (collisions.Count > 0)
+                {
+                    areThereCollisions = true;
+                    break;
+                }
+            }
+
+            if (!areThereCollisions)
+            {
+                stuckToPlatform = false;
+                Debug.Log("Player left platform");
+            }
+            /*
+            Rigidbody2D curentCollisionRb = boneCollisionDict[bone];
+
+            if (curentCollisionRb == collision.rigidbody)
+            {
+                //boneCollisionDict.Remove(bone);
+
+                //if (boneCollisionDict.Count == 0)
+                //{
+                    // Player no longer in contact with platform
+                //    stuckToPlatform = false;
+                //    Debug.Log("Player not in contact anymore");
+                //}
+            }
+            */
         }
     }
 
-    IEnumerator IgnoreBonesTimer() {
+    IEnumerator IgnoreBonesTimer() 
+    {
         bonesCanCollide = false;
         yield return new WaitForSeconds(bonesCollisionTime);
         bonesCanCollide = true;
     }
 
-    public void SetVelocity(Vector2 newVelocity) {
+    public void SetVelocity(Vector2 newVelocity) 
+    {
         Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
         foreach(Rigidbody2D bone in bones) {
             bone.velocity = newVelocity;
