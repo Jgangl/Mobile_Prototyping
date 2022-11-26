@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5214733959963714675}
-  - component: {fileID: 5214733959963714674}
+  - component: {fileID: 5214733958665003294}
   m_Layer: 0
   m_Name: TrajectoryPredictor
   m_TagString: Untagged
@@ -27,11 +27,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5214733959963714674
+--- !u!114 &5214733958665003294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,14 +41,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5214733959963714673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d713046830826743b920f4dd9d5a19a, type: 3}
+  m_Script: {fileID: 11500000, guid: f52c7343f4a1a4c47a55032f779c4ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerObject: {fileID: 8077343795506054988, guid: 1d4d874f40e8f6742a679b0251795983, type: 3}
-  _steps: 20
-  collidablesRoot: {fileID: 0}
+  useCullingMasks: 0
+  timeStepInterval: 0.02
   lineTex: {fileID: 2800000, guid: d07b4641011ff47e490ba72225972b16, type: 3}
   lineColor: {r: 0, g: 1, b: 0, a: 1}
   lineType: 0
   lineWidthStart: 13
   lineWidthEnd: 5
+  maxSteps: 60
+  gravityScale: 1
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 64
