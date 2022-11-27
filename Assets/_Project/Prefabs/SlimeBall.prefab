@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 280669549}
   - component: {fileID: 280669551}
   - component: {fileID: 280669550}
+  - component: {fileID: 3786356240270473667}
   m_Layer: 10
   m_Name: Sprite (2)
   m_TagString: Untagged
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,6 +102,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &3786356240270473667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280669548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316cff2ebfaa6484c8339028927718c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnmaskedMaterial: {fileID: 0}
+  MaskType: 0
+  _oldMaskType: 0
 --- !u!1 &466079826
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +128,7 @@ GameObject:
   - component: {fileID: 466079827}
   - component: {fileID: 466079829}
   - component: {fileID: 466079828}
+  - component: {fileID: 7621212674280984914}
   m_Layer: 10
   m_Name: Sprite (1)
   m_TagString: Untagged
@@ -154,7 +171,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -202,6 +219,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &7621212674280984914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466079826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316cff2ebfaa6484c8339028927718c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnmaskedMaterial: {fileID: 0}
+  MaskType: 0
+  _oldMaskType: 0
 --- !u!1 &1359611575
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +245,7 @@ GameObject:
   - component: {fileID: 1359611576}
   - component: {fileID: 1359611578}
   - component: {fileID: 1359611577}
+  - component: {fileID: 8121698905997782746}
   m_Layer: 10
   m_Name: Sprite (3)
   m_TagString: Untagged
@@ -255,7 +288,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -303,6 +336,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &8121698905997782746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359611575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316cff2ebfaa6484c8339028927718c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnmaskedMaterial: {fileID: 0}
+  MaskType: 0
+  _oldMaskType: 0
 --- !u!1 &1912389109
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +362,7 @@ GameObject:
   - component: {fileID: 1912389110}
   - component: {fileID: 1912389112}
   - component: {fileID: 1912389111}
+  - component: {fileID: 3673634825793257812}
   m_Layer: 10
   m_Name: Sprite (4)
   m_TagString: Untagged
@@ -356,7 +405,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -404,6 +453,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &3673634825793257812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912389109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316cff2ebfaa6484c8339028927718c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnmaskedMaterial: {fileID: 0}
+  MaskType: 0
+  _oldMaskType: 0
 --- !u!1 &1933510944
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +479,7 @@ GameObject:
   - component: {fileID: 1933510945}
   - component: {fileID: 1933510947}
   - component: {fileID: 1933510946}
+  - component: {fileID: 5264581093082116249}
   m_Layer: 10
   m_Name: Sprite (5)
   m_TagString: Untagged
@@ -457,7 +522,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -505,6 +570,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &5264581093082116249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933510944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316cff2ebfaa6484c8339028927718c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnmaskedMaterial: {fileID: 0}
+  MaskType: 0
+  _oldMaskType: 0
 --- !u!1 &7473275928338017538
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +596,7 @@ GameObject:
   - component: {fileID: 7473275928338017539}
   - component: {fileID: 7473275928338017536}
   - component: {fileID: 7473275928338017537}
+  - component: {fileID: 543367138730221461}
   m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
@@ -558,7 +639,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -588,7 +669,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!58 &7473275928338017537
 CircleCollider2D:
@@ -606,6 +687,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &543367138730221461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7473275928338017538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316cff2ebfaa6484c8339028927718c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnmaskedMaterial: {fileID: 0}
+  MaskType: 0
+  _oldMaskType: 0
 --- !u!1 &7473275929454565281
 GameObject:
   m_ObjectHideFlags: 0
