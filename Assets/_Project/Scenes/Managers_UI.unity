@@ -1170,6 +1170,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7366699435684704057, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 376110478}
+    - target: {fileID: 7366699435684704057, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366699435684704057, guid: 267f2af6a49201743a54d17754d58484, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -277368833
+      objectReference: {fileID: 0}
     - target: {fileID: 7366699435684704058, guid: 267f2af6a49201743a54d17754d58484, type: 3}
       propertyPath: m_ScreenMatchMode
       value: 0
@@ -1388,7 +1400,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1488721812551170808, guid: 329e532c2267ba445ba3f2c5424e60e4, type: 3}
   m_PrefabInstance: {fileID: 496953380}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &259416436
+--- !u!114 &259416433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1397,14 +1409,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 259416432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 729aad4491e915a41bda2b8325cf757a, type: 3}
+  m_Script: {fileID: 11500000, guid: 449ef5ebbe24720439ec31d15f7b6f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_FocusTracksTarget: 0
   m_FocusTracking: 0
   m_FocusTarget: {fileID: 0}
   m_FocusOffset: 0
-  m_Profile: {fileID: 0}
+  m_Profile: {fileID: 11400000, guid: 76c1242cb8876d647b4d0ca4220419e2, type: 2}
 --- !u!1 &260823296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,7 +1686,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
