@@ -214,8 +214,13 @@ public class Level_Manager : Singleton<Level_Manager> {
 
     private void Initialize()
     {
-        playerSpawnPoint = GameObject.Find("SpawnPoint").transform;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        GameObject spawnPoint = GameObject.Find("SpawnPoint");
+        if (spawnPoint)
+            playerSpawnPoint = GameObject.Find("SpawnPoint").transform;
+
+        GameObject localPlayer = GameObject.FindGameObjectWithTag("Player");
+        if (localPlayer)
+            player = localPlayer.GetComponent<PlayerController>();
     }
 
     IEnumerator LoadLevelCoroutine(int levelIndex)
