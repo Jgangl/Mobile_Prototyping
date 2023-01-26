@@ -13,6 +13,7 @@ public class UI_Manager : Singleton<UI_Manager>
     [SerializeField] GameObject mainMenu;
 
     private Menu currentOpenMenu;
+    private PlayerController player;
 
     bool isLevelSelectionMenuOpen = false;
     bool isSettingsMenuOpen = false;
@@ -21,7 +22,7 @@ public class UI_Manager : Singleton<UI_Manager>
 
     private void Start()
     {
-        Level_Manager.Instance.OnLevelLoaded += OnLevelLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
         Level_Manager.Instance.OnLevelCompleted += LevelManager_OnLevelCompleted;
     }
 
@@ -31,6 +32,8 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void OnLevelSettingsButtonPressed()
     {
+        DisablePlayerInput();
+        
         GameManager.Instance.PauseGame(true);
         
         settingsMenu.Open();
@@ -54,8 +57,11 @@ public class UI_Manager : Singleton<UI_Manager>
         inLevelUI.SetActive(enabled);
     }
     
-    void OnLevelLoaded() 
+    void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
+        player = FindObjectOfType<PlayerController>();
+        if (player == null) Debug.Log("Player was null");
+        
         EnableMainMenu(false);
         EnableLevelSelectionMenu(false, false);
         afterLevelMenu.CloseInstant();
@@ -101,6 +107,8 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void OpenSettingsMenu()
     {
+        DisablePlayerInput();
+        
         settingsMenu.Open();
         settingsMenu.EnableHomeButton(!isMainMenuOpened);
         UpdateMenuStatus(true);
@@ -108,6 +116,8 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void CloseSettingsMenu()
     {
+        EnablePlayerInput();
+        
         if (settingsMenu)
         {
             GameManager.Instance.PauseGame(false);
@@ -178,5 +188,24 @@ public class UI_Manager : Singleton<UI_Manager>
     public void SetCurrentOpenMenu(Menu openMenu)
     {
         currentOpenMenu = openMenu;
+    }
+
+    private void EnablePlayerInput()
+    {
+        if (player)
+            player.EnableMovement(true);
+    }
+
+    private void DisablePlayerInput()
+    {
+        if (player)
+        {
+            Debug.Log("Disabling player input");
+            player.EnableMovement(false);
+        }
+        else
+        {
+            Debug.Log("Player was null");
+        }
     }
 }

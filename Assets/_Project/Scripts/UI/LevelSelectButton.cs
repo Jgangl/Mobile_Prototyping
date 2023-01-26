@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class LevelSelectButton : MonoBehaviour
 {
@@ -14,12 +15,19 @@ public class LevelSelectButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private Transform completeCheckmark;
     [SerializeField] private Transform lockTransform;
+    [SerializeField] private Image bgImage;
 
     private bool bLocked = true;
 
     private void Start()
     {
         EnableLevelLock(bLocked);
+
+        //float randZRot = Random.Range(0f, 360f);
+        //Vector3 originalRot = bgImage.transform.rotation.eulerAngles;
+        //Vector3 newRot = new Vector3(originalRot.x, originalRot.y, randZRot);
+        
+        //bgImage.transform.rotation = Quaternion.Euler(originalRot.x, originalRot.y, randZRot);
     }
 
     public void Setup(int level, Action<int> onClickAction)

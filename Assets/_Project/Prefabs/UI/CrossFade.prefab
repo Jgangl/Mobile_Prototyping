@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 7838066856152078600}
   - component: {fileID: 7838066856152078599}
   - component: {fileID: 7838066856152078596}
+  - component: {fileID: 1360617928}
   m_Layer: 5
   m_Name: CrossFade
   m_TagString: Untagged
@@ -111,7 +112,7 @@ RectTransform:
   m_Children:
   - {fileID: 7838066856013727015}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -179,7 +180,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1911
 --- !u!225 &7838066856152078599
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -189,8 +190,8 @@ CanvasGroup:
   m_GameObject: {fileID: 7838066856152078601}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!95 &7838066856152078596
 Animator:
@@ -200,7 +201,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7838066856152078601}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: b8e9a3d8c070f114baf6468ceaf3113d, type: 2}
   m_CullingMode: 0
@@ -212,3 +213,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1360617928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7838066856152078601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb98f6af82595c4fa029d5ae699b041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keepAlive: 0

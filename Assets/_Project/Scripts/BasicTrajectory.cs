@@ -15,6 +15,9 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
     private PolylinePath polyPath;
     private List<float> lineWidths;
 
+    [SerializeField] private Color lineColor;
+    [SerializeField] private Color capColor;
+
     [SerializeField] private Polyline polyline;
     [SerializeField] private Disc endOfTrajectoryDisc;
 
@@ -36,6 +39,8 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
 
         polyline = FindObjectOfType<Polyline>();
         endOfTrajectoryDisc = FindObjectOfType<Disc>();
+
+        endOfTrajectoryDisc.Color = capColor;
     }
 
     public void SimulateArc(Vector2 launchPosition, Vector2 directionVector, float velocity, float mass)
@@ -44,7 +49,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
         polyline.points.Clear();
         polyPath.ClearAllPoints();
         
-        PolylinePoint polylinePoint = new PolylinePoint(launchPosition, Color.green, 1f);
+        PolylinePoint polylinePoint = new PolylinePoint(launchPosition, lineColor, 1f);
         
         polyline.points.Add(polylinePoint);
         polyPath.AddPoint(polylinePoint);
@@ -60,14 +65,14 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
             Vector2 previousPos = linePositions[i - 1];
             Vector2 rayDirection = calculatedPosition - previousPos;
             
-            PolylinePoint point = new PolylinePoint(calculatedPosition, Color.green, 1f);
+            PolylinePoint point = new PolylinePoint(calculatedPosition, lineColor, 1f);
             
             RaycastHit2D hit = Physics2D.Raycast(previousPos, rayDirection, rayDirection.magnitude, collisionLayers);
             if (hit.collider)
             {
                 // Collided with something
                 
-                point = new PolylinePoint(hit.point, Color.green, 1f);
+                point = new PolylinePoint(hit.point, lineColor, 1f);
                 linePositions.Add(hit.point);
                 
                 polyline.points.Add(point);

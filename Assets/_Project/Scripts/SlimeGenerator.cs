@@ -8,7 +8,7 @@ using UnityEngine.Pool;
 
 public class SlimeGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject slimeBallPrefab;
+    [SerializeField] private GameObject[] slimeBallPrefabs;
 
     private ObjectPool<GameObject> slimePool;
 
@@ -59,7 +59,9 @@ public class SlimeGenerator : MonoBehaviour
 
     private GameObject CreatePooledItem()
     {
-        GameObject slimeBall = Instantiate(slimeBallPrefab, Vector2.zero, Quaternion.identity);
+        GameObject randomSlimePrefab = GetRandomSlimePrefab();
+        
+        GameObject slimeBall = Instantiate(randomSlimePrefab, Vector2.zero, Quaternion.identity);
         slimeBall.SetActive(false);
         /*
         foreach (Transform t in slimeBall.transform)
@@ -130,5 +132,12 @@ public class SlimeGenerator : MonoBehaviour
     private void OnDestroyPoolObject(GameObject slime)
     {
         Destroy(slime);
+    }
+
+    private GameObject GetRandomSlimePrefab()
+    {
+        int randIndex = Random.Range(0, slimeBallPrefabs.Length);
+
+        return slimeBallPrefabs[randIndex];
     }
 }

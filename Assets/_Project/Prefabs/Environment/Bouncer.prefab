@@ -226,10 +226,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.2
   _oldSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  _oldType: 5
+  _oldType: 4
 --- !u!1 &7483095515952374229
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,10 +345,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.2
   _oldSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  _oldType: 5
+  _oldType: 4
 --- !u!1 &9014936487527149994
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.2
   _oldSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  _oldType: 5
+  _oldType: 4

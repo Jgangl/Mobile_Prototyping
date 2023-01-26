@@ -65,7 +65,10 @@ public class LevelSelection : MonoBehaviour
 
     private LevelSelectButton GetLevelButton(int level)
     {
-        return levelButtons[level - 1];
+        if (levelButtons.Count > level - 1)
+            return levelButtons[level - 1];
+
+        return null;
     }
 
     private void Level_Manager_OnLevelCompleted(int levelCompleted)
@@ -74,7 +77,13 @@ public class LevelSelection : MonoBehaviour
         GetLevelButton(levelCompleted).Complete();
         
         // Unlock next level
-        GetLevelButton(levelCompleted + 1).Unlock();
+        LevelSelectButton nextLevelButton = GetLevelButton(levelCompleted + 1);
+        if (nextLevelButton)
+            nextLevelButton.Unlock();
+        else
+        {
+            Debug.Log("Next Level Button null");
+        }
     }
 
     public void EnableLevelSelectionMenu(bool enabled, bool withAnimation)

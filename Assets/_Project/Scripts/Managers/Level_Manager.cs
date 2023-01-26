@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -35,7 +38,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         managersUIScene = SceneManager.GetSceneAt(0);
 
         Scene currentOpenScene = managersUIScene;
-        if (SceneManager.sceneCount > 2)
+        if (SceneManager.sceneCount >= 2)
             currentOpenScene = SceneManager.GetSceneAt(1);
         
         if (currentOpenScene != managersUIScene)
@@ -49,7 +52,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         
         Initialize();
 
-        //UpdateCurrentLevel();
+        numLevels = SceneManager.sceneCountInBuildSettings - 1;
     }
 
     private void Update() 
@@ -266,6 +269,46 @@ public class Level_Manager : Singleton<Level_Manager> {
         OnLevelReset?.Invoke();
 
         yield return Fader.Instance.FadeInCoroutine(1.5f);
+    }
+
+    [Button("Update Build Levels")]
+    public void UpdateBuildLevels()
+    {
+        Debug.Log("Updating build scenes");
+        
+        string scenesDir = "Assets/_Project/Scenes/";
+        string levelsDir = scenesDir + "Levels/";
+        string uiScenePath = scenesDir + "Managers_UI.unity";
+
+        DirectoryInfo levelsInfo = new DirectoryInfo(levelsDir);
+        FileInfo[] levelsFileInfo = levelsInfo.GetFiles();
+        List<FileInfo> levelFiles = new List<FileInfo>();
+
+        foreach (FileInfo fileInfo in levelsFileInfo)
+        {
+            bool metaFile = fileInfo.Name.Contains(".meta");
+
+            if (metaFile) continue;
+            
+            levelFiles.Add(fileInfo);
+        }
+
+        // Number of levels + UI scene
+        EditorBuildSettingsScene[] scenes = new EditorBuildSettingsScene[levelFiles.Count + 1];
+        
+        scenes[0] = new EditorBuildSettingsScene(uiScenePath, true);
+        Debug.Log("  " + uiScenePath);
+
+        for (int i = 1; i < scenes.Length; i++)
+        {
+            string levelPath = levelsDir + levelFiles[i - 1].Name;
+            scenes[i] = new EditorBuildSettingsScene(levelPath, true);
+            
+            Debug.Log("  " + levelPath);
+        }
+
+        // Set editor build settings scenes
+        EditorBuildSettings.scenes = scenes;
     }
 
     public int GetHighestCompletedLevel()

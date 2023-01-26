@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rb;
 
-    [SerializeField]
+    [SerializeField] 
     private bool canMove;
 
     [SerializeField]
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private GameObject previousPlatform;
     private bool canCollideWithPreviousPlatform = true;
 
-    [SerializeField]
+    [SerializeField] 
     private float platformIgnoreTime = 0.25f;
 
     public float maxSwipeLength = 300f;
@@ -38,7 +38,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentSwipeForce;
 
     private TrajectoryPredictor trajectoryPredictor;
-    [SerializeField] private BasicTrajectory basicTrajectory;
+    [SerializeField] 
+    private BasicTrajectory basicTrajectory;
     
     public float squishSoundTime = 0.25f;
     //private bool canPlaySquishSound = true;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 prevPositionTwo;
 
     public bool isSimulated = false;
+    [SerializeField]
     private bool disableInput = false;
 
     private bool isDead;
@@ -286,7 +288,7 @@ public class PlayerController : MonoBehaviour
             slimeGenerator.Generate(collision.contacts[0].point);
             
             //StartCoroutine("SquishSoundTimer");
-            //StartCoroutine("IgnoreBonesTimer");
+            StartCoroutine("IgnoreBonesTimer");
 
             //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
             Vector2 currentPosition = transform.position;

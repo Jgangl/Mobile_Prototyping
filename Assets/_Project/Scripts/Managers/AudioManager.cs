@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Random = UnityEngine.Random;
 
 public class AudioManager : Singleton<AudioManager>
 {
@@ -12,21 +14,31 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioSource backgroundSource;
     [SerializeField] private AudioSource squishSource;
     
-    public float[] pitchValues;
-    public AudioClip[] squishClips;
-
-    public void PlaySquishSound() {
+    //public float[] pitchValues;
+    public SquishAudioClip[] squishClips;
+    
+    public void PlaySquishSound() 
+    {
         if (!enableSoundFX)
             return;
 
-        squishSource.clip = squishClips[Random.Range(0, squishClips.Length)];
-        squishSource.pitch = pitchValues[Random.Range(0, pitchValues.Length)];
+        int randClip = Random.Range(0, squishClips.Length);
+
+        squishSource.clip = squishClips[randClip].GetAudioClip();
+        squishSource.pitch = squishClips[randClip].GetRandomPitch();
         squishSource.Stop();
         squishSource.Play();
     }
 
-    private void UpdateMusicStatus() {
-        if (enableMusic) {
+    private void Start()
+    {
+        UpdateMusicStatus();
+    }
+
+    private void UpdateMusicStatus() 
+    {
+        if (enableMusic) 
+        {
             backgroundSource.Play();
         }
         else
@@ -38,38 +50,83 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    private void UpdateSoundFXStatus() {
-        if (enableSoundFX) {
-            // Stop all Sound FX Sources
-            squishSource.Play();
-        }
-        else
+    private void UpdateSoundFXStatus() 
+    {
+        if (!enableSoundFX) 
         {
+            // Stop all Sound FX Sources
             squishSource.Stop();
         }
     }
 
-    public void OnSoundFXChecked(bool isChecked) {
+    public void OnSoundFXChecked(bool isChecked) 
+    {
         enableSoundFX = isChecked;
         UpdateSoundFXStatus();
     }
 
-    public void OnMusicChecked(bool isChecked) {
+    public void OnMusicChecked(bool isChecked) 
+    {
         enableMusic = isChecked;
         UpdateMusicStatus();
     }
 
-    public void UpdateMusicEnabled(bool enabled) {
-        if (enableMusic != enabled) {
+    public void UpdateMusicEnabled(bool enabled) 
+    {
+        if (enableMusic != enabled) 
+        {
             enableMusic = enabled;
             UpdateMusicStatus();
         }
     }
 
-    public void UpdateSoundFXEnabled(bool enabled) {
-        if (enableSoundFX != enabled) {
+    public void UpdateSoundFXEnabled(bool enabled) 
+    {
+        if (enableSoundFX != enabled) 
+        {
             enableSoundFX = enabled;
             UpdateSoundFXStatus();
         }
+    }
+
+    public void PlayOpenMenuSound()
+    {
+        if (!enableSoundFX) return;
+
+        squishSource.clip = squishClips[0].GetAudioClip();
+        squishSource.pitch = 0.8f;
+        
+        squishSource.Stop();
+        squishSource.Play();
+    }
+    
+    public void PlayCloseMenuSound()
+    {
+        if (!enableSoundFX) return;
+        
+        squishSource.clip = squishClips[0].GetAudioClip();
+        squishSource.pitch = 0.5f;
+        
+        squishSource.Stop();
+        squishSource.Play();
+    }
+}
+
+[System.Serializable]
+public class SquishAudioClip
+{
+    [SerializeField] AudioClip clip;
+    [SerializeField] float minPitch;
+    [SerializeField] float maxPitch;
+
+
+    public AudioClip GetAudioClip()
+    {
+        return clip;
+    }
+
+    public float GetRandomPitch()
+    {
+        return Random.Range(minPitch, maxPitch);
     }
 }

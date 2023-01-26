@@ -115,10 +115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.75
   _oldSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  _oldType: 5
+  _oldType: 4
 --- !u!1 &4821589866644960210
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,10 +244,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.2
   _oldSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  _oldType: 5
+  _oldType: 4
 --- !u!1 &4821589866681845360
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,10 +363,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.75
   _oldSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  _oldType: 5
+  _oldType: 4
 --- !u!1 &4821589867306474516
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,10 +482,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.75
   _oldSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  _oldType: 5
+  _oldType: 4
 --- !u!1 &4821589867722608645
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,10 +611,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.2
   _oldSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  _oldType: 5
+  _oldType: 4
 --- !u!1 &4821589868286255406
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,10 +730,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  maskType: 5
+  maskType: 4
   alphaCutoff: 0.75
   _oldSprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  _oldType: 5
+  _oldType: 4
 --- !u!1 &7222166190620185677
 GameObject:
   m_ObjectHideFlags: 0
