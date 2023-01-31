@@ -387,6 +387,8 @@ public class PlayerController : MonoBehaviour
     {
         SetIsDead(false);
         SetVelocity(Vector2.zero);
+        
+        StartMovement();
 
         transform.position = newPosition;
 
