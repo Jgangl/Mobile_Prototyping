@@ -17,6 +17,9 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
 
     [SerializeField] private Color lineColor;
     [SerializeField] private Color capColor;
+    [SerializeField] private float lineThickness = 0.1f;
+    [SerializeField] private float endCapRadius = 0.2f;
+    [SerializeField] private int numLineSkipPoints;
 
     [SerializeField] private Polyline polyline;
     [SerializeField] private Disc endOfTrajectoryDisc;
@@ -45,13 +48,13 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
 
     public void SimulateArc(Vector2 launchPosition, Vector2 directionVector, float velocity, float mass)
     {
-        endOfTrajectoryDisc.enabled = true;
-        polyline.points.Clear();
+        //endOfTrajectoryDisc.enabled = true;
+        //polyline.points.Clear();
         polyPath.ClearAllPoints();
         
         PolylinePoint polylinePoint = new PolylinePoint(launchPosition, lineColor, 1f);
-        
-        polyline.points.Add(polylinePoint);
+
+        //polyline.points.Add(polylinePoint);
         polyPath.AddPoint(polylinePoint);
         linePositions.Clear();
         linePositions.Add(launchPosition);
@@ -75,13 +78,13 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
                 point = new PolylinePoint(hit.point, lineColor, 1f);
                 linePositions.Add(hit.point);
                 
-                polyline.points.Add(point);
+                //polyline.points.Add(point);
                 polyPath.AddPoint(point);
                 
                 break;
             }
 
-            polyline.points.Add(point);
+            //polyline.points.Add(point);
             polyPath.AddPoint(point);
             
             linePositions.Add(calculatedPosition);
@@ -90,7 +93,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
         if (linePositions.Count > 0)
             endOfTrajectoryDisc.transform.localPosition = linePositions[^1];
 
-        polyline.meshOutOfDate = true;
+        //polyline.meshOutOfDate = true;
     }
 
     public void ClearArc()
@@ -107,6 +110,47 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
     public override void DrawShapes(Camera cam)
     {
         using( Draw.Command( cam ) ){
+            
+            if (linePositions.Count == 0)
+                return;
+            
+            
+            //Draw.Thickness = lineThickness;
+            Draw.Color = lineColor;
+            Draw.BlendMode = ShapesBlendMode.Opaque;
+            
+            int currPointSkips = 0;
+            for (int i = 0; i < linePositions.Count - 1; i++)
+            {
+                currPointSkips++;
+                if (currPointSkips < numLineSkipPoints)
+                    continue;
+                
+                
+                
+                currPointSkips = 0;
+                
+                // Draw point
+                Vector3 point = linePositions[i];
+
+                float distToEndCap = Vector2.Distance(point, linePositions[^1]);
+                
+                // Don't draw points too close to end cap
+                if (distToEndCap < endCapRadius + lineThickness)
+                    break;
+                
+                point.z = point.z - 0.5f;
+                
+                Draw.Disc(point, Quaternion.identity, lineThickness);
+            }
+
+            Draw.Color = capColor;
+
+            Vector3 endCapPos = linePositions[^1];
+            endCapPos.z += 0.5f;
+            
+            Draw.Disc(endCapPos, Quaternion.identity, endCapRadius);
+
             /*
             // set up static parameters. these are used for all following Draw.Line calls
             Draw.LineGeometry = LineGeometry.Flat2D;

@@ -180,7 +180,7 @@ public class UI_Manager : Singleton<UI_Manager>
         EnableInLevelUI(false);
         TimeDilator.ResumeNormalTime();
         
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         
         yield return StartCoroutine(Fader.Instance.FadeInCoroutine(1f));
     }
@@ -200,12 +200,7 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         if (player)
         {
-            Debug.Log("Disabling player input");
             player.EnableMovement(false);
-        }
-        else
-        {
-            Debug.Log("Player was null");
         }
     }
 }
