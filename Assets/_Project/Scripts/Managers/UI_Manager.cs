@@ -12,21 +12,22 @@ public class UI_Manager : Singleton<UI_Manager>
     [SerializeField] GameObject inLevelUI;
     [SerializeField] GameObject mainMenu;
 
-    private Menu currentOpenMenu;
-    private PlayerController player;
+    Menu currentOpenMenu;
+    PlayerController player;
 
     bool isLevelSelectionMenuOpen = false;
     bool isSettingsMenuOpen = false;
     bool isMenuOpened = false;
     bool isMainMenuOpened = true;
 
-    private void Start()
+    void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         Level_Manager.Instance.OnLevelCompleted += LevelManager_OnLevelCompleted;
     }
 
-    public void OnStartButtonPressed() {
+    public void OnStartButtonPressed() 
+    {
         GameManager.Instance.StartGame();
     }
 
@@ -40,11 +41,12 @@ public class UI_Manager : Singleton<UI_Manager>
         settingsMenu.EnableHomeButton(true);
     }
 
-    public void OnQuitButtonPressed() {
+    public void OnQuitButtonPressed() 
+    {
         GameManager.Instance.QuitGame();
     }
 
-    private void EnableLevelSelectionMenu(bool enabled, bool withAnimation)
+    void EnableLevelSelectionMenu(bool enabled, bool withAnimation)
     {
         levelSelection.EnableLevelSelectionMenu(enabled, withAnimation);
         
@@ -52,7 +54,7 @@ public class UI_Manager : Singleton<UI_Manager>
         UpdateMenuStatus(enabled);
     }
 
-    private void EnableInLevelUI(bool enabled)
+    void EnableInLevelUI(bool enabled)
     {
         inLevelUI.SetActive(enabled);
     }
@@ -73,7 +75,7 @@ public class UI_Manager : Singleton<UI_Manager>
         StartCoroutine("LevelCompleteRoutine");
     }
 
-    private IEnumerator LevelCompleteRoutine()
+    IEnumerator LevelCompleteRoutine()
     {
         UpdateMenuStatus(true);
 
@@ -86,22 +88,25 @@ public class UI_Manager : Singleton<UI_Manager>
         Fader.Instance.FadeInInstant();
     }
 
-    private void EnableMainMenu(bool enabled)
+    void EnableMainMenu(bool enabled)
     {
         isMainMenuOpened = enabled;
         mainMenu.SetActive(enabled);
     }
 
-    private void UpdateMenuStatus(bool menuOpened) {
+    void UpdateMenuStatus(bool menuOpened) 
+    {
         isMenuOpened = menuOpened;
         GameManager.Instance.SetMenuOpened(isMenuOpened);
     }
     
-    public void OpenLevelSelectionMenu() {
+    public void OpenLevelSelectionMenu() 
+    {
         EnableLevelSelectionMenu(true, true);
     }
     
-    public void CloseLevelSelectionMenu() {
+    public void CloseLevelSelectionMenu() 
+    {
         EnableLevelSelectionMenu(false, true);
     }
 
@@ -127,37 +132,44 @@ public class UI_Manager : Singleton<UI_Manager>
         }
     }
 
-    public void OnRestartButtonPressed() {
+    public void OnRestartButtonPressed() 
+    {
         Debug.Log("RESTART BUTTON");
         Level_Manager.Instance.RestartCurrentLevel();
     }
 
-    public void OnMusicSwitch_On() {
+    public void OnMusicSwitch_On() 
+    {
         print("Music Switch ON");
         AudioManager.Instance.OnMusicChecked(true);
     }
 
-    public void OnMusicSwitch_Off() {
+    public void OnMusicSwitch_Off() 
+    {
         print("Music Switch OFF");
         AudioManager.Instance.OnMusicChecked(false);
     }
 
-    public void OnSoundFXSwitch_On() {
+    public void OnSoundFXSwitch_On() 
+    {
         print("SFX Switch ON");
         AudioManager.Instance.OnSoundFXChecked(true);
     }
 
-    public void OnSoundFXSwitch_Off() {
+    public void OnSoundFXSwitch_Off() 
+    {
         print("SFX Switch OFF");
         AudioManager.Instance.OnSoundFXChecked(false);
     }
     
-    public void OnCameraShakeSwitch_On() {
+    public void OnCameraShakeSwitch_On() 
+    {
         print("Camera Shake Switch ON");
         CinemachineShake.Instance.EnableCameraShake();
     }
 
-    public void OnCameraShakeSwitch_Off() {
+    public void OnCameraShakeSwitch_Off() 
+    {
         print("Camera Shake Switch OFF");
         CinemachineShake.Instance.DisableCameraShake();
     }
@@ -167,7 +179,7 @@ public class UI_Manager : Singleton<UI_Manager>
         StartCoroutine(ReturnToMainMenuRoutine());
     }
 
-    private IEnumerator ReturnToMainMenuRoutine()
+    IEnumerator ReturnToMainMenuRoutine()
     {
         yield return Fader.Instance.FadeOutCoroutine(0.5f);
 
@@ -190,13 +202,13 @@ public class UI_Manager : Singleton<UI_Manager>
         currentOpenMenu = openMenu;
     }
 
-    private void EnablePlayerInput()
+    void EnablePlayerInput()
     {
         if (player)
             player.EnableMovement(true);
     }
 
-    private void DisablePlayerInput()
+    void DisablePlayerInput()
     {
         if (player)
         {

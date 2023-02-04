@@ -1,78 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
-
-    Rigidbody2D rb;
-
-    [SerializeField] 
-    private bool canMove;
-
-    [SerializeField]
+    [SerializeField] const float SWIPE_LENGTH_THRESHOLD = 0.25f;
     [Range(0.0f, 1.0f)]
-    private float swipeLengthVariableGain = 1.0f;
-
-    private float swipeLengthFlatGain = 0.01f;
-
-    private GameObject previousPlatform;
-    private bool canCollideWithPreviousPlatform = true;
-
-    [SerializeField] 
-    private float platformIgnoreTime = 0.25f;
-
-    public float maxSwipeLength = 300f;
-
-    private Vector2 fingerDownPos;
-    private Vector2 fingerCurrentPos;
-    private Vector2 fingerUpPos;
-
-    private bool mouseHeldDown = false;
-
-    private Vector2 prevFingerPos;
-
-    public float SWIPE_LENGTH_THRESHOLD = 0.25f;
-
-    private Vector2 currentSwipeForce;
-
-    private TrajectoryPredictor trajectoryPredictor;
-    [SerializeField] 
-    private BasicTrajectory basicTrajectory;
+    [SerializeField] float swipeLengthVariableGain = 1.0f;
+    [SerializeField] float swipeLengthFlatGain = 0.01f;
+    [SerializeField] float speed;
+    [SerializeField] GameObject hitParticles;
+    [SerializeField] bool canMove;
+    [SerializeField] bool disableInput;
+    [SerializeField] float bonesCollisionTime = 0.05f;
+    [SerializeField] float platformIgnoreTime = 0.25f;
+    [SerializeField] float maxSwipeLength     = 300f;
     
-    public float squishSoundTime = 0.25f;
-    //private bool canPlaySquishSound = true;
-
-    public bool bonesCanCollide = true;
-    public float bonesCollisionTime = 0.05f;
-
-    public GameObject hitParticles;
-
-    private Vector2 prevPosition;
-    private Vector2 prevPositionTwo;
-
-    public bool isSimulated = false;
-    [SerializeField]
-    private bool disableInput = false;
-
-    private bool isDead;
-
-    private SlimeGenerator slimeGenerator;
-
-    private Dictionary<Transform, Vector2> bonePositions;
-
-    private List<Bone_Softbody> bones;
-
-    private Dictionary<Bone_Softbody, List<Rigidbody2D>> boneCollisionDict; 
-
-    private bool stuckToPlatform = false;
+    GameObject previousPlatform;
+    bool canCollideWithPreviousPlatform = true;
+    bool mouseHeldDown;
+    Rigidbody2D rb;
+    BasicTrajectory basicTrajectory;
+    SlimeGenerator slimeGenerator;
+    
+    Vector2 fingerDownPos;
+    Vector2 fingerCurrentPos;
+    Vector2 prevFingerPos;
+    Vector2 prevPosition;
+    Vector2 prevPositionTwo;
+    Vector2 currentSwipeForce;
+    
+    Dictionary<Transform, Vector2> bonePositions;
+    List<Bone_Softbody> bones;
+    List<Rigidbody2D> boneRigidbodies;
+    bool bonesCanCollide = true;
+    Dictionary<Bone_Softbody, List<Rigidbody2D>> boneCollisionDict;
+    bool stuckToPlatform = false;
+    bool isDead;
+    MovingObject CurrentMovingObject;
+    FixedJoint2D MovingJoint;
 
     void Start()
     {
         slimeGenerator = GetComponent<SlimeGenerator>();
         rb = GetComponent<Rigidbody2D>();
         basicTrajectory = GetComponent<BasicTrajectory>();
+
+        MovingJoint = GetComponent<FixedJoint2D>();
 
         canMove = false;
         isDead = false;
@@ -83,113 +58,84 @@ public class PlayerController : MonoBehaviour
         boneCollisionDict = new Dictionary<Bone_Softbody, List<Rigidbody2D>>();
 
         bones = new List<Bone_Softbody>();
+        boneRigidbodies = new List<Rigidbody2D>();
+        
         foreach (Transform t in transform)
         {
             if (t.TryGetComponent(out Bone_Softbody bone))
             {
                 bones.Add(bone);
+                boneRigidbodies.Add(bone.GetRigidbody());
                 boneCollisionDict.Add(bone, new List<Rigidbody2D>());
             }
         }
     }
 
-    void Update() {
-        if (tag != "Player")
-            return;
-
+    void Update() 
+    {
         if (disableInput)
             return;
-        /*
-        Touch touch = Input.touches[0];
-        if (touch.phase == TouchPhase.Began || Input.GetMouseButtonDown(0)) {
-            fingerDownPos = touch.position;
-        }
-        else if (touch.phase == TouchPhase.Moved || mouseMoved) {
-            fingerCurrentPos = touch.position;
-
-            // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
-            float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
-            if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD) {
-                // Calculate current position difference
-                Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
-                float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
-
-                // Calculate force
-                currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
-
-                // Simulate launch
-                trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
-            }
-
-        }
-        else if (touch.phase == TouchPhase.Ended) {
-            fingerUpPos = touch.position;
-            trajectoryPredictor.ClearSimulation();
-            // Enable Movement
-            StartMovement();
-            // Add swipe force
-            rb.AddForce(currentSwipeForce);
-        }
         
-        prevFingerPos = touch.position;
-        */
-
         Vector2 mousePosition = Input.mousePosition;
         bool mouseMoved = Vector2.Distance(prevFingerPos, mousePosition) >= 0.25f;
-        if (canMove) {
-            if (Input.GetMouseButtonDown(0)) {
+        if (canMove) 
+        {
+            if (Input.GetMouseButtonDown(0)) 
+            {
                 fingerDownPos = Input.mousePosition;
                 mouseHeldDown = true;
             }
-            else if (Input.GetMouseButtonUp(0)) {
-                fingerUpPos = Input.mousePosition;
+            else if (Input.GetMouseButtonUp(0)) 
+            {
                 mouseHeldDown = false;
-                if (trajectoryPredictor)
-                    trajectoryPredictor.ClearSimulation();
-                
+
                 if (basicTrajectory)
                     basicTrajectory.ClearArc();
                 
-                if (Mathf.Abs(currentSwipeForce.x) >= 0.01f || Mathf.Abs(currentSwipeForce.y) >= 0.01f) {
+                if (Mathf.Abs(currentSwipeForce.x) >= 0.01f || Mathf.Abs(currentSwipeForce.y) >= 0.01f) 
+                {
                     // Enable Movement
-                    Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
+                    //Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
                     StartMovement();
 
                     // Add swipe force
-                    foreach (Rigidbody2D bone in bones)
+                    foreach (Rigidbody2D bone in boneRigidbodies)
                         bone.AddForce(currentSwipeForce);
                 }
 
                 currentSwipeForce = Vector2.zero;
             }
-            else if (mouseHeldDown && mouseMoved) {
+            else if (mouseHeldDown && (mouseMoved || CurrentMovingObject != null)) 
+            {
                 fingerCurrentPos = Input.mousePosition;
 
                 // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
-                float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
-                if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD) {
-                    // Calculate current position difference
-                    Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
-                    float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
+//                float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
+//                if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD)
+//                {
 
-                    // Clamp swipe length
-                    if (currSwipeLength > maxSwipeLength)
-                        currSwipeLength = maxSwipeLength;
+                // Calculate current position difference
+                Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
+                float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
 
-                    // Calculate force
-                    currentSwipeForce = (currSwipeDirection * -1) * speed * (currSwipeLength * swipeLengthVariableGain * swipeLengthFlatGain);
-                    // Simulate launch
-                    if (trajectoryPredictor)
-                        trajectoryPredictor.SimulateLaunch(gameObject.transform, currentSwipeForce);
+                // Clamp swipe length
+                if (currSwipeLength > maxSwipeLength)
+                    currSwipeLength = maxSwipeLength;
 
-                    if (basicTrajectory)
-                    {
-                        basicTrajectory.SimulateArc(gameObject.transform.position, 
-                            currentSwipeForce.normalized,
-                            currentSwipeForce.magnitude,
-                            1f);
-                    }
+                // Calculate force
+                currentSwipeForce = (currSwipeDirection * -1) * speed * currSwipeLength * swipeLengthVariableGain *
+                                    swipeLengthFlatGain;
+                
+                // Simulate launch
+                if (basicTrajectory)
+                {
+                    basicTrajectory.SimulateArc(gameObject.transform.position, 
+                        currentSwipeForce.normalized,
+                        currentSwipeForce.magnitude,
+                        1f);
                 }
+                
+                //}
             }
         }
 
@@ -204,19 +150,23 @@ public class PlayerController : MonoBehaviour
 #endif
     }
 
-    private void StopMovement(Rigidbody2D rb) {
+    void StopMovement() 
+    {
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
         canMove = true;
     }
 
-    public void StartMovement() {
+    public void StartMovement() 
+    {
         StartCoroutine("IgnorePlatformTimer");
         StartCoroutine("IgnoreBonesTimer");
 
         stuckToPlatform = false;
         rb.isKinematic = false;
         canMove = false;
+        
+        DisableMovingJoint();
 
         foreach (Bone_Softbody bone in bones)
         {
@@ -224,70 +174,52 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EnableMovement(bool enabled) {
-        disableInput = !enabled;
+    public void EnableMovement(bool newEnabled) 
+    {
+        disableInput = !newEnabled;
     }
 
-    IEnumerator IgnorePlatformTimer() {
+    IEnumerator IgnorePlatformTimer() 
+    {
         canCollideWithPreviousPlatform = false;
         yield return new WaitForSeconds(platformIgnoreTime);
         canCollideWithPreviousPlatform = true;
     }
-    /*
-    IEnumerator SquishSoundTimer() {
-        canPlaySquishSound = false;
-        yield return new WaitForSeconds(squishSoundTime);
-        canPlaySquishSound = true;
-    }
-    */
-    private Vector2 GetObjectAveragePosition() {
-        Vector3 avgPos = Vector2.zero;
 
-        // Get all rigidbodies of bones
-        Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
-        if (bones.Length == 0)
-            return Vector2.zero;
-
-        // Average all bone positions
-        foreach (Rigidbody2D rb in bones) {
-            avgPos += rb.transform.localPosition;
-        }
-
-        return (avgPos / bones.Length);
-    }
-
-    public Vector2 GetObjectAverageVelocity() {
+    public Vector2 GetObjectAverageVelocity() 
+    {
         Vector2 totalVelocity = Vector2.zero;
 
         // Get all rigidbodies of bones
-        Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
-        if (bones.Length == 0)
+        if (bones.Count == 0)
             return Vector2.zero;
 
         // Average all bone positions
-        foreach (Rigidbody2D rb in bones) {
-            totalVelocity += rb.velocity;
+        foreach (Rigidbody2D boneRb in boneRigidbodies) 
+        {
+            totalVelocity += boneRb.velocity;
         }
 
-        return (totalVelocity / bones.Length);
+        return (totalVelocity / bones.Count);
     }
 
-    public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) {
+    public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) 
+    {
         // Don't collide with other bones
-        if (collision.gameObject.tag == "Player" || isDead)
+        if (collision.gameObject.CompareTag("Player") || isDead)
             return;
 
         if (stuckToPlatform)
             return;
 
         float velocityMagnitude = GetObjectAverageVelocity().magnitude;
-        if (velocityMagnitude > 1f && bonesCanCollide) {
+        if (velocityMagnitude > 1f && bonesCanCollide) 
+        {
             AudioManager.Instance.PlaySquishSound();
             CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
             
-            slimeGenerator.Generate(collision.contacts[0].point);
+            slimeGenerator.Generate(collision.contacts[0].point, collision.gameObject);
             
-            //StartCoroutine("SquishSoundTimer");
             StartCoroutine("IgnoreBonesTimer");
 
             //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
@@ -308,9 +240,25 @@ public class PlayerController : MonoBehaviour
             Destroy(particles, 0.5f);
         }
 
-        if (collision.gameObject.tag == "Platform" && canCollideWithPreviousPlatform && !stuckToPlatform) 
+        if (collision.gameObject.CompareTag("Platform") && canCollideWithPreviousPlatform && !stuckToPlatform) 
         {
-            StopMovement(rb);
+            StopMovement();
+
+            if (boneCollisionDict.ContainsKey(bone))
+            {
+                boneCollisionDict[bone].Add(collision.rigidbody);
+            }
+
+            stuckToPlatform = true;
+        }
+        else if (collision.gameObject.TryGetComponent(out MovingObject movingObject) && canCollideWithPreviousPlatform && !stuckToPlatform)
+        {
+            rb.velocity = Vector2.zero;
+            canMove = true;
+            
+            EnableMovingJoint(movingObject.GetComponent<Rigidbody2D>());
+
+            CurrentMovingObject = movingObject;
 
             if (boneCollisionDict.ContainsKey(bone))
             {
@@ -321,22 +269,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) {
-        if (collision.gameObject.tag == "Platform")
+    public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) 
+    {
+        if (collision.gameObject.CompareTag("Platform"))
         {
             if (stuckToPlatform)
                 return;
             
             if (bonesCanCollide)
             {
-                StopMovement(rb);
+                StopMovement();
                 stuckToPlatform = true;
             }
         }
     }
 
-    public void OnChildCollisionExit2D(Bone_Softbody bone, Collision2D collision) {
-        if (collision.gameObject.tag == "Platform") 
+    public void OnChildCollisionExit2D(Bone_Softbody bone, Collision2D collision) 
+    {
+        if (collision.gameObject.CompareTag("Platform")) 
         {
             if (boneCollisionDict.ContainsKey(bone))
             {
@@ -372,15 +322,15 @@ public class PlayerController : MonoBehaviour
 
     public void SetVelocity(Vector2 newVelocity) 
     {
-        Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
-        foreach(Rigidbody2D bone in bones) {
+        foreach(Rigidbody2D bone in boneRigidbodies) 
+        {
             bone.velocity = newVelocity;
         }
     }
 
-    public void SetIsDead(bool isDead)
+    public void SetIsDead(bool newIsDead)
     {
-        this.isDead = isDead;
+        this.isDead = newIsDead;
     }
 
     public void Reset(Vector2 newPosition)
@@ -395,7 +345,7 @@ public class PlayerController : MonoBehaviour
         ResetBonePositions();
     }
 
-    private void SaveBonePositions()
+    void SaveBonePositions()
     {
         bonePositions.Clear();
         
@@ -408,11 +358,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ResetBonePositions()
+    void ResetBonePositions()
     {
         foreach ((Transform bone, Vector2 bonePos) in bonePositions)
         {
             bone.localPosition = bonePos;
         }
+    }
+
+    void EnableMovingJoint(Rigidbody2D connectedRigidbody)
+    {
+        MovingJoint.enabled = true;
+        MovingJoint.connectedBody = connectedRigidbody;
+        MovingJoint.autoConfigureConnectedAnchor = false;
+    }
+    
+    void DisableMovingJoint()
+    {
+        MovingJoint.connectedBody = null;
+        MovingJoint.autoConfigureConnectedAnchor = true;
+        MovingJoint.enabled = false;
     }
 }

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Bone_Softbody : MonoBehaviour
 {
-    private PlayerController player;
-    private Rigidbody2D rb;
-    
+    PlayerController player;
+    Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -15,22 +14,27 @@ public class Bone_Softbody : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (player == null) {
+    void OnCollisionEnter2D(Collision2D collision) 
+    {
+        if (player == null) 
+        {
             return;
         }
 
         player.OnChildCollisionEnter2D(this, collision);
     }
 
-    private void OnCollisionStay2D(Collision2D collision) {
-        if (player == null) {
+    void OnCollisionStay2D(Collision2D collision) 
+    {
+        if (player == null) 
+        {
             return;
         }
 
         player.OnChildCollisionStay2D(this, collision);
     }
-    private void OnCollisionExit2D(Collision2D collision) {
+    void OnCollisionExit2D(Collision2D collision) 
+    {
         if (player == null) {
             return;
         }

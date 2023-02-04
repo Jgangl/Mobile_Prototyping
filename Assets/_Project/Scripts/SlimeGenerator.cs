@@ -8,22 +8,22 @@ using UnityEngine.Pool;
 
 public class SlimeGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject[] slimeBallPrefabs;
+    [SerializeField] GameObject[] slimeBallPrefabs;
 
-    private ObjectPool<GameObject> slimePool;
+    ObjectPool<GameObject> slimePool;
 
     public bool collectionChecks = true;
 
-    [SerializeField] private int slimePoolSize;
-    private int numActiveObjects;
+    [SerializeField] int slimePoolSize;
+    int numActiveObjects;
     
-    private Queue<GameObject> slimeQueue;
+    Queue<GameObject> slimeQueue;
 
-    private Transform slimeBallParent;
+    Transform slimeBallParent;
 
-    private GameObject oldestObject;
+    GameObject oldestObject;
 
-    private void Start()
+    void Start()
     {
         slimeQueue = new Queue<GameObject>();
         
@@ -37,10 +37,14 @@ public class SlimeGenerator : MonoBehaviour
         slimeBallParent = new GameObject("SlimeBallParent").transform;
     }
 
-    public void Generate(Vector3 position)
+    public void Generate(Vector3 position, GameObject hitObject)
     {
         GameObject slime = slimePool.Get();
 
+        // If generating slime on moving platform, parent it to the hit transform
+        if (hitObject.TryGetComponent(out MovingObject movingObject))
+            slime.transform.parent = hitObject.transform;
+        
         slime.transform.position = position;
 
         /*
@@ -57,7 +61,7 @@ public class SlimeGenerator : MonoBehaviour
         */
     }
 
-    private GameObject CreatePooledItem()
+    GameObject CreatePooledItem()
     {
         GameObject randomSlimePrefab = GetRandomSlimePrefab();
         
@@ -81,7 +85,7 @@ public class SlimeGenerator : MonoBehaviour
         return slimeBall;
     }
 
-    private void OnTakeFromPool(GameObject slime)
+    void OnTakeFromPool(GameObject slime)
     {
         slime.SetActive(true);
         
@@ -113,7 +117,7 @@ public class SlimeGenerator : MonoBehaviour
         //slimeQueue.Enqueue(slime);
     }
 
-    private void OnReturnedToPool(GameObject slime)
+    void OnReturnedToPool(GameObject slime)
     {
         /*
         foreach (Transform t in slime.transform)
@@ -129,12 +133,12 @@ public class SlimeGenerator : MonoBehaviour
         slime.SetActive(false);
     }
 
-    private void OnDestroyPoolObject(GameObject slime)
+    void OnDestroyPoolObject(GameObject slime)
     {
         Destroy(slime);
     }
 
-    private GameObject GetRandomSlimePrefab()
+    GameObject GetRandomSlimePrefab()
     {
         int randIndex = Random.Range(0, slimeBallPrefabs.Length);
 

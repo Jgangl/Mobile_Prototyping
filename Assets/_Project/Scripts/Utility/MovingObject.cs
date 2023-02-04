@@ -9,19 +9,29 @@ public class MovingObject : MonoBehaviour
     public GameObject targetA;
     public GameObject targetB;
     private GameObject target;
+    
+    FixedJoint2D PlayerJoint;
+
+    Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        PlayerJoint = GetComponent<FixedJoint2D>();
+        
         target = targetA;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float step = speed * Time.deltaTime;
 
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed);
+        rb.MovePosition(Vector2.MoveTowards(transform.position, target.transform.position, speed));
+        
+        //rb.velocity = Vector2.right * speed;
+        //transform.position = 
 
         if (Vector2.Distance(transform.position, target.transform.position) < 0.01f) {
             // Swap targets
@@ -30,5 +40,17 @@ public class MovingObject : MonoBehaviour
             else
                 target = targetA;
         }
+    }
+    
+    public void EnableJoint()
+    {
+        PlayerJoint.enabled = true;
+        PlayerJoint.autoConfigureConnectedAnchor = false;
+    }
+    
+    public void DisableJoint()
+    {
+        PlayerJoint.autoConfigureConnectedAnchor = true;
+        PlayerJoint.enabled = false;
     }
 }

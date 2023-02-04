@@ -6,12 +6,12 @@ using TMPro;
 
 public class LevelSelection : MonoBehaviour
 {
-    private const string LEVEL_SELECT_BUTTON_NAME = "LevelSelectSingleButton";
+    const string LEVEL_SELECT_BUTTON_NAME = "LevelSelectSingleButton";
     
-    [SerializeField] private GameObject levelsPanel;
-    [SerializeField] private GameObject levelButtonPrefab;
-    private int numLevels;
-    private List<LevelSelectButton> levelButtons;
+    [SerializeField] GameObject levelsPanel;
+    [SerializeField] GameObject levelButtonPrefab;
+    int numLevels;
+    List<LevelSelectButton> levelButtons;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +23,8 @@ public class LevelSelection : MonoBehaviour
         AddLevelButtons();
     }
 
-    private void AddLevelButtons() {
+    void AddLevelButtons() 
+    {
         foreach (LevelSelectButton button in levelsPanel.GetComponentsInChildren<LevelSelectButton>())
         {
             Destroy(button.gameObject);
@@ -44,11 +45,13 @@ public class LevelSelection : MonoBehaviour
         levelButtons[0].Unlock();
     }
 
-    public void OnLevelButtonPressed(int level) {
+    void OnLevelButtonPressed(int level) 
+    {
         Level_Manager.Instance.LoadLevel(level);
     }
 
-    private void UpdateLevelCompletionIcons() {
+    void UpdateLevelCompletionIcons() 
+    {
         Debug.Log("updating level complete icons");
         List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
 
@@ -63,7 +66,7 @@ public class LevelSelection : MonoBehaviour
         }
     }
 
-    private LevelSelectButton GetLevelButton(int level)
+    LevelSelectButton GetLevelButton(int level)
     {
         if (levelButtons.Count > level - 1)
             return levelButtons[level - 1];
@@ -71,7 +74,7 @@ public class LevelSelection : MonoBehaviour
         return null;
     }
 
-    private void Level_Manager_OnLevelCompleted(int levelCompleted)
+    void Level_Manager_OnLevelCompleted(int levelCompleted)
     {
         Debug.Log("OnLevelCompleted: " + levelCompleted);
         GetLevelButton(levelCompleted).Complete();
