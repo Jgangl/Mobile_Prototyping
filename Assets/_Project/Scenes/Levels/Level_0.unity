@@ -913,6 +913,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 366737938}
     m_Modifications:
+    - target: {fileID: 652223081946698340, guid: bef85197f949fc442a5f98511183b3a1, type: 3}
+      propertyPath: targetA
+      value: 
+      objectReference: {fileID: 1009763467}
+    - target: {fileID: 652223081946698340, guid: bef85197f949fc442a5f98511183b3a1, type: 3}
+      propertyPath: targetB
+      value: 
+      objectReference: {fileID: 1399675246}
     - target: {fileID: 1426869343382153020, guid: bef85197f949fc442a5f98511183b3a1, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 

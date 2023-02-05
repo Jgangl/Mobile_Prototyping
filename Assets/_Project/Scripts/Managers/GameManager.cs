@@ -101,7 +101,7 @@ public class GameManager : Singleton<GameManager>
 
         // Enable/Disable player movement if a menu is open
         if (player) {
-            player.EnableMovement(!isMenuOpened);
+            player.EnableInput(!isMenuOpened);
         }
     }
 
@@ -153,14 +153,14 @@ public class GameManager : Singleton<GameManager>
     public void EnablePlayerMovement()
     {
         if (player) {
-            player.EnableMovement(true);
+            player.EnableInput(true);
         }
     }
 
     public void DisablePlayerMovement()
     {
         if (player) {
-            player.EnableMovement(false);
+            player.EnableInput(false);
         }
     }
 

@@ -2,52 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPlatform : MonoBehaviour
+public class MovingPlatform : Platform
 {
-    // Movement speed in units per second.
-    [SerializeField]  float speed = 1.0F;
+    public float speed = 1.0f;
 
-    // Time when the movement started.
-    [SerializeField]  float startTime;
+    public GameObject targetA;
+    public GameObject targetB;
+    private GameObject target;
 
-    // Total distance between the markers.
-    float journeyLength;
-    [SerializeField] Transform StartPoint;
-    [SerializeField] Transform EndPoint;
+    Rigidbody2D rb;
 
-    FixedJoint2D PlayerJoint;
-    
+    // Start is called before the first frame update
     void Start()
     {
-        PlayerJoint = GetComponent<FixedJoint2D>();
-        
-        // Keep a note of the time the movement started.
-        startTime = Time.time;
-
-        // Calculate the journey length.
-        journeyLength = Vector3.Distance(StartPoint.position, EndPoint.position);
+        rb = GetComponent<Rigidbody2D>();
+        target = targetA;
     }
 
-    // Move to the target end position.
-    void Update()
+    // Update is called once per frame
+    void FixedUpdate()
     {
-        // Distance moved equals elapsed time times speed..
-        float distCovered = (Time.time - startTime) * speed;
+        rb.MovePosition(Vector2.MoveTowards(transform.position, target.transform.position, speed));
 
-        // Fraction of journey completed equals current distance divided by total distance.
-        float fractionOfJourney = distCovered / journeyLength;
-
-        // Set our position as a fraction of the distance between the markers.
-        transform.position = Vector3.Lerp(StartPoint.position, EndPoint.position, fractionOfJourney);
-    }
-
-    public void EnableJoint()
-    {
-        PlayerJoint.enabled = true;
-    }
-    
-    public void DisableJoint()
-    {
-        PlayerJoint.enabled = false;
+        if (Vector2.Distance(transform.position, target.transform.position) < 0.01f) {
+            // Swap targets
+            if (target == targetA)
+                target = targetB;
+            else
+                target = targetA;
+        }
     }
 }

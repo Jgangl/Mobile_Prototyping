@@ -746,8 +746,7 @@ GameObject:
   - component: {fileID: 8644391174338032494}
   - component: {fileID: 5847071358853502888}
   - component: {fileID: 1426869343382153021}
-  - component: {fileID: 1426869343382153020}
-  - component: {fileID: 1426869343382153023}
+  - component: {fileID: 652223081946698340}
   m_Layer: 6
   m_Name: MovingPlatform
   m_TagString: Untagged
@@ -868,25 +867,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!255 &1426869343382153020
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8644391174338032491}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.11142867, y: -2.435143}
-  m_DampingRatio: 1
-  m_Frequency: 1
---- !u!114 &1426869343382153023
+--- !u!114 &652223081946698340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -895,10 +876,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8644391174338032491}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a5b7e7af6db0964b84a1f5e11626957, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ad8dbe9924cfbe4db17138580f0b15c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.02
+  speed: 0.05
   targetA: {fileID: 0}
   targetB: {fileID: 0}
 --- !u!1 &8644391175879990180

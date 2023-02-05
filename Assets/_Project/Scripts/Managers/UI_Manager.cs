@@ -205,14 +205,14 @@ public class UI_Manager : Singleton<UI_Manager>
     void EnablePlayerInput()
     {
         if (player)
-            player.EnableMovement(true);
+            player.EnableInput(true);
     }
 
     void DisablePlayerInput()
     {
         if (player)
         {
-            player.EnableMovement(false);
+            player.EnableInput(false);
         }
     }
 }

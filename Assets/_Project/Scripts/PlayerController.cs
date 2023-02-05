@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     Vector2 prevPosition;
     Vector2 prevPositionTwo;
     Vector2 currentSwipeForce;
+    float flightTime;
     
     Dictionary<Transform, Vector2> bonePositions;
     List<Bone_Softbody> bones;
@@ -38,37 +39,27 @@ public class PlayerController : MonoBehaviour
     Dictionary<Bone_Softbody, List<Rigidbody2D>> boneCollisionDict;
     bool stuckToPlatform = false;
     bool isDead;
-    MovingObject CurrentMovingObject;
+    Platform CurrentPlatform;
+    //MovingObject CurrentMovingObject;
     FixedJoint2D MovingJoint;
 
     void Start()
     {
-        slimeGenerator = GetComponent<SlimeGenerator>();
-        rb = GetComponent<Rigidbody2D>();
+        slimeGenerator  = GetComponent<SlimeGenerator>();
+        rb              = GetComponent<Rigidbody2D>();
         basicTrajectory = GetComponent<BasicTrajectory>();
-
-        MovingJoint = GetComponent<FixedJoint2D>();
+        MovingJoint     = GetComponent<FixedJoint2D>();
 
         canMove = false;
-        isDead = false;
+        isDead  = false;
 
-        bonePositions = new Dictionary<Transform, Vector2>();
-        SaveBonePositions();
-
+        bonePositions     = new Dictionary<Transform, Vector2>();
         boneCollisionDict = new Dictionary<Bone_Softbody, List<Rigidbody2D>>();
 
-        bones = new List<Bone_Softbody>();
+        bones           = new List<Bone_Softbody>();
         boneRigidbodies = new List<Rigidbody2D>();
         
-        foreach (Transform t in transform)
-        {
-            if (t.TryGetComponent(out Bone_Softbody bone))
-            {
-                bones.Add(bone);
-                boneRigidbodies.Add(bone.GetRigidbody());
-                boneCollisionDict.Add(bone, new List<Rigidbody2D>());
-            }
-        }
+        InitializeBones();
     }
 
     void Update() 
@@ -94,9 +85,7 @@ public class PlayerController : MonoBehaviour
                 
                 if (Mathf.Abs(currentSwipeForce.x) >= 0.01f || Mathf.Abs(currentSwipeForce.y) >= 0.01f) 
                 {
-                    // Enable Movement
-                    //Rigidbody2D[] bones = GetComponentsInChildren<Rigidbody2D>();
-                    StartMovement();
+                    EnableMovement();
 
                     // Add swipe force
                     foreach (Rigidbody2D bone in boneRigidbodies)
@@ -105,14 +94,9 @@ public class PlayerController : MonoBehaviour
 
                 currentSwipeForce = Vector2.zero;
             }
-            else if (mouseHeldDown && (mouseMoved || CurrentMovingObject != null)) 
+            else if (mouseHeldDown && (mouseMoved || CurrentPlatform != null)) 
             {
                 fingerCurrentPos = Input.mousePosition;
-
-                // Even in the Moved touchPhase, the finger wasn't actually 'moving' much
-//                float fingerPosDiff = Vector2.Distance(prevFingerPos, fingerCurrentPos);
-//                if (fingerPosDiff >= SWIPE_LENGTH_THRESHOLD)
-//                {
 
                 // Calculate current position difference
                 Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
@@ -134,8 +118,6 @@ public class PlayerController : MonoBehaviour
                         currentSwipeForce.magnitude,
                         1f);
                 }
-                
-                //}
             }
         }
 
@@ -143,21 +125,34 @@ public class PlayerController : MonoBehaviour
         prevPositionTwo = prevPosition;
         prevPosition = currentPosition;
 
-#if UNITY_EDITOR
         prevFingerPos = Input.mousePosition;
-#elif UNITY_ANDROID
-        //prevFingerPos = Input.touches[0].position;
-#endif
+    }
+    
+    void InitializeBones()
+    {
+        foreach (Transform t in transform)
+        {
+            if (t.TryGetComponent(out Bone_Softbody bone))
+            {
+                bones.Add(bone);
+                boneRigidbodies.Add(bone.GetRigidbody());
+                boneCollisionDict.Add(bone, new List<Rigidbody2D>());
+            }
+        }
+        
+        SaveBonePositions();
     }
 
-    void StopMovement() 
+    void StopMovement(bool enableKinematicRigidbody) 
     {
-        rb.isKinematic = true;
+        if (enableKinematicRigidbody)
+            rb.isKinematic = true;
+        
         rb.velocity = Vector2.zero;
         canMove = true;
     }
 
-    public void StartMovement() 
+    void EnableMovement() 
     {
         StartCoroutine("IgnorePlatformTimer");
         StartCoroutine("IgnoreBonesTimer");
@@ -165,6 +160,8 @@ public class PlayerController : MonoBehaviour
         stuckToPlatform = false;
         rb.isKinematic = false;
         canMove = false;
+
+        SetVelocity(Vector2.zero);
         
         DisableMovingJoint();
 
@@ -174,7 +171,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void EnableMovement(bool newEnabled) 
+    public void EnableInput(bool newEnabled) 
     {
         disableInput = !newEnabled;
     }
@@ -189,8 +186,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetObjectAverageVelocity() 
     {
         Vector2 totalVelocity = Vector2.zero;
-
-        // Get all rigidbodies of bones
+        
         if (bones.Count == 0)
             return Vector2.zero;
 
@@ -200,7 +196,7 @@ public class PlayerController : MonoBehaviour
             totalVelocity += boneRb.velocity;
         }
 
-        return (totalVelocity / bones.Count);
+        return totalVelocity / bones.Count;
     }
 
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) 
@@ -212,6 +208,8 @@ public class PlayerController : MonoBehaviour
         if (stuckToPlatform)
             return;
 
+        bool bHitPlatform = collision.gameObject.TryGetComponent(out Platform platformHit);
+/*
         float velocityMagnitude = GetObjectAverageVelocity().magnitude;
         if (velocityMagnitude > 1f && bonesCanCollide) 
         {
@@ -222,27 +220,17 @@ public class PlayerController : MonoBehaviour
             
             StartCoroutine("IgnoreBonesTimer");
 
-            //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
-            Vector2 currentPosition = transform.position;
-            Vector2 dirOfTravel = (currentPosition - prevPositionTwo).normalized;
-
-            // Find angle between x axis and direction of travel
-            float angle = Mathf.Atan2(dirOfTravel.y, dirOfTravel.x) * Mathf.Rad2Deg;
-
-            // Rotating the angle around an axis (Similar to applying the rotation to a specfic axis)
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            Vector2 colPoint = collision.contacts[0].point;
-
-            // Create particles and apply rotation
-            GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
-            particles.transform.rotation = q;
-            Destroy(particles, 0.5f);
+            SpawnHitParticles(collision);
         }
-
-        if (collision.gameObject.CompareTag("Platform") && canCollideWithPreviousPlatform && !stuckToPlatform) 
+*/
+        if (!bHitPlatform)
+            return;
+        
+        if (platformHit is MovingPlatform && canCollideWithPreviousPlatform && !stuckToPlatform)
         {
-            StopMovement();
+            CurrentPlatform = platformHit;
+            StopMovement(false);
+            EnableMovingJoint(platformHit.GetComponent<Rigidbody2D>());
 
             if (boneCollisionDict.ContainsKey(bone))
             {
@@ -251,14 +239,9 @@ public class PlayerController : MonoBehaviour
 
             stuckToPlatform = true;
         }
-        else if (collision.gameObject.TryGetComponent(out MovingObject movingObject) && canCollideWithPreviousPlatform && !stuckToPlatform)
+        else if (bHitPlatform && canCollideWithPreviousPlatform && !stuckToPlatform) 
         {
-            rb.velocity = Vector2.zero;
-            canMove = true;
-            
-            EnableMovingJoint(movingObject.GetComponent<Rigidbody2D>());
-
-            CurrentMovingObject = movingObject;
+            StopMovement(true);
 
             if (boneCollisionDict.ContainsKey(bone))
             {
@@ -267,6 +250,26 @@ public class PlayerController : MonoBehaviour
 
             stuckToPlatform = true;
         }
+    }
+
+    void SpawnHitParticles(Collision2D collision)
+    {
+        //  CALCULATE PARTICLES ROTATION USING DIRECTION OF TRAVEL
+        Vector2 currentPosition = transform.position;
+        Vector2 dirOfTravel = (currentPosition - prevPositionTwo).normalized;
+
+        // Find angle between x axis and direction of travel
+        float angle = Mathf.Atan2(dirOfTravel.y, dirOfTravel.x) * Mathf.Rad2Deg;
+
+        // Rotating the angle around an axis (Similar to applying the rotation to a specfic axis)
+        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        Vector2 colPoint = collision.contacts[0].point;
+
+        // Create particles and apply rotation
+        GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
+        particles.transform.rotation = q;
+        Destroy(particles, 0.5f);
     }
 
     public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) 
@@ -278,7 +281,7 @@ public class PlayerController : MonoBehaviour
             
             if (bonesCanCollide)
             {
-                StopMovement();
+                StopMovement(true);
                 stuckToPlatform = true;
             }
         }
@@ -330,7 +333,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetIsDead(bool newIsDead)
     {
-        this.isDead = newIsDead;
+        isDead = newIsDead;
     }
 
     public void Reset(Vector2 newPosition)
@@ -338,7 +341,7 @@ public class PlayerController : MonoBehaviour
         SetIsDead(false);
         SetVelocity(Vector2.zero);
         
-        StartMovement();
+        EnableMovement();
 
         transform.position = newPosition;
 

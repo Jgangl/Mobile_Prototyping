@@ -42,7 +42,7 @@ public class SlimeGenerator : MonoBehaviour
         GameObject slime = slimePool.Get();
 
         // If generating slime on moving platform, parent it to the hit transform
-        if (hitObject.TryGetComponent(out MovingObject movingObject))
+        if (hitObject.TryGetComponent(out MovingPlatform movingPlatform))
             slime.transform.parent = hitObject.transform;
         
         slime.transform.position = position;
