@@ -141,6 +141,8 @@ public class PlayerController : MonoBehaviour
             }
         }
         
+        boneRigidbodies.Add(rb);
+        
         SaveBonePositions();
     }
 
