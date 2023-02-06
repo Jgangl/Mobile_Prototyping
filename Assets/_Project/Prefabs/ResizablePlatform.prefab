@@ -746,6 +746,7 @@ GameObject:
   - component: {fileID: 7222166190620185672}
   - component: {fileID: 7222166190620185679}
   - component: {fileID: 4821589867783975054}
+  - component: {fileID: 8085496428400213959}
   m_Layer: 6
   m_Name: ResizablePlatform
   m_TagString: Platform
@@ -871,6 +872,18 @@ MonoBehaviour:
   cornerBottomRight: {fileID: 4821589866603533368}
   topBottomRect: {fileID: 4821589867722608645}
   leftRightRect: {fileID: 4821589866644960210}
+--- !u!114 &8085496428400213959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7222166190620185677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97625f93913f492408bcea1e7364a43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7222166191092612226
 GameObject:
   m_ObjectHideFlags: 0
