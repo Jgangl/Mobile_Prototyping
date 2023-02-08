@@ -9,6 +9,8 @@ Assets/*
 !Assets/_Project/
 !Assets/Editor/
 
+UserSettings/*
+
 # Visual Studio cache directory
 .vs/
 

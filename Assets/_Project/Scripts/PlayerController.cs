@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float bonesCollisionTime = 0.05f;
     [SerializeField] float platformIgnoreTime = 0.25f;
     [SerializeField] float maxSwipeLength     = 300f;
+    [SerializeField] float playerRadius = 0.75f;
+    [SerializeField] LayerMask collisionLayerMask;
     
     GameObject previousPlatform;
     bool platformCollisionTimeout = true;
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
     Vector2 currentSwipeForce;
     float flightTime;
     float hitSpeedThreshold = 1f;
-    
+
     Dictionary<Transform, Vector2> bonePositions;
     List<Bone_Softbody> bones;
     List<Rigidbody2D> boneRigidbodies;
@@ -245,7 +247,7 @@ public class PlayerController : MonoBehaviour
             
             slimeGenerator.Generate(collision.contacts[0].point, collision.gameObject);
             
-            StartCoroutine("IgnoreBonesTimer");
+            //StartCoroutine("IgnoreBonesTimer");
 
             SpawnHitParticles(collision);
         }
@@ -253,9 +255,6 @@ public class PlayerController : MonoBehaviour
         if (!bHitPlatform)
             return;
         
-        Debug.Log("platformCollisionTimeout: " + platformCollisionTimeout);
-        Debug.Log("bHitPlatformIsCurrent: " + bHitPlatformIsCurrent);
-
         // Platform collision hasn't timed out and hit platform is same as current
         if (!platformCollisionTimeout && bHitPlatformIsCurrent)
             return;
@@ -276,7 +275,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Stopping movement in else");
             StopMovement(true);
 
             if (boneCollisionDict.ContainsKey(bone))
@@ -304,12 +302,27 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(CurrentPlatform);
         
         // If timer timed out and hit the same platform 
-        if (bonesCanCollide && bHitPlatformIsCurrent )
+        if (bonesCanCollide && bHitPlatformIsCurrent)
         {
-            Debug.Log("OnCollisionStay Stopping movement");
-            StopMovement(true);
-            stuckToPlatform = true;
+            // Try a circle overlap to make sure we are touching something
+
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, playerRadius, collisionLayerMask);
+            
+            bool hitSomething = colliders.Length > 0;
+
+            if (hitSomething)
+            {
+                Debug.Log(colliders[0].gameObject);
+                Debug.Log("OnCollisionStay Stopping movement");
+                StopMovement(true);
+                stuckToPlatform = true;
+            }
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, playerRadius);
     }
 
     public void OnChildCollisionExit2D(Bone_Softbody bone, Collision2D collision) 

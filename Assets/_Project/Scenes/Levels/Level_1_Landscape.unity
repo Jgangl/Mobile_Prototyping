@@ -687,6 +687,22 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 969940170, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
+      propertyPath: playerRadius
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 969940170, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
+      propertyPath: collisionLayerMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3452020396485294500, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
+      propertyPath: playerRadius
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3452020396485294500, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
+      propertyPath: ignoreCastStepsPercent
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6119821868485345447, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -738,3 +754,20 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 66cdf58ac36d8664ebda17cdfbd23a7a, type: 3}
+--- !u!1 &1817122308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6701234956083387299, guid: d3910689c4f46a24b9f4f59c4f89f83c, type: 3}
+  m_PrefabInstance: {fileID: 366737936}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1817122313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817122308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97625f93913f492408bcea1e7364a43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
