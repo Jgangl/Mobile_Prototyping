@@ -6,33 +6,43 @@ using System.IO;
 
 public class Save_Manager : Singleton<Save_Manager>
 {
-    string fileName = "Save.dat";
+    const string fileName = "Save.dat";
+    string fullSaveFilePath;
 
-    public bool SaveGame() {
+    protected override void Awake()
+    {
+        base.Awake();
+
+        fullSaveFilePath = Application.persistentDataPath + "/" + fileName;
+    }
+
+    public bool SaveGame() 
+    {
         GameData gameData = new GameData();
         return true;
     }
 
-    public object LoadGame() {
-        string path = Application.persistentDataPath + fileName;
-        object loadData = Load(path);
+    public object LoadGame() 
+    {
+        object loadData = Load(fullSaveFilePath);
         return loadData;
     }
 
-    public bool Save(object saveData) {
+    public bool Save(object saveData) 
+    {
         BinaryFormatter formatter = new BinaryFormatter();
 
-        string path = Application.persistentDataPath + fileName;
-
-        FileStream file = File.Create(path);
+        FileStream file = File.Create(fullSaveFilePath);
         formatter.Serialize(file, saveData);
         file.Close();
 
         return true;
     }
 
-    public object Load(string path) {
-        if (!File.Exists(path)) {
+    public object Load(string path) 
+    {
+        if (!File.Exists(path)) 
+        {
             return null;
         }
 
@@ -40,12 +50,14 @@ public class Save_Manager : Singleton<Save_Manager>
 
         FileStream file = File.Open(path, FileMode.Open);
 
-        try {
+        try 
+        {
             object saveData = formatter.Deserialize(file);
             file.Close();
             return saveData;
         }
-        catch {
+        catch 
+        {
             Debug.LogError("Failed to load file at: " + path);
             file.Close();
             return null;

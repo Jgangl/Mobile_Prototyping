@@ -17,17 +17,11 @@ public class LevelSelectButton : MonoBehaviour
     [SerializeField] private Transform lockTransform;
     [SerializeField] private Image bgImage;
 
-    private bool bLocked = true;
+    bool bLocked = true;
 
-    private void Start()
+    void Start()
     {
         EnableLevelLock(bLocked);
-
-        //float randZRot = Random.Range(0f, 360f);
-        //Vector3 originalRot = bgImage.transform.rotation.eulerAngles;
-        //Vector3 newRot = new Vector3(originalRot.x, originalRot.y, randZRot);
-        
-        //bgImage.transform.rotation = Quaternion.Euler(originalRot.x, originalRot.y, randZRot);
     }
 
     public void Setup(int level, Action<int> onClickAction)
@@ -38,24 +32,24 @@ public class LevelSelectButton : MonoBehaviour
         buttonText.text = level.ToString();
     }
     
-    public void EnableLevelCompleteCheck(bool enabled) {
+    public void EnableLevelCompleteCheck(bool enabled) 
+    {
         completeCheckmark.gameObject.SetActive(enabled);
     }
 
     public void Complete()
     {
-        Debug.Log("Completed: " + level);
         EnableLevelCompleteCheck(true);
     }
 
     public void Unlock()
     {
-        Debug.Log("Unlocked: " + level);
         bLocked = false;
         EnableLevelLock(false);
     }
     
-    private void EnableLevelLock(bool enabled) {
+    void EnableLevelLock(bool enabled) 
+    {
         lockTransform.gameObject.SetActive(enabled);
 
         // Disable button while locked

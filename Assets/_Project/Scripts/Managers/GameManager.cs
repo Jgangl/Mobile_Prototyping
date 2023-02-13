@@ -6,20 +6,28 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    private GameData gameData;
-    private PlayerController player;
-    private GameState currentGameState;
-    private bool isMenuOpened = false;
-    private bool gameOver = false;
+    GameData gameData;
+    PlayerController player;
+    GameState currentGameState;
+    bool isMenuOpened = false;
+    bool gameOver = false;
+    bool isPlaying = false;
+
+    int numJumpsThisLevel = 0;
+    double timeThisLevel = 0.0f;
+
+    public Action OnLoadedSave;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        currentGameState = GameState.Playing;
+        gameData = new GameData();
+    }
 
     void Start()
     {
-        currentGameState = GameState.Playing;
-        gameData = new GameData();
-
-        //if (LoadGame())
-        //    Level_Manager.Instance.SetCompletedLevels(gameData.GetCompletedLevels());
-
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj)
         {
@@ -28,30 +36,25 @@ public class GameManager : Singleton<GameManager>
 
         Level_Manager.Instance.OnLevelReset += OnLevelReset;
         Level_Manager.Instance.OnLevelLoaded += OnLevelLoaded;
+
+        PlayerController.OnJumped += OnPlayerJumped;
+        
+        LoadGame();
     }
-/*
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) 
-        {
-            GameOver();
-        }
-
-        if (Input.GetKeyDown(KeyCode.P)) 
-        {
-            if (currentGameState == GameState.Paused)
-                PauseGame(false);
-            else
-                PauseGame(true);
-        }
+        if (isPlaying)
+            timeThisLevel += Time.deltaTime;
     }  
-*/
-    public void StartGame() {
-        Debug.Log("Started Game");
+
+    public void StartGame() 
+    {
         Level_Manager.Instance.LoadCurrentLevel();
     }
 
-    public void QuitGame() {
+    public void QuitGame() 
+    {
         Debug.Log("Quit Game");
         Application.Quit();
     }
@@ -66,6 +69,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         gameOver = true;
+        
         TimeDilator.SlowTime(this, 0.3f, 2f);
         Level_Manager.Instance.RestartCurrentLevel();
     }
@@ -73,12 +77,14 @@ public class GameManager : Singleton<GameManager>
     public void CompleteLevel()
     {
         if (gameOver) return;
-        
-        Debug.Log("Complete Current Level");
+
+        isPlaying = false;
+
         Level_Manager.Instance.CompleteCurrentLevel();
     }
 
-    public void PauseGame(bool pause) {
+    public void PauseGame(bool pause) 
+    {
         if (pause && currentGameState == GameState.Playing)
         {
             Time.timeScale = 0.0f;
@@ -91,26 +97,33 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void PlayerDied() {
+    public void PlayerDied() 
+    {
         Debug.Log("Player Died");
         GameOver();
     }
 
-    public void SetMenuOpened(bool menuOpen) {
+    public void SetMenuOpened(bool menuOpen) 
+    {
         isMenuOpened = menuOpen;
 
         // Enable/Disable player movement if a menu is open
-        if (player) {
+        if (player) 
+        {
             player.EnableInput(!isMenuOpened);
         }
     }
 
     public void OnLevelReset()
     {
+        isPlaying = true;
         gameOver = false;
+        numJumpsThisLevel = 0;
+        timeThisLevel = 0.0f;
     }
 
-    void OnLevelLoaded() {
+    void OnLevelLoaded() 
+    {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj)
         {
@@ -118,16 +131,50 @@ public class GameManager : Singleton<GameManager>
         }
 
         gameOver = false;
+        isPlaying = true;
+        numJumpsThisLevel = 0;
+        timeThisLevel = 0.0f;
+    }
+    
+    public bool LoadGame() 
+    {
+        object saveData = Save_Manager.Instance.LoadGame();
+
+        // A save file already exists
+        if (saveData != null) 
+        {
+            Debug.Log("Loaded Game");
+            gameData = (GameData)saveData;
+
+            Level_Manager.Instance.TryLoadLevels(gameData.GetLevels());
+
+            OnLoadedSave?.Invoke();
+            
+            return true;
+        }
+        else {
+            Debug.Log("No save file found");
+            return false;
+        }
+        
+
     }
 
-    public bool SaveGame() {
-        List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
-
-        if (gameData != null) {
+    public bool SaveGame() 
+    {
+        Debug.Log("Save game");
+        
+        Debug.Log(gameData);
+        
+        if (gameData != null) 
+        {
             // Insert save data
-            gameData.SetCompletedLevels(completedLevels);
-            Save_Manager.Instance.Save(gameData);
-            return true;
+            gameData.SetLevels(Level_Manager.Instance.GetLevels());
+            bool saved = Save_Manager.Instance.Save(gameData);
+            
+            Debug.Log(saved);
+            
+            return saved;
         }
         else {
             //Debug.Log("GAME NOT SAVED");
@@ -135,46 +182,40 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public bool LoadGame() {
-        object saveData = Save_Manager.Instance.LoadGame();
-
-        if (saveData != null) {
-            //Debug.Log("Loaded Game");
-            gameData = (GameData)saveData;
-            //Debug.Log(gameData.GetCompletedLevels().Count);
-            return true;
-        }
-        else {
-            //Debug.Log("DID NOT LOAD Game");
-            return false;
-        }
-    }
-
     public void EnablePlayerMovement()
     {
-        if (player) {
+        if (player) 
+        {
             player.EnableInput(true);
         }
     }
 
     public void DisablePlayerMovement()
     {
-        if (player) {
+        if (player) 
+        {
             player.EnableInput(false);
         }
     }
 
-    private void OnApplicationQuit() 
+    void OnApplicationQuit() 
     {
         SaveGame();
     }
 
-    private void OnApplicationPause(bool pause) 
+    void OnPlayerJumped()
     {
-        if (pause)
-            SaveGame();
-        else
-            LoadGame();
+        numJumpsThisLevel++;
+    }
+
+    public int GetNumJumpsThisLevel()
+    {
+        return numJumpsThisLevel;
+    }
+
+    public double GetTimeThisLevel()
+    {
+        return timeThisLevel;
     }
 }
 

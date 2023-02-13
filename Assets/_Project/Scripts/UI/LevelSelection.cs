@@ -21,6 +21,8 @@ public class LevelSelection : MonoBehaviour
         levelButtons = new List<LevelSelectButton>();
 
         AddLevelButtons();
+        
+        UpdateLevelCompletionIcons();
     }
 
     void AddLevelButtons() 
@@ -41,7 +43,6 @@ public class LevelSelection : MonoBehaviour
         }
         
         // Unlock level 1
-        Debug.Log("Unlock level 1");
         levelButtons[0].Unlock();
     }
 
@@ -53,15 +54,23 @@ public class LevelSelection : MonoBehaviour
     void UpdateLevelCompletionIcons() 
     {
         Debug.Log("updating level complete icons");
-        List<int> completedLevels = Level_Manager.Instance.GetCompletedLevels();
+        Level[] levels = Level_Manager.Instance.GetLevels();
 
-        if (completedLevels == null)
+        if (levels == null)
             return;
 
-        foreach(LevelSelectButton button in levelButtons) {
-            if (completedLevels.Contains(button.GetLevel())) {
-                 button.Unlock();
-                 button.Complete();
+        for (int i = 0; i < levels.Length; i++)
+        {
+            if (levels[i].completed)
+            {
+                levelButtons[i].Unlock();
+                levelButtons[i].Complete();
+
+                if (i < levels.Length - 1)
+                {
+                    // Unlock the next level
+                    levelButtons[i + 1].Unlock();
+                }
             }
         }
     }
@@ -76,7 +85,6 @@ public class LevelSelection : MonoBehaviour
 
     void Level_Manager_OnLevelCompleted(int levelCompleted)
     {
-        Debug.Log("OnLevelCompleted: " + levelCompleted);
         GetLevelButton(levelCompleted).Complete();
         
         // Unlock next level

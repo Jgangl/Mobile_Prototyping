@@ -22,11 +22,6 @@ public class ResizableSpikeWall : MonoBehaviour
 
     private SpriteRenderer sprite;
 
-    private void Awake()
-    {
-        Debug.Log("AWAKE");
-    }
-
     // Start is called before the first frame update
     void Start()
     {

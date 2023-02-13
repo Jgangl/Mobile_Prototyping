@@ -43,8 +43,9 @@ public class PlayerController : MonoBehaviour
     bool stuckToPlatform = false;
     bool isDead;
     Platform CurrentPlatform;
-    //MovingObject CurrentMovingObject;
     FixedJoint2D MovingJoint;
+
+    public static Action OnJumped;
 
     void Start()
     {
@@ -93,6 +94,8 @@ public class PlayerController : MonoBehaviour
                     // Add swipe force
                     foreach (Rigidbody2D bone in boneRigidbodies)
                         bone.AddForce(currentSwipeForce);
+                    
+                    OnJumped?.Invoke();
                 }
 
                 currentSwipeForce = Vector2.zero;
@@ -217,7 +220,11 @@ public class PlayerController : MonoBehaviour
         bool bHitPlatform = collision.gameObject.TryGetComponent(out platformHit);
         if (!bHitPlatform)
         {
-            bHitPlatform = collision.transform.parent.gameObject.TryGetComponent(out platformHit);
+            Transform collisionParent = collision.transform.parent;
+            if (collisionParent != null)
+            {
+                bHitPlatform = collisionParent.gameObject.TryGetComponent(out platformHit);
+            }
         }
         
         bool bHitPlatformIsCurrent = CurrentPlatform == platformHit;
@@ -312,8 +319,6 @@ public class PlayerController : MonoBehaviour
 
             if (hitSomething)
             {
-                Debug.Log(colliders[0].gameObject);
-                Debug.Log("OnCollisionStay Stopping movement");
                 StopMovement(true);
                 stuckToPlatform = true;
             }

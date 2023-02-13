@@ -1,26 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;
 
 public class Level_Manager : Singleton<Level_Manager> {
     
     [SerializeField]
     int numLevels  = 2;
-    public int NumLevels {
+    public int NumLevels 
+    {
         get => numLevels;
     }
 
-    private int currentLevel = 1;
-    private int highestCompletedLevel = 0;
-    private List<int> completedLevels;
-    private Scene managersUIScene;
-    private bool loadingLevel = false;
-    private bool levelCompleted = false;
+    Level[] levels;
+    int currentLevel = 1;
+    int highestCompletedLevel = 0;
+    List<int> completedLevels;
+    Scene managersUIScene;
+    bool loadingLevel = false;
+    bool levelCompleted = false;
     public float transitionTime = 1f;
     public GameObject fadeCanvasPrefab;
 
@@ -28,13 +32,13 @@ public class Level_Manager : Singleton<Level_Manager> {
     public Action<int> OnLevelCompleted;
     public Action OnLevelReset;
 
-    private Transform playerSpawnPoint;
-    private PlayerController player;
+    Transform playerSpawnPoint;
+    PlayerController player;
 
-    private void Start() 
+    protected override void Awake()
     {
-        completedLevels = new List<int>();
-
+        base.Awake();
+        
         managersUIScene = SceneManager.GetSceneAt(0);
 
         Scene currentOpenScene = managersUIScene;
@@ -50,14 +54,53 @@ public class Level_Manager : Singleton<Level_Manager> {
             currentLevel = 1;
         }
         
-        Initialize();
-
         numLevels = SceneManager.sceneCountInBuildSettings - 1;
+        
+        InitializeLevels();
     }
 
-    private void Update() 
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.N)) {
+        completedLevels = new List<int>();
+
+        Initialize();
+    }
+
+    public bool TryLoadLevels(Level[] savedLevels)
+    {
+        if (savedLevels == null)
+        {
+            return false;
+        }
+
+        foreach (Level level in savedLevels)
+        {
+            if (level.levelNumber <= levels.Length)
+            {
+                levels[level.levelNumber - 1] = level;
+            }
+        }
+        
+        levels = savedLevels;
+        return true;
+    }
+
+    public void InitializeLevels()
+    {
+        levels = new Level[numLevels];
+        
+        // Try to load, otherwise initialize default values
+        
+        for (int i = 0; i < numLevels; i++)
+        {
+            levels[i] = new Level(i + 1);
+        }
+    }
+
+    void Update() 
+    {
+        if (Input.GetKeyDown(KeyCode.N)) 
+        {
             LoadNextLevel();
         }
     }
@@ -70,32 +113,59 @@ public class Level_Manager : Singleton<Level_Manager> {
             UpdateHighestCompletedLevel(level);
         }
 
-        OnLevelCompleted?.Invoke(level);
-        completedLevels.Add(level);
+        int currNumJumps = GameManager.Instance.GetNumJumpsThisLevel();
+        double currTime = GameManager.Instance.GetTimeThisLevel();
         
+        Level currLevel = GetLevel(level);
+        int bestNumJumps = currLevel.bestNumOfJumps;
+        double bestTime = currLevel.bestTime;
+
+        if (currNumJumps < bestNumJumps)
+        {
+            // New Jump high score
+            SetLevelBestNumJumps(level, currNumJumps);
+        }
+
+        if (currTime < bestTime)
+        {
+            // New time high score
+            SetLevelBestTime(level, currTime);
+        }
+
+        SetLevelCompleted(level, true);
         levelCompleted = true;
+        
+        // Save game after a level is completed
+        GameManager.Instance.SaveGame();
+
+        OnLevelCompleted?.Invoke(level);
     }
 
-    private void UpdateHighestCompletedLevel(int newHighLevel)
+    void UpdateHighestCompletedLevel(int newHighLevel)
     {
         highestCompletedLevel = newHighLevel;
         // Update level selection buttons
     }
 
-    public void CompleteCurrentLevel() {
+    public void CompleteCurrentLevel() 
+    {
         CompleteLevel(currentLevel);
     }
 
-    public List<int> GetCompletedLevels() {
+    public List<int> GetCompletedLevels() 
+    {
         return completedLevels;
     }
 
-    public void SetCompletedLevels(List<int> completedLevels) {
+    public void SetCompletedLevels(List<int> completedLevels) 
+    {
         this.completedLevels = completedLevels;
     }
 
-    public void LoadNextLevel() {
-        if (currentLevel < numLevels) {
+    public void LoadNextLevel() 
+    {
+        if (currentLevel < numLevels) 
+        {
             currentLevel++;
             // Load scene at the next build index
             LoadLevel(currentLevel);
@@ -105,11 +175,13 @@ public class Level_Manager : Singleton<Level_Manager> {
         }
     }
 
-    public void LoadCurrentLevel() {
+    public void LoadCurrentLevel() 
+    {
         LoadLevel(currentLevel);
     }
 
-    public void LoadLevel(int levelIndex) {
+    public void LoadLevel(int levelIndex) 
+    {
         currentLevel = levelIndex;
         if (currentLevel > numLevels)
             return;
@@ -123,7 +195,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         return loadingLevel;
     }
 
-    private int GetCurrentOpenLevel()
+    int GetCurrentOpenLevel()
     {
         if (SceneManager.sceneCount >= 2)
             return GetLevelFromSceneName(SceneManager.GetSceneAt(1).name);
@@ -131,7 +203,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         return -1;
     }
 
-    private int GetLevelFromSceneName(string name)
+    int GetLevelFromSceneName(string name)
     {
         string[] splitName = name.Split('_');
         foreach(string val in splitName) 
@@ -149,7 +221,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         return -1;
     }
 
-    private void UpdateCurrentLevel()
+    void UpdateCurrentLevel()
     {
         int level = GetCurrentOpenLevel();
         if (level != -1)
@@ -190,18 +262,18 @@ public class Level_Manager : Singleton<Level_Manager> {
         return scene;
     }
     
-    private void UnloadScene(Scene sceneToUnload)
+    void UnloadScene(Scene sceneToUnload)
     {
         AsyncOperation asyncOperation = SceneManager.UnloadSceneAsync(sceneToUnload);
     }
     
-    private void LoadScene(int sceneToLoad)
+    void LoadScene(int sceneToLoad)
     {
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
         asyncOperation.completed += OnSceneDoneLoading;
     }
 
-    private void OnSceneDoneLoading(AsyncOperation asyncOperation)
+    void OnSceneDoneLoading(AsyncOperation asyncOperation)
     {
         asyncOperation.completed -= OnSceneDoneLoading;
         
@@ -215,7 +287,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         Initialize();
     }
 
-    private void Initialize()
+    void Initialize()
     {
         GameObject spawnPoint = GameObject.Find("SpawnPoint");
         if (spawnPoint)
@@ -257,7 +329,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         StartCoroutine(RestartLevelRoutine());
     }
 
-    private IEnumerator RestartLevelRoutine()
+    IEnumerator RestartLevelRoutine()
     {
         yield return Fader.Instance.FadeOutCoroutine(2f);
 
@@ -314,5 +386,72 @@ public class Level_Manager : Singleton<Level_Manager> {
     public int GetHighestCompletedLevel()
     {
         return highestCompletedLevel;
+    }
+
+    private bool SetLevelCompleted(int level, bool completed)
+    {
+        Level currLevel = GetLevel(level);
+        currLevel.completed = completed;
+        SetLevel(level, currLevel);
+        
+        return true;
+    }
+    
+    private bool SetLevelBestNumJumps(int level, int numOfJumps)
+    {
+        Level currLevel = GetLevel(level);
+        currLevel.bestNumOfJumps = numOfJumps;
+        SetLevel(level, currLevel);
+        
+        return true;
+    }
+    
+    private bool SetLevelBestTime(int level, double bestTime)
+    {
+        Level currLevel = GetLevel(level);
+        currLevel.bestTime = bestTime;
+        SetLevel(level, currLevel);
+        
+        return true;
+    }
+
+    public Level[] GetLevels()
+    {
+        return levels;
+    }
+    
+    public Level GetLevel(int level)
+    {
+        int index = level - 1;
+
+        if (levels == null || index > levels.Length || index < 0)
+        {
+            return new Level();
+        }
+        
+        return levels[index];
+    }
+    
+    public bool SetLevel(int level, Level newLevel)
+    {
+        int index = level - 1;
+
+        if (levels == null || index > levels.Length || index < 0)
+        {
+            return false;
+        }
+
+        levels[index] = newLevel;
+        return true;
+    }
+
+    public int GetCurrentLevelNumber()
+    {
+        return currentLevel;
+    }
+
+    public Level GetCurrentLevel()
+    {
+        return GetLevel(currentLevel);
     }
 }
