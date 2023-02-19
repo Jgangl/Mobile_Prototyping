@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UI_Manager : Singleton<UI_Manager>
 {
@@ -11,6 +13,7 @@ public class UI_Manager : Singleton<UI_Manager>
     [SerializeField] LevelSelection levelSelection;
     [SerializeField] GameObject inLevelUI;
     [SerializeField] GameObject mainMenu;
+    [SerializeField] Button startButton;
 
     Menu currentOpenMenu;
     PlayerController player;
@@ -24,10 +27,14 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         Level_Manager.Instance.OnLevelCompleted += LevelManager_OnLevelCompleted;
+
+        startButton.onClick.AddListener(OnStartButtonPressed);
+        UpdateStartButton();
     }
 
-    public void OnStartButtonPressed() 
+    public void OnStartButtonPressed()
     {
+        startButton.interactable = false;
         GameManager.Instance.StartGame();
     }
 
@@ -92,6 +99,9 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         isMainMenuOpened = enabled;
         mainMenu.SetActive(enabled);
+        
+        startButton.interactable = enabled;
+        UpdateStartButton();
     }
 
     void UpdateMenuStatus(bool menuOpened) 
@@ -129,6 +139,28 @@ public class UI_Manager : Singleton<UI_Manager>
             settingsMenu.Close();
             settingsMenu.EnableHomeButton(!isMainMenuOpened);
             UpdateMenuStatus(false);
+        }
+    }
+
+    void UpdateStartButton()
+    {
+        int numCompletedLevels = Level_Manager.Instance.GetNumCompletedLevels();
+
+        TextMeshProUGUI startButtonText = startButton.GetComponentInChildren<TextMeshProUGUI>();
+        if (!startButtonText)
+        {
+            return;
+        }
+
+        if (numCompletedLevels == 0)
+        {
+            startButtonText.text = "Start";
+            startButtonText.fontSize = 75;
+        }
+        else
+        {
+            startButtonText.text = "Continue";
+            startButtonText.fontSize = 60;
         }
     }
 

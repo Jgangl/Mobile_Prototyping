@@ -108,10 +108,6 @@ public class Level_Manager : Singleton<Level_Manager> {
     public void CompleteLevel(int level) 
     {
         Debug.Log("Level " + level + " completed");
-        if (level > highestCompletedLevel)
-        {
-            UpdateHighestCompletedLevel(level);
-        }
 
         int currNumJumps = GameManager.Instance.GetNumJumpsThisLevel();
         double currTime = GameManager.Instance.GetTimeThisLevel();
@@ -141,20 +137,24 @@ public class Level_Manager : Singleton<Level_Manager> {
         OnLevelCompleted?.Invoke(level);
     }
 
-    void UpdateHighestCompletedLevel(int newHighLevel)
-    {
-        highestCompletedLevel = newHighLevel;
-        // Update level selection buttons
-    }
-
     public void CompleteCurrentLevel() 
     {
         CompleteLevel(currentLevel);
     }
 
-    public List<int> GetCompletedLevels() 
+    public int GetNumCompletedLevels()
     {
-        return completedLevels;
+        int numCompletedLevels = 0;
+        
+        foreach (Level level in levels)
+        {
+            if (level.completed)
+            {
+                numCompletedLevels++;
+            }
+        }
+
+        return numCompletedLevels;
     }
 
     public void SetCompletedLevels(List<int> completedLevels) 
@@ -178,6 +178,13 @@ public class Level_Manager : Singleton<Level_Manager> {
     public void LoadCurrentLevel() 
     {
         LoadLevel(currentLevel);
+    }
+
+    public void LoadFirstUncompletedLevel()
+    {
+        int level = GetFirstUncompletedLevel();
+        
+        LoadLevel(level);
     }
 
     public void LoadLevel(int levelIndex) 
@@ -383,9 +390,17 @@ public class Level_Manager : Singleton<Level_Manager> {
         EditorBuildSettings.scenes = scenes;
     }
 
-    public int GetHighestCompletedLevel()
+    public int GetFirstUncompletedLevel()
     {
-        return highestCompletedLevel;
+        foreach (Level level in levels)
+        {
+            if (!level.completed)
+            {
+                return level.levelNumber;
+            }
+        }
+        
+        return 1;
     }
 
     private bool SetLevelCompleted(int level, bool completed)

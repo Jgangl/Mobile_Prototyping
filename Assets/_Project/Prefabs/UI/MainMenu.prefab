@@ -894,6 +894,7 @@ MonoBehaviour:
   levelSelection: {fileID: 0}
   inLevelUI: {fileID: 2693624721466010162}
   mainMenu: {fileID: 0}
+  startButton: {fileID: 0}
 --- !u!1 &7366699435875857861
 GameObject:
   m_ObjectHideFlags: 0

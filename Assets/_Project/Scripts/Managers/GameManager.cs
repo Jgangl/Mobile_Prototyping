@@ -52,7 +52,7 @@ public class GameManager : Singleton<GameManager>
 
     public void StartGame() 
     {
-        Level_Manager.Instance.LoadCurrentLevel();
+        Level_Manager.Instance.LoadFirstUncompletedLevel();
     }
 
     public void QuitGame() 
