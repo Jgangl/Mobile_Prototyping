@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,13 +10,14 @@ using Random = UnityEngine.Random;
 
 public class LevelSelectButton : MonoBehaviour
 {
-    private int level;
+    int level;
 
-    [SerializeField] private Button button;
-    [SerializeField] private TextMeshProUGUI buttonText;
-    [SerializeField] private Transform completeCheckmark;
-    [SerializeField] private Transform lockTransform;
-    [SerializeField] private Image bgImage;
+    [SerializeField] Button button;
+    [SerializeField] TextMeshProUGUI buttonText;
+    [SerializeField] Transform completeCheckmark;
+    [SerializeField] Transform lockTransform;
+    [SerializeField] Image bgImage;
+    [SerializeField] DOTweenAnimation clickAnimation;
 
     bool bLocked = true;
 
@@ -28,6 +30,7 @@ public class LevelSelectButton : MonoBehaviour
     {
         this.level = level;
         button.onClick.AddListener(() => onClickAction(level));
+        button.onClick.AddListener(() => clickAnimation.DORestart());
         
         buttonText.text = level.ToString();
     }

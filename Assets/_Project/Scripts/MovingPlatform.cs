@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingPlatform : Platform
 {
-    public float speed = 1.0f;
+    public float speed = 0.05f;
 
     public GameObject targetA;
     public GameObject targetB;

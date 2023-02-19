@@ -16,6 +16,8 @@ public class GameManager : Singleton<GameManager>
     int numJumpsThisLevel = 0;
     double timeThisLevel = 0.0f;
 
+    [SerializeField] bool disableLoadingSaving;
+
     public Action OnLoadedSave;
 
     protected override void Awake()
@@ -136,8 +138,11 @@ public class GameManager : Singleton<GameManager>
         timeThisLevel = 0.0f;
     }
     
-    public bool LoadGame() 
+    public bool LoadGame()
     {
+        if (disableLoadingSaving)
+            return false;
+        
         object saveData = Save_Manager.Instance.LoadGame();
 
         // A save file already exists
@@ -152,31 +157,28 @@ public class GameManager : Singleton<GameManager>
             
             return true;
         }
-        else {
+        else 
+        {
             Debug.Log("No save file found");
             return false;
         }
-        
-
     }
 
     public bool SaveGame() 
     {
-        Debug.Log("Save game");
-        
-        Debug.Log(gameData);
+        if (disableLoadingSaving)
+            return false;
         
         if (gameData != null) 
         {
             // Insert save data
             gameData.SetLevels(Level_Manager.Instance.GetLevels());
             bool saved = Save_Manager.Instance.Save(gameData);
-            
-            Debug.Log(saved);
-            
+
             return saved;
         }
-        else {
+        else 
+        {
             //Debug.Log("GAME NOT SAVED");
             return false;
         }

@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -5177388603050735206, guid: cc35afd292fc349128b36a291fb3a165, type: 3}
-  m_Color: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
+  m_Color: {r: 0.3882353, g: 0.40784314, b: 0.43137255, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -164,6 +164,10 @@ MonoBehaviour:
   spikePrefab: {fileID: 6657448692435931645, guid: 81d3523120d8dd84ab227108856907cd, type: 3}
   xOffset: 0.05
   yOffset: 0.05
+  xSpikeSpacing: 0.02
+  ySpikeSpacing: 0.02
+  leftRightSpikeYOffset: 0.02
+  topBottomSpikeXOffset: 0.02
 --- !u!1818360610 &8528248484033117837
 ScaleConstraint:
   m_ObjectHideFlags: 0

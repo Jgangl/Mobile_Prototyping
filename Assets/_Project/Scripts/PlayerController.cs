@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -77,8 +78,11 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) 
             {
-                fingerDownPos = Input.mousePosition;
-                mouseHeldDown = true;
+                if (!InLevelUIButton.IsMouseOverButton())
+                {
+                    fingerDownPos = Input.mousePosition;
+                    mouseHeldDown = true;
+                }
             }
             else if (Input.GetMouseButtonUp(0)) 
             {
@@ -169,7 +173,7 @@ public class PlayerController : MonoBehaviour
         rb.isKinematic = false;
         canMove = false;
 
-        //SetVelocity(Vector2.zero);
+        SetVelocity(Vector2.zero);
         
         DisableMovingJoint();
 
@@ -301,13 +305,20 @@ public class PlayerController : MonoBehaviour
 
         if (stuckToPlatform)
             return;
-
-        bool bHitPlatform = collision.gameObject.TryGetComponent(out Platform platformHit);
+        
+        Platform platformHit;
+        bool bHitPlatform = collision.gameObject.TryGetComponent(out platformHit);
+        if (!bHitPlatform)
+        {
+            Transform collisionParent = collision.transform.parent;
+            if (collisionParent != null)
+            {
+                bHitPlatform = collisionParent.gameObject.TryGetComponent(out platformHit);
+            }
+        }
+        
         bool bHitPlatformIsCurrent = CurrentPlatform == platformHit;
 
-        //Debug.Log(CurrentPlatform);
-        //Debug.Log(CurrentPlatform);
-        
         // If timer timed out and hit the same platform 
         if (bonesCanCollide && bHitPlatformIsCurrent)
         {
@@ -317,6 +328,7 @@ public class PlayerController : MonoBehaviour
             
             bool hitSomething = colliders.Length > 0;
 
+            Debug.Log(hitSomething);
             if (hitSomething)
             {
                 StopMovement(true);
@@ -404,7 +416,7 @@ public class PlayerController : MonoBehaviour
         SetIsDead(false);
         SetVelocity(Vector2.zero);
         
-        EnableMovement();
+        StopMovement(true);
 
         transform.position = newPosition;
 

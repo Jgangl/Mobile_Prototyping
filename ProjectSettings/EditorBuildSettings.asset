@@ -23,4 +23,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Levels/Level_5_Landscape.unity
     guid: c8fb7e6133e33074a9ba0c0ef4254362
+  - enabled: 1
+    path: Assets/_Project/Scenes/Levels/Level_6_Landscape.unity
+    guid: ed1556dff8fda42428eacf0dd60ec1cb
+  - enabled: 1
+    path: Assets/_Project/Scenes/Levels/Level_7_Landscape.unity
+    guid: aa07603347abec440b2621a8045ed883
+  - enabled: 1
+    path: Assets/_Project/Scenes/Levels/Level_8_Landscape.unity
+    guid: 76bcc2afc6bf5814ea564a94889eaa28
   m_configObjects: {}
