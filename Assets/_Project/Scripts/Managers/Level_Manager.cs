@@ -338,7 +338,7 @@ public class Level_Manager : Singleton<Level_Manager> {
 
     IEnumerator RestartLevelRoutine()
     {
-        yield return Fader.Instance.FadeOutCoroutine(2f);
+        yield return Fader.Instance.FadeOutCoroutine(1f);
 
         // Reset player position
         player.Reset(playerSpawnPoint.position);

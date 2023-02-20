@@ -27,6 +27,7 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         Level_Manager.Instance.OnLevelCompleted += LevelManager_OnLevelCompleted;
+        Level_Manager.Instance.OnLevelReset += LevelManager_OnLevelReset;
 
         startButton.onClick.AddListener(OnStartButtonPressed);
         UpdateStartButton();
@@ -80,6 +81,13 @@ public class UI_Manager : Singleton<UI_Manager>
     void LevelManager_OnLevelCompleted(int levelCompleted)
     {
         StartCoroutine("LevelCompleteRoutine");
+    }
+    
+    void LevelManager_OnLevelReset()
+    {
+        afterLevelMenu.CloseInstant();
+        isMenuOpened = false;
+        UpdateMenuStatus(false);
     }
 
     IEnumerator LevelCompleteRoutine()
@@ -166,7 +174,6 @@ public class UI_Manager : Singleton<UI_Manager>
 
     public void OnRestartButtonPressed() 
     {
-        Debug.Log("RESTART BUTTON");
         Level_Manager.Instance.RestartCurrentLevel();
     }
 
