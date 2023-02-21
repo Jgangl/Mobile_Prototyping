@@ -344,8 +344,10 @@ public class Level_Manager : Singleton<Level_Manager> {
         player.Reset(playerSpawnPoint.position);
         
         TimeDilator.ResumeNormalTime();
-        
+
         OnLevelReset?.Invoke();
+        
+        levelCompleted = false;
 
         yield return Fader.Instance.FadeInCoroutine(1.5f);
     }

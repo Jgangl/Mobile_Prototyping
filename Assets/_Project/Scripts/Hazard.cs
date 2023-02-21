@@ -22,11 +22,10 @@ public class Hazard : MonoBehaviour
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player)
             player.SetIsDead(true);
-
+        
         if (collided)
             return;
-        
-        Debug.Log("Player collided");
+
         
         // Set collided flag to stop multiple collisions from player bones
         collided = true;
