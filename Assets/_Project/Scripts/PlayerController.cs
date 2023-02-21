@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxSwipeLength     = 300f;
     [SerializeField] float playerRadius = 0.75f;
     [SerializeField] LayerMask collisionLayerMask;
+    [SerializeField] double recentCollisionTimeDiffThreshold = 0.2f;
     
     GameObject previousPlatform;
     bool platformCollisionTimeout = true;
@@ -46,6 +47,8 @@ public class PlayerController : MonoBehaviour
     Platform CurrentPlatform;
     FixedJoint2D MovingJoint;
 
+    Dictionary<GameObject, double> recentCollisions;
+
     public static Action OnJumped;
 
     void Start()
@@ -63,12 +66,16 @@ public class PlayerController : MonoBehaviour
 
         bones           = new List<Bone_Softbody>();
         boneRigidbodies = new List<Rigidbody2D>();
+
+        recentCollisions = new Dictionary<GameObject, double>();
         
         InitializeBones();
     }
 
     void Update() 
     {
+        UpdateRecentCollisions();
+        
         if (disableInput)
             return;
         
@@ -98,6 +105,8 @@ public class PlayerController : MonoBehaviour
                     // Add swipe force
                     foreach (Rigidbody2D bone in boneRigidbodies)
                         bone.AddForce(currentSwipeForce);
+                    
+                    AudioManager.Instance.PlayLaunchSound();
                     
                     OnJumped?.Invoke();
                 }
@@ -224,6 +233,7 @@ public class PlayerController : MonoBehaviour
         bool bHitPlatform = collision.gameObject.TryGetComponent(out platformHit);
         if (!bHitPlatform)
         {
+            // Need to check if the Platform component is in the parent gameobject
             Transform collisionParent = collision.transform.parent;
             if (collisionParent != null)
             {
@@ -231,36 +241,25 @@ public class PlayerController : MonoBehaviour
             }
         }
         
-        bool bHitPlatformIsCurrent = CurrentPlatform == platformHit;
-        
-/*
-        float velocityMagnitude = GetObjectAverageVelocity().magnitude;
-        if (velocityMagnitude > 1f && bonesCanCollide) 
-        {
-            AudioManager.Instance.PlaySquishSound();
-            CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
-            
-            slimeGenerator.Generate(collision.contacts[0].point, collision.gameObject);
-            
-            StartCoroutine("IgnoreBonesTimer");
+        bool bCanCollideWithWall = !recentCollisions.ContainsKey(collision.gameObject);
 
-            SpawnHitParticles(collision);
+        if (!bHitPlatform)
+        {
+            if (!recentCollisions.ContainsKey(collision.gameObject))
+            {
+                recentCollisions.Add(collision.gameObject, Time.time); 
+            }
         }
-*/
+        
+        bool bHitPlatformIsCurrent = CurrentPlatform == platformHit;
 
         bool speedThresholdPassed = GetObjectAverageVelocity().magnitude > hitSpeedThreshold;
-
+        
+        
         // If hit a platform OR didn't hit a platform but going fast enough
-        if (bHitPlatform || speedThresholdPassed)
+        if (speedThresholdPassed && bCanCollideWithWall)
         {
-            AudioManager.Instance.PlaySquishSound();
-            CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
-            
-            slimeGenerator.Generate(collision.contacts[0].point, collision.gameObject);
-            
-            //StartCoroutine("IgnoreBonesTimer");
-
-            SpawnHitParticles(collision);
+            PlayHitEffects(collision);
         }
 
         if (!bHitPlatform)
@@ -271,30 +270,25 @@ public class PlayerController : MonoBehaviour
             return;
         
         CurrentPlatform = platformHit;
+        
+        PlayHitEffects(collision);
 
         if (platformHit is MovingPlatform)
         {
             StopMovement(false);
             EnableMovingJoint(platformHit.GetComponent<Rigidbody2D>());
-
-            if (boneCollisionDict.ContainsKey(bone))
-            {
-                boneCollisionDict[bone].Add(collision.rigidbody);
-            }
-
-            stuckToPlatform = true;
         }
         else
         {
             StopMovement(true);
-
-            if (boneCollisionDict.ContainsKey(bone))
-            {
-                boneCollisionDict[bone].Add(collision.rigidbody);
-            }
-
-            stuckToPlatform = true;
         }
+        
+        if (boneCollisionDict.ContainsKey(bone))
+        {
+            boneCollisionDict[bone].Add(collision.rigidbody);
+        }
+
+        stuckToPlatform = true;
     }
 
     public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) 
@@ -328,7 +322,6 @@ public class PlayerController : MonoBehaviour
             
             bool hitSomething = colliders.Length > 0;
 
-            Debug.Log(hitSomething);
             if (hitSomething)
             {
                 StopMovement(true);
@@ -368,6 +361,34 @@ public class PlayerController : MonoBehaviour
             {
                 stuckToPlatform = false;
             }
+        }
+    }
+
+    void PlayHitEffects(Collision2D collision)
+    {
+        AudioManager.Instance.PlaySquishSound();
+        CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
+        slimeGenerator.Generate(collision.contacts[0].point, collision.gameObject);
+        SpawnHitParticles(collision);
+    }
+
+    void UpdateRecentCollisions()
+    {
+        List<GameObject> collisionsToRemove = new List<GameObject>();
+        
+        double currentTime = Time.time;
+        foreach ((GameObject collision, double time) in recentCollisions)
+        {
+            double timeDiff = currentTime - time;
+            if (timeDiff > recentCollisionTimeDiffThreshold)
+            {
+                collisionsToRemove.Add(collision);
+            }
+        }
+        
+        foreach (GameObject collision in collisionsToRemove)
+        {
+            recentCollisions.Remove(collision);
         }
     }
     

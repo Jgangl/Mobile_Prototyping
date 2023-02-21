@@ -13,9 +13,24 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private bool enableSoundFX;
     [SerializeField] private AudioSource backgroundSource;
     [SerializeField] private AudioSource squishSource;
+    [SerializeField] private AudioSource launchSource;
     
     //public float[] pitchValues;
     public SquishAudioClip[] squishClips;
+    public SquishAudioClip[] launchClips;
+    
+    public void PlayLaunchSound() 
+    {
+        if (!enableSoundFX)
+            return;
+
+        int randClip = Random.Range(0, launchClips.Length);
+
+        launchSource.clip = launchClips[randClip].GetAudioClip();
+        launchSource.pitch = launchClips[randClip].GetRandomPitch();
+        launchSource.Stop();
+        launchSource.Play();
+    }
     
     public void PlaySquishSound() 
     {
