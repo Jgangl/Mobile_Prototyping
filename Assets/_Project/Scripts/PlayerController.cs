@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float playerRadius = 0.75f;
     [SerializeField] LayerMask collisionLayerMask;
     [SerializeField] double recentCollisionTimeDiffThreshold = 0.2f;
+    [SerializeField] ParticleSystem playerTrail;
+    [SerializeField] ParticleSystem playerSlimeParticles;
     
     GameObject previousPlatform;
     bool platformCollisionTimeout = true;
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
     Platform CurrentPlatform;
     FixedJoint2D MovingJoint;
 
-    Dictionary<GameObject, double> recentCollisions;
+    Dictionary<GameObject, double> recentWallCollisions;
 
     public static Action OnJumped;
 
@@ -67,8 +68,8 @@ public class PlayerController : MonoBehaviour
         bones           = new List<Bone_Softbody>();
         boneRigidbodies = new List<Rigidbody2D>();
 
-        recentCollisions = new Dictionary<GameObject, double>();
-        
+        recentWallCollisions = new Dictionary<GameObject, double>();
+
         InitializeBones();
     }
 
@@ -107,6 +108,8 @@ public class PlayerController : MonoBehaviour
                         bone.AddForce(currentSwipeForce);
                     
                     AudioManager.Instance.PlayLaunchSound();
+                    
+                    playerSlimeParticles.Play();
                     
                     OnJumped?.Invoke();
                 }
@@ -168,6 +171,8 @@ public class PlayerController : MonoBehaviour
     {
         if (enableKinematicRigidbody)
             rb.isKinematic = true;
+        
+        playerSlimeParticles.Stop();
         
         rb.velocity = Vector2.zero;
         canMove = true;
@@ -241,13 +246,13 @@ public class PlayerController : MonoBehaviour
             }
         }
         
-        bool bCanCollideWithWall = !recentCollisions.ContainsKey(collision.gameObject);
+        bool bCanCollideWithWall = !recentWallCollisions.ContainsKey(collision.gameObject);
 
         if (!bHitPlatform)
         {
-            if (!recentCollisions.ContainsKey(collision.gameObject))
+            if (!recentWallCollisions.ContainsKey(collision.gameObject))
             {
-                recentCollisions.Add(collision.gameObject, Time.time); 
+                recentWallCollisions.Add(collision.gameObject, Time.time); 
             }
         }
         
@@ -257,22 +262,22 @@ public class PlayerController : MonoBehaviour
         
         
         // If hit a platform OR didn't hit a platform but going fast enough
-        if (speedThresholdPassed && bCanCollideWithWall)
+        if ((speedThresholdPassed && bCanCollideWithWall) && !bHitPlatform)
         {
             PlayHitEffects(collision);
         }
 
         if (!bHitPlatform)
             return;
-        
+
         // Platform collision hasn't timed out and hit platform is same as current
         if (!platformCollisionTimeout && bHitPlatformIsCurrent)
             return;
         
         CurrentPlatform = platformHit;
-        
-        PlayHitEffects(collision);
 
+        PlayHitEffects(collision);
+        
         if (platformHit is MovingPlatform)
         {
             StopMovement(false);
@@ -324,6 +329,7 @@ public class PlayerController : MonoBehaviour
 
             if (hitSomething)
             {
+                PlayHitEffects(collision);
                 StopMovement(true);
                 stuckToPlatform = true;
             }
@@ -359,15 +365,20 @@ public class PlayerController : MonoBehaviour
 
             if (!areThereCollisions)
             {
-                stuckToPlatform = false;
+                //stuckToPlatform = false;
             }
         }
     }
 
     void PlayHitEffects(Collision2D collision)
     {
-        AudioManager.Instance.PlaySquishSound();
-        CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
+        // Only play sound/screen shake during the level
+        if (!isDead && !Level_Manager.Instance.IsLevelCompleted() && !Level_Manager.Instance.LevelJustStarted())
+        {
+            AudioManager.Instance.PlaySquishSound();
+            CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
+        }
+
         slimeGenerator.Generate(collision.contacts[0].point, collision.gameObject);
         SpawnHitParticles(collision);
     }
@@ -377,7 +388,7 @@ public class PlayerController : MonoBehaviour
         List<GameObject> collisionsToRemove = new List<GameObject>();
         
         double currentTime = Time.time;
-        foreach ((GameObject collision, double time) in recentCollisions)
+        foreach ((GameObject collision, double time) in recentWallCollisions)
         {
             double timeDiff = currentTime - time;
             if (timeDiff > recentCollisionTimeDiffThreshold)
@@ -388,7 +399,7 @@ public class PlayerController : MonoBehaviour
         
         foreach (GameObject collision in collisionsToRemove)
         {
-            recentCollisions.Remove(collision);
+            recentWallCollisions.Remove(collision);
         }
     }
     
@@ -439,8 +450,9 @@ public class PlayerController : MonoBehaviour
         
         StopMovement(true);
 
+        playerTrail.Pause();
         transform.position = newPosition;
-
+        playerTrail.Play();
         ResetBonePositions();
     }
 

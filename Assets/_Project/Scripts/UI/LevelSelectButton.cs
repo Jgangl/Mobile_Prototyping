@@ -31,6 +31,7 @@ public class LevelSelectButton : MonoBehaviour
         this.level = level;
         button.onClick.AddListener(() => onClickAction(level));
         button.onClick.AddListener(() => clickAnimation.DORestart());
+        button.onClick.AddListener(() => AudioManager.Instance.PlayLaunchSound());
         
         buttonText.text = level.ToString();
     }

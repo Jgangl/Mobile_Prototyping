@@ -131,6 +131,8 @@ public class Level_Manager : Singleton<Level_Manager> {
         SetLevelCompleted(level, true);
         levelCompleted = true;
         
+        AudioManager.Instance.PlayWinSound();
+        
         // Save game after a level is completed
         GameManager.Instance.SaveGame();
 
@@ -241,6 +243,11 @@ public class Level_Manager : Singleton<Level_Manager> {
     public bool IsLevelCompleted()
     {
         return levelCompleted;
+    }
+    
+    public bool LevelJustStarted()
+    {
+        return GameManager.Instance.GetTimeThisLevel() < 0.5f;
     }
 
     public void UnloadPreviousScenes()

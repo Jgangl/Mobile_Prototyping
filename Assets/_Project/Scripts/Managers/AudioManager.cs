@@ -14,10 +14,12 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioSource backgroundSource;
     [SerializeField] private AudioSource squishSource;
     [SerializeField] private AudioSource launchSource;
+    [SerializeField] private AudioSource successSource;
     
-    //public float[] pitchValues;
     public SquishAudioClip[] squishClips;
     public SquishAudioClip[] launchClips;
+    public SquishAudioClip[] successClips;
+    public AudioClip   startClip;
     
     public void PlayLaunchSound() 
     {
@@ -43,6 +45,26 @@ public class AudioManager : Singleton<AudioManager>
         squishSource.pitch = squishClips[randClip].GetRandomPitch();
         squishSource.Stop();
         squishSource.Play();
+    }
+
+    public void PlayWinSound()
+    {
+        PlaySquishSound();
+        
+        if (!enableSoundFX)
+            return;
+
+        int randClip = Random.Range(0, successClips.Length);
+
+        successSource.clip = successClips[randClip].GetAudioClip();
+        successSource.pitch = successClips[randClip].GetRandomPitch();
+        successSource.Stop();
+        successSource.Play();
+    }
+
+    public void PlayStartSound()
+    {
+        AudioSource.PlayClipAtPoint(startClip, Vector3.zero);
     }
 
     private void Start()
@@ -108,8 +130,8 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (!enableSoundFX) return;
 
-        squishSource.clip = squishClips[0].GetAudioClip();
-        squishSource.pitch = 0.8f;
+        squishSource.clip = squishClips[2].GetAudioClip();
+        squishSource.pitch = 1.1f;
         
         squishSource.Stop();
         squishSource.Play();
@@ -119,8 +141,8 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (!enableSoundFX) return;
         
-        squishSource.clip = squishClips[0].GetAudioClip();
-        squishSource.pitch = 0.5f;
+        squishSource.clip = squishClips[2].GetAudioClip();
+        squishSource.pitch = 0.9f;
         
         squishSource.Stop();
         squishSource.Play();
