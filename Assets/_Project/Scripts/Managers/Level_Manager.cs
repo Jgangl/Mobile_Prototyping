@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -32,7 +33,7 @@ public class Level_Manager : Singleton<Level_Manager> {
     public Action<int> OnLevelCompleted;
     public Action OnLevelReset;
 
-    Transform playerSpawnPoint;
+    Vector2 playerSpawnLocation;
     PlayerController player;
 
     protected override void Awake()
@@ -303,13 +304,12 @@ public class Level_Manager : Singleton<Level_Manager> {
 
     void Initialize()
     {
-        GameObject spawnPoint = GameObject.Find("SpawnPoint");
-        if (spawnPoint)
-            playerSpawnPoint = GameObject.Find("SpawnPoint").transform;
-
         GameObject localPlayer = GameObject.FindGameObjectWithTag("Player");
         if (localPlayer)
+        {
             player = localPlayer.GetComponent<PlayerController>();
+            playerSpawnLocation = player.transform.position;
+        }
     }
 
     IEnumerator LoadLevelCoroutine(int levelIndex)
@@ -348,7 +348,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         yield return Fader.Instance.FadeOutCoroutine(1f);
 
         // Reset player position
-        player.Reset(playerSpawnPoint.position);
+        player.Reset(playerSpawnLocation);
         
         TimeDilator.ResumeNormalTime();
 
@@ -380,6 +380,9 @@ public class Level_Manager : Singleton<Level_Manager> {
             
             levelFiles.Add(fileInfo);
         }
+
+        // Need to sort level files manually using custom compare for integer within string
+        levelFiles.Sort(new MyComparer());
 
         // Number of levels + UI scene
         EditorBuildSettingsScene[] scenes = new EditorBuildSettingsScene[levelFiles.Count + 1];
@@ -611,5 +614,35 @@ public class Level_Manager : Singleton<Level_Manager> {
     public Level GetCurrentLevel()
     {
         return GetLevel(currentLevel);
+    }
+}
+
+class MyComparer : IComparer<FileInfo>
+{
+    public int Compare(FileInfo fileX, FileInfo fileY)
+    {
+        string x = fileX.Name;
+        string y = fileY.Name;
+        
+        if (x.Contains(".unity"))
+            x = x.Remove(x.Length - 6);
+        
+        if (y.Contains(".unity"))
+            y = y.Remove(y.Length - 6);
+
+        x = x.Substring(x.LastIndexOf("_") + 1);
+        y = y.Substring(y.LastIndexOf("_") + 1);
+        
+        int xVal, yVal;
+        var xIsVal = int.TryParse( x, out xVal );
+        var yIsVal = int.TryParse( y, out yVal );
+
+        if (xIsVal && yIsVal)   // both are numbers...
+            return xVal.CompareTo(yVal);
+        if (!xIsVal && !yIsVal) // both are strings...
+            return x.CompareTo(y);
+        if (xIsVal)             // x is a number, sort first
+            return -1;
+        return 1;               // x is a string, sort last
     }
 }
