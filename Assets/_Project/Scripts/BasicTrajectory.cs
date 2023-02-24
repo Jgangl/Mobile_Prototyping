@@ -92,8 +92,8 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
 
     public override void DrawShapes(Camera cam)
     {
-        using( Draw.Command( cam ) ){
-            
+        using( Draw.Command( cam ) )
+        {
             if (linePositions.Count == 0)
                 return;
             

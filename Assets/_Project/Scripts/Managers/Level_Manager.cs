@@ -399,6 +399,140 @@ public class Level_Manager : Singleton<Level_Manager> {
         EditorBuildSettings.scenes = scenes;
     }
 
+    [Title("Scene Renaming (CAUTION)", Bold = true, TitleAlignment = TitleAlignments.Centered)]
+    [Button("Increment Levels")]
+    public void InrementLevelNumbers()
+    {
+        Debug.Log("Incrementing levels");
+
+        string projectDirectory = Application.dataPath;
+        
+        // Remove Assets folder
+        projectDirectory = projectDirectory.Replace("/Assets", "");
+
+        List<string> levelsToIncrement = new List<string>();
+        
+        foreach (UnityEngine.Object o in Selection.objects)
+        {
+            if (o.GetType() == typeof(SceneAsset))
+            {
+                string assetPath = AssetDatabase.GetAssetPath(o);
+                string fullFilePath = projectDirectory + "/" + assetPath;
+                
+                levelsToIncrement.Add(fullFilePath);
+            }
+        }
+
+        for (int i = levelsToIncrement.Count - 1; i >= 0; i--)
+        {
+            string fileName = levelsToIncrement[i];
+            // Remove .unity from end of file
+            if (fileName.Contains(".unity"))
+                fileName = fileName.Remove(fileName.Length - 6);
+            
+            int lastIndexOfSplit = fileName.LastIndexOf("/");
+            string levelName     = fileName.Substring(lastIndexOfSplit);
+            string filePath      = fileName.Substring(0, lastIndexOfSplit);
+
+            string[] levelAndNumber = levelName.Split("_");
+
+            if (!int.TryParse(levelAndNumber[1], out int levelNum))
+            {
+                Debug.Log(levelAndNumber[1] + " is not a valid number");
+                return;
+            }
+
+            int numChange = 1;
+            levelNum = levelNum + numChange;
+                
+            string newLevelName = levelAndNumber[0] + "_" + levelNum.ToString();
+
+            string newFullUnityFileName = filePath + newLevelName + ".unity";
+            string newFullMetaFileName = newFullUnityFileName + ".meta";
+
+            if (File.Exists(newFullUnityFileName) || File.Exists(newFullMetaFileName))
+            {
+                Debug.LogError("Scene or meta file already exists: " + newFullUnityFileName);
+                return;
+            }
+            
+            // Rename scene file
+            File.Move(levelsToIncrement[i], newFullUnityFileName);
+            
+            // Rename .meta file
+            File.Move(levelsToIncrement[i] + ".meta", newFullMetaFileName);
+        }
+        
+        AssetDatabase.Refresh();
+    }
+    
+    [Title("Scene Renaming (CAUTION)", Bold = true, TitleAlignment = TitleAlignments.Centered)]
+    [Button("Decrement Levels")]
+    public void DecrementLevelNumbers()
+    {
+        Debug.Log("Deccrementing levels");
+
+        string projectDirectory = Application.dataPath;
+        
+        // Remove Assets folder
+        projectDirectory = projectDirectory.Replace("/Assets", "");
+
+        List<string> levelsToIncrement = new List<string>();
+        
+        foreach (UnityEngine.Object o in Selection.objects)
+        {
+            if (o.GetType() == typeof(SceneAsset))
+            {
+                string assetPath = AssetDatabase.GetAssetPath(o);
+                string fullFilePath = projectDirectory + "/" + assetPath;
+                
+                levelsToIncrement.Add(fullFilePath);
+            }
+        }
+
+        for (int i = 0; i < levelsToIncrement.Count; i++)
+        {
+            string fileName = levelsToIncrement[i];
+            // Remove .unity from end of file
+            if (fileName.Contains(".unity"))
+                fileName = fileName.Remove(fileName.Length - 6);
+            
+            int lastIndexOfSplit = fileName.LastIndexOf("/");
+            string levelName     = fileName.Substring(lastIndexOfSplit);
+            string filePath      = fileName.Substring(0, lastIndexOfSplit);
+
+            string[] levelAndNumber = levelName.Split("_");
+
+            if (!int.TryParse(levelAndNumber[1], out int levelNum))
+            {
+                Debug.Log(levelAndNumber[1] + " is not a valid number");
+                return;
+            }
+
+            int numChange = -1;
+            levelNum = levelNum + numChange;
+                
+            string newLevelName = levelAndNumber[0] + "_" + levelNum.ToString();
+
+            string newFullUnityFileName = filePath + newLevelName + ".unity";
+            string newFullMetaFileName = newFullUnityFileName + ".meta";
+
+            if (File.Exists(newFullUnityFileName) || File.Exists(newFullMetaFileName))
+            {
+                Debug.LogError("Scene or meta file already exists: " + newFullUnityFileName);
+                return;
+            }
+            
+            // Rename scene file
+            File.Move(levelsToIncrement[i], newFullUnityFileName);
+            
+            // Rename .meta file
+            File.Move(levelsToIncrement[i] + ".meta", newFullMetaFileName);
+        }
+        
+        AssetDatabase.Refresh();
+    }
+
     public int GetFirstUncompletedLevel()
     {
         foreach (Level level in levels)

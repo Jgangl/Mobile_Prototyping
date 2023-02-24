@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
                     basicTrajectory.SimulateArc(gameObject.transform.position, 
                         currentSwipeForce.normalized,
                         currentSwipeForce.magnitude,
-                        1f);
+                        rb.mass);
                 }
             }
         }
@@ -329,8 +329,17 @@ public class PlayerController : MonoBehaviour
 
             if (hitSomething)
             {
+                if (platformHit is MovingPlatform)
+                {
+                    StopMovement(false);
+                    EnableMovingJoint(platformHit.GetComponent<Rigidbody2D>());
+                }
+                else
+                {
+                    StopMovement(true);
+                }
+                
                 PlayHitEffects(collision);
-                StopMovement(true);
                 stuckToPlatform = true;
             }
         }
@@ -430,11 +439,30 @@ public class PlayerController : MonoBehaviour
         bonesCanCollide = true;
     }
 
-    public void SetVelocity(Vector2 newVelocity) 
+    public void SetVelocity(Vector2 newVelocity)
     {
+        if (rb.isKinematic)
+            return;
+        
         foreach(Rigidbody2D bone in boneRigidbodies) 
         {
             bone.velocity = newVelocity;
+        }
+    }
+    
+    public void AddVelocity(Vector2 velocityToAdd) 
+    {
+        foreach(Rigidbody2D bone in boneRigidbodies) 
+        {
+            bone.velocity += velocityToAdd;
+        }
+    }
+    
+    public void AddForce(Vector2 forceToAdd, ForceMode2D forceMode) 
+    {
+        foreach(Rigidbody2D bone in boneRigidbodies)
+        {
+            bone.AddForce(forceToAdd, forceMode);
         }
     }
 
