@@ -359,6 +359,87 @@ public class Level_Manager : Singleton<Level_Manager> {
         yield return Fader.Instance.FadeInCoroutine(1.5f);
     }
 
+    public int GetFirstUncompletedLevel()
+    {
+        foreach (Level level in levels)
+        {
+            if (!level.completed)
+            {
+                return level.levelNumber;
+            }
+        }
+        
+        return 1;
+    }
+
+    private bool SetLevelCompleted(int level, bool completed)
+    {
+        Level currLevel = GetLevel(level);
+        currLevel.completed = completed;
+        SetLevel(level, currLevel);
+        
+        return true;
+    }
+    
+    private bool SetLevelBestNumJumps(int level, int numOfJumps)
+    {
+        Level currLevel = GetLevel(level);
+        currLevel.bestNumOfJumps = numOfJumps;
+        SetLevel(level, currLevel);
+        
+        return true;
+    }
+    
+    private bool SetLevelBestTime(int level, double bestTime)
+    {
+        Level currLevel = GetLevel(level);
+        currLevel.bestTime = bestTime;
+        SetLevel(level, currLevel);
+        
+        return true;
+    }
+
+    public Level[] GetLevels()
+    {
+        return levels;
+    }
+    
+    public Level GetLevel(int level)
+    {
+        int index = level - 1;
+
+        if (levels == null || index > levels.Length || index < 0)
+        {
+            return new Level();
+        }
+        
+        return levels[index];
+    }
+    
+    public bool SetLevel(int level, Level newLevel)
+    {
+        int index = level - 1;
+
+        if (levels == null || index > levels.Length || index < 0)
+        {
+            return false;
+        }
+
+        levels[index] = newLevel;
+        return true;
+    }
+
+    public int GetCurrentLevelNumber()
+    {
+        return currentLevel;
+    }
+
+    public Level GetCurrentLevel()
+    {
+        return GetLevel(currentLevel);
+    }
+    
+#if UNITY_EDITOR
     [Button("Update Build Levels")]
     public void UpdateBuildLevels()
     {
@@ -469,6 +550,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         AssetDatabase.Refresh();
     }
     
+    
     [Title("Scene Renaming (CAUTION)", Bold = true, TitleAlignment = TitleAlignments.Centered)]
     [Button("Decrement Levels")]
     public void DecrementLevelNumbers()
@@ -535,86 +617,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         
         AssetDatabase.Refresh();
     }
-
-    public int GetFirstUncompletedLevel()
-    {
-        foreach (Level level in levels)
-        {
-            if (!level.completed)
-            {
-                return level.levelNumber;
-            }
-        }
-        
-        return 1;
-    }
-
-    private bool SetLevelCompleted(int level, bool completed)
-    {
-        Level currLevel = GetLevel(level);
-        currLevel.completed = completed;
-        SetLevel(level, currLevel);
-        
-        return true;
-    }
-    
-    private bool SetLevelBestNumJumps(int level, int numOfJumps)
-    {
-        Level currLevel = GetLevel(level);
-        currLevel.bestNumOfJumps = numOfJumps;
-        SetLevel(level, currLevel);
-        
-        return true;
-    }
-    
-    private bool SetLevelBestTime(int level, double bestTime)
-    {
-        Level currLevel = GetLevel(level);
-        currLevel.bestTime = bestTime;
-        SetLevel(level, currLevel);
-        
-        return true;
-    }
-
-    public Level[] GetLevels()
-    {
-        return levels;
-    }
-    
-    public Level GetLevel(int level)
-    {
-        int index = level - 1;
-
-        if (levels == null || index > levels.Length || index < 0)
-        {
-            return new Level();
-        }
-        
-        return levels[index];
-    }
-    
-    public bool SetLevel(int level, Level newLevel)
-    {
-        int index = level - 1;
-
-        if (levels == null || index > levels.Length || index < 0)
-        {
-            return false;
-        }
-
-        levels[index] = newLevel;
-        return true;
-    }
-
-    public int GetCurrentLevelNumber()
-    {
-        return currentLevel;
-    }
-
-    public Level GetCurrentLevel()
-    {
-        return GetLevel(currentLevel);
-    }
+#endif
 }
 
 class MyComparer : IComparer<FileInfo>

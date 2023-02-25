@@ -26,6 +26,9 @@ public class GameManager : Singleton<GameManager>
         
         currentGameState = GameState.Playing;
         gameData = new GameData();
+        
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
     }
 
     void Start()
