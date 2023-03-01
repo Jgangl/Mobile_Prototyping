@@ -254,4 +254,18 @@ public class UI_Manager : Singleton<UI_Manager>
             player.EnableInput(false);
         }
     }
+
+    public bool IsPositionWithinLevelUI(Vector2 screenPosition)
+    {
+        RectTransform InLevelUIRect = inLevelUI.GetComponent<RectTransform>();
+        if (InLevelUIRect)
+        {
+            Vector2 worldPosiion = Camera.main.ScreenToWorldPoint(screenPosition);
+            Vector2 localSpacePosition = InLevelUIRect.InverseTransformPoint(worldPosiion);
+
+            return InLevelUIRect.rect.Contains(localSpacePosition);
+        }
+
+        return false;
+    }
 }

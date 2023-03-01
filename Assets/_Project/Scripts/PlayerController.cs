@@ -86,11 +86,16 @@ public class PlayerController : MonoBehaviour
         bool mouseMoved = Vector2.Distance(prevFingerPos, mousePosition) >= 0.25f;
         if (canMove) 
         {
-            if (Input.GetMouseButtonDown(0)) 
+            if (Input.GetMouseButtonDown(0))
             {
+                Vector2 mousePos = Input.mousePosition;
+
+                if (UI_Manager.Instance.IsPositionWithinLevelUI(mousePos))
+                {
+                    return;
+                }
                 
                 fingerDownPos = Input.mousePosition;
-
                 mouseHeldDown = true;
             }
             else if (Input.GetMouseButtonUp(0)) 
