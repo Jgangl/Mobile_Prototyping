@@ -9,6 +9,7 @@ using UnityEngine.Pool;
 public class SlimeGenerator : MonoBehaviour
 {
     [SerializeField] GameObject[] slimeBallPrefabs;
+    [SerializeField] ParticleSystem[] slimePrefabs;
 
     ObjectPool<GameObject> slimePool;
 
@@ -26,20 +27,23 @@ public class SlimeGenerator : MonoBehaviour
     void Start()
     {
         slimeQueue = new Queue<GameObject>();
-        
+        /*
         slimePool = new ObjectPool<GameObject>( CreatePooledItem, 
                                                 OnTakeFromPool, 
                                                 OnReturnedToPool, 
                                                 OnDestroyPoolObject, 
                                                 collectionChecks,
                                                 slimePoolSize);
-        
+        */
         slimeBallParent = new GameObject("SlimeBallParent").transform;
     }
 
     public void Generate(Vector3 position, GameObject hitObject)
     {
-        GameObject slime = slimePool.Get();
+
+        ParticleSystem slime = Instantiate(slimePrefabs[0], position, Quaternion.identity);
+        
+        //GameObject slime = slimePool.Get();
 
         bool bParentToHitObject = hitObject.transform.localScale.x - hitObject.transform.localScale.y < 0.001f;
         

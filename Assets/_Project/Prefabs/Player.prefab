@@ -1142,6 +1142,8 @@ MonoBehaviour:
   - {fileID: 7473275929454565281, guid: 57a4f68eb4cc9ba42804f35fa716b954, type: 3}
   - {fileID: 7473275929454565281, guid: 2b3ece35ad00d16419a66b2eb0174a54, type: 3}
   - {fileID: 7473275929454565281, guid: 5475e7e1fa0f86044a067c4e6f587515, type: 3}
+  slimePrefabs:
+  - {fileID: 6797190405620914769, guid: ae41cf6ca25d30a4a804e42adfc11b34, type: 3}
   collectionChecks: 1
   slimePoolSize: 100
 --- !u!114 &3452020396485294500

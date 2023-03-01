@@ -14,19 +14,8 @@ public class Finish_Zone : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerController playerController;
-        playerController = collision.GetComponent<PlayerController>();
-
-        if (!playerController)
-        {
-            playerController = collision.transform.parent.GetComponent<PlayerController>();
-        }
-
-        // Didn't hit player
-        if (!playerController)
-        {
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
-        }
 
         if (!playerCollided) 
         {

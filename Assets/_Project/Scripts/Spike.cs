@@ -11,7 +11,7 @@ public class Spike : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mask = GetComponent<MultiMask>();
+        //mask = GetComponent<MultiMask>();
     }
 
     // Update is called once per frame
@@ -22,11 +22,11 @@ public class Spike : MonoBehaviour
 
     private void OnBecameVisible()
     {
-        mask.enabled = true;
+        //mask.enabled = true;
     }
 
     private void OnBecameInvisible()
     {
-        mask.enabled = false;
+        //mask.enabled = false;
     }
 }

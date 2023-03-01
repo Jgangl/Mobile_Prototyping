@@ -43,9 +43,8 @@ GameObject:
   - component: {fileID: 5307334724478558916}
   - component: {fileID: 6998260561126511608}
   - component: {fileID: 800535481425024691}
-  - component: {fileID: 7104959518334507865}
-  - component: {fileID: 5605328789775715943}
   - component: {fileID: 2073038555549682853}
+  - component: {fileID: 4865955922282470235}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -153,14 +152,26 @@ PolygonCollider2D:
       - {x: 0.050815135, y: -0.049955882}
       - {x: 0.0010441204, y: 0.049586087}
   m_UseDelaunayMesh: 0
---- !u!331 &7104959518334507865
+--- !u!114 &2073038555549682853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977412950061554009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf65f6c9ced8c54296b085d491a7851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!331 &4865955922282470235
 SpriteMask:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7977412950061554009}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -204,32 +215,3 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
---- !u!114 &5605328789775715943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7977412950061554009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a32ea8518185cf24185745be3b03e627, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maskSprite: {fileID: 21300000, guid: 8a613353805ee294589963235e29e577, type: 3}
-  maskType: 4
-  alphaCutoff: 0.2
-  _oldSprite: {fileID: 21300000, guid: 8a613353805ee294589963235e29e577, type: 3}
-  _oldType: 4
---- !u!114 &2073038555549682853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7977412950061554009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bf65f6c9ced8c54296b085d491a7851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

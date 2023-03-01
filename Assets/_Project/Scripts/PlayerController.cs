@@ -88,8 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) 
             {
-                //if (!InLevelUIButton.IsMouseOverButton())
-                //{
+                
                 fingerDownPos = Input.mousePosition;
 
                 mouseHeldDown = true;
@@ -221,7 +220,6 @@ public class PlayerController : MonoBehaviour
         // Average all bone positions
         foreach (Rigidbody2D boneRb in boneRigidbodies) 
         {
-            Debug.Log(boneRb);
             totalVelocity += boneRb.velocity;
         }
 
@@ -231,7 +229,7 @@ public class PlayerController : MonoBehaviour
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) 
     {
         // Don't collide with other bones
-        if (collision.gameObject.TryGetComponent(out Bone_Softbody tryBone) || isDead)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || isDead)
             return;
 
         if (stuckToPlatform)
@@ -302,7 +300,7 @@ public class PlayerController : MonoBehaviour
     public void OnChildCollisionStay2D(Bone_Softbody bone, Collision2D collision) 
     {
         // Fixes sliding across platform
-        if (collision.gameObject.CompareTag("Player") || isDead)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || isDead)
             return;
 
         if (stuckToPlatform)

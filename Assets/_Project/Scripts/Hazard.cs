@@ -17,26 +17,17 @@ public class Hazard : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) 
     {
-        PlayerController playerController;
-        playerController = collision.transform.GetComponent<PlayerController>();
-
-        if (!playerController)
-        {
-            playerController = collision.transform.parent.GetComponent<PlayerController>();
-        }
-
-        // Didn't hit player
-        if (!playerController)
-        {
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
-        }
 
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-        if (player)
-            player.SetIsDead(true);
-        
+
+        // Player has already collided
         if (collided)
             return;
+        
+        if (player)
+            player.SetIsDead(true);
 
         
         // Set collided flag to stop multiple collisions from player bones
