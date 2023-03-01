@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,7 @@ public class Bone_Softbody : MonoBehaviour
     PlayerController player;
     Rigidbody2D rb;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player = GetComponentInParent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();

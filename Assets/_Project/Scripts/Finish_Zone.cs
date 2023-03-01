@@ -12,17 +12,28 @@ public class Finish_Zone : MonoBehaviour
         Level_Manager.Instance.OnLevelReset += OnLevelReset;
     }
 
-    void OnTriggerEnter2D(Collider2D collision) 
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player") 
-        {
-            if (!playerCollided) 
-            {
-                GameManager.Instance.CompleteLevel();
-            }
+        PlayerController playerController;
+        playerController = collision.GetComponent<PlayerController>();
 
-            playerCollided = true;
+        if (!playerController)
+        {
+            playerController = collision.transform.parent.GetComponent<PlayerController>();
         }
+
+        // Didn't hit player
+        if (!playerController)
+        {
+            return;
+        }
+
+        if (!playerCollided) 
+        {
+            GameManager.Instance.CompleteLevel();
+        }
+
+        playerCollided = true;
     }
 
     void OnLevelReset()

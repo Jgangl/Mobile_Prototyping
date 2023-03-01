@@ -15,9 +15,21 @@ public class Hazard : MonoBehaviour
         Level_Manager.Instance.OnLevelReset += OnLevelReset;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.transform.root.tag != "Player")
+    private void OnCollisionEnter2D(Collision2D collision) 
+    {
+        PlayerController playerController;
+        playerController = collision.transform.GetComponent<PlayerController>();
+
+        if (!playerController)
+        {
+            playerController = collision.transform.parent.GetComponent<PlayerController>();
+        }
+
+        // Didn't hit player
+        if (!playerController)
+        {
             return;
+        }
 
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player)

@@ -305,6 +305,7 @@ public class Level_Manager : Singleton<Level_Manager> {
     void Initialize()
     {
         GameObject localPlayer = GameObject.FindGameObjectWithTag("Player");
+        
         if (localPlayer)
         {
             player = localPlayer.GetComponent<PlayerController>();

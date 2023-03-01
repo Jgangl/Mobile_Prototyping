@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     {
         slimeGenerator  = GetComponent<SlimeGenerator>();
         rb              = GetComponent<Rigidbody2D>();
+        Debug.Log("Start");
+        Debug.Log(rb);
         basicTrajectory = GetComponent<BasicTrajectory>();
         MovingJoint     = GetComponent<FixedJoint2D>();
 
@@ -86,11 +88,11 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) 
             {
-                if (!InLevelUIButton.IsMouseOverButton())
-                {
-                    fingerDownPos = Input.mousePosition;
-                    mouseHeldDown = true;
-                }
+                //if (!InLevelUIButton.IsMouseOverButton())
+                //{
+                fingerDownPos = Input.mousePosition;
+
+                mouseHeldDown = true;
             }
             else if (Input.GetMouseButtonUp(0)) 
             {
@@ -212,13 +214,14 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetObjectAverageVelocity() 
     {
         Vector2 totalVelocity = Vector2.zero;
-        
-        if (bones.Count == 0)
+
+        if (bones == null || bones.Count == 0 || boneRigidbodies == null)
             return Vector2.zero;
 
         // Average all bone positions
         foreach (Rigidbody2D boneRb in boneRigidbodies) 
         {
+            Debug.Log(boneRb);
             totalVelocity += boneRb.velocity;
         }
 
@@ -228,7 +231,7 @@ public class PlayerController : MonoBehaviour
     public void OnChildCollisionEnter2D(Bone_Softbody bone, Collision2D collision) 
     {
         // Don't collide with other bones
-        if (collision.gameObject.CompareTag("Player") || isDead)
+        if (collision.gameObject.TryGetComponent(out Bone_Softbody tryBone) || isDead)
             return;
 
         if (stuckToPlatform)
