@@ -40,17 +40,19 @@ public class SlimeGenerator : MonoBehaviour
 
     public void Generate(Vector3 position, GameObject hitObject)
     {
-
         ParticleSystem slime = Instantiate(slimePrefabs[0], position, Quaternion.identity);
         
         //GameObject slime = slimePool.Get();
+        MovingObject movingObject = hitObject.GetComponentInParent<MovingObject>();
+        //MovingPlatform movingPlatform = hitObject.GetComponentInParent<MovingPlatform>();
 
-        bool bParentToHitObject = hitObject.transform.localScale.x - hitObject.transform.localScale.y < 0.001f;
-        
-        if (bParentToHitObject)
-            slime.transform.parent   = hitObject.transform;
+        bool bParentToHitObject = movingObject != null;
         
         slime.transform.position = position;
+        
+        // Parent to a moving object
+        if (bParentToHitObject)
+            slime.transform.parent = movingObject.transform;
     }
 
     GameObject CreatePooledItem()

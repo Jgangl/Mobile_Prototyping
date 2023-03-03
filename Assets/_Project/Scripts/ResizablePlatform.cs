@@ -16,7 +16,7 @@ public class ResizablePlatform : MonoBehaviour
     Vector2 prevSpriteRendererSize;
     SpriteRenderer sprite;
 
-    float xScaleOffset = 0.02f;
+    //float xScaleOffset = 0.02f;
     float cornerCircleScale = 0.475f;
     
     void Start()

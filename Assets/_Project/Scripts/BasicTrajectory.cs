@@ -9,8 +9,6 @@ using Vector3 = UnityEngine.Vector3;
 public class BasicTrajectory : ImmediateModeShapeDrawer
 {
     [SerializeField] float timeStepInterval = 0.1f;
-    [SerializeField] float lineWidthStart = 13.0f;
-    [SerializeField] float lineWidthEnd = 5.0f;
     [SerializeField] int maxSteps = 10;
     [SerializeField] float gravityScale = 2f;
     [SerializeField] float playerRadius = 0.25f;
@@ -96,11 +94,10 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
         {
             if (linePositions.Count == 0)
                 return;
+
+            Draw.BlendMode = ShapesBlendMode.Transparent;
             
-            Draw.BlendMode = ShapesBlendMode.Opaque;
-
             DrawPathPointDiscs();
-
             DrawFinalDisc();
         }
     }

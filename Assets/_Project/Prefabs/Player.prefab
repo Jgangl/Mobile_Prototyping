@@ -1168,8 +1168,8 @@ MonoBehaviour:
   collisionLayers:
     serializedVersion: 2
     m_Bits: 64
-  lineColor: {r: 0, g: 0.5188679, b: 0.24213837, a: 0.5019608}
-  capColor: {r: 0, g: 1, b: 0.31651497, a: 0.7490196}
+  lineColor: {r: 0, g: 0.5188679, b: 0.24213837, a: 1}
+  capColor: {r: 0, g: 1, b: 0.31651497, a: 1}
   lineThickness: 0.1
   endCapRadius: 0.2
   numLineSkipPoints: 5

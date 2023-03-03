@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6191965928110571168}
   - component: {fileID: 3243680934436590866}
   - component: {fileID: 8595103979538303742}
-  - component: {fileID: 1589405620028026342}
-  - component: {fileID: 6941418332847936360}
+  - component: {fileID: 2665369191905654240}
+  - component: {fileID: 1483932935247121664}
   m_Layer: 6
   m_Name: MovableResizableSpikes
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 6428931842207961651}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.01, y: 2.78, z: 8.578123}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -163,33 +163,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spikePrefab: {fileID: 6657448692435931645, guid: 81d3523120d8dd84ab227108856907cd, type: 3}
-  xOffset: 0.05
-  yOffset: 0.05
+  xOffset: 0.1
+  yOffset: 0.1
   xSpikeSpacing: 0.02
   ySpikeSpacing: 0.02
   leftRightSpikeYOffset: 0.02
   topBottomSpikeXOffset: 0.02
---- !u!1818360610 &1589405620028026342
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6428931842207961651}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_ScaleAtRest: {x: 0.4, y: 0.4, z: 0.4}
-  m_ScaleOffset: {x: 0.40191013, y: 0.40191013, z: 0.40191013}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 0}
-    weight: 1
---- !u!114 &6941418332847936360
+--- !u!114 &2665369191905654240
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,9 +178,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6428931842207961651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ad8dbe9924cfbe4db17138580f0b15c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9af5606bddecef44cba7bc1d0bed82e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.04
+  speed: 0.05
   targetA: {fileID: 0}
   targetB: {fileID: 0}
+--- !u!114 &1483932935247121664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6428931842207961651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97625f93913f492408bcea1e7364a43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

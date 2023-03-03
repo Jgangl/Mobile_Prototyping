@@ -53,7 +53,6 @@ public class LevelSelection : MonoBehaviour
 
     void UpdateLevelCompletionIcons() 
     {
-        Debug.Log("updating level complete icons");
         Level[] levels = Level_Manager.Instance.GetLevels();
 
         if (levels == null)

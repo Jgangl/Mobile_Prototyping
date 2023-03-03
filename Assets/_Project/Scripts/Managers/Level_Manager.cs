@@ -21,13 +21,13 @@ public class Level_Manager : Singleton<Level_Manager> {
 
     Level[] levels;
     int currentLevel = 1;
-    int highestCompletedLevel = 0;
-    List<int> completedLevels;
+    //int highestCompletedLevel = 0;
+    //List<int> completedLevels;
     Scene managersUIScene;
     bool loadingLevel = false;
     bool levelCompleted = false;
     public float transitionTime = 1f;
-    public GameObject fadeCanvasPrefab;
+    //public GameObject fadeCanvasPrefab;
 
     public Action OnLevelLoaded;
     public Action<int> OnLevelCompleted;
@@ -62,8 +62,6 @@ public class Level_Manager : Singleton<Level_Manager> {
 
     void Start()
     {
-        completedLevels = new List<int>();
-
         Initialize();
     }
 
@@ -158,11 +156,6 @@ public class Level_Manager : Singleton<Level_Manager> {
         }
 
         return numCompletedLevels;
-    }
-
-    public void SetCompletedLevels(List<int> completedLevels) 
-    {
-        this.completedLevels = completedLevels;
     }
 
     public void LoadNextLevel() 

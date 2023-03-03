@@ -950,7 +950,8 @@ GameObject:
   - component: {fileID: 8644391174338032494}
   - component: {fileID: 5847071358853502888}
   - component: {fileID: 1426869343382153021}
-  - component: {fileID: 652223081946698340}
+  - component: {fileID: 8425567945899699184}
+  - component: {fileID: 6879691831805159088}
   m_Layer: 6
   m_Name: MovingPlatform
   m_TagString: Untagged
@@ -978,7 +979,7 @@ Transform:
   - {fileID: 5847071358823610146}
   - {fileID: 5847071357712389367}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8644391174338032494
 SpriteRenderer:
@@ -1071,7 +1072,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &652223081946698340
+--- !u!114 &8425567945899699184
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1080,12 +1081,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8644391174338032491}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ad8dbe9924cfbe4db17138580f0b15c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9af5606bddecef44cba7bc1d0bed82e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.05
   targetA: {fileID: 0}
   targetB: {fileID: 0}
+--- !u!114 &6879691831805159088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8644391174338032491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97625f93913f492408bcea1e7364a43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8644391175879990180
 GameObject:
   m_ObjectHideFlags: 0

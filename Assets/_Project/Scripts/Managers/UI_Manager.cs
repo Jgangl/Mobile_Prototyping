@@ -19,7 +19,7 @@ public class UI_Manager : Singleton<UI_Manager>
     PlayerController player;
 
     bool isLevelSelectionMenuOpen = false;
-    bool isSettingsMenuOpen = false;
+    //bool isSettingsMenuOpen = false;
     bool isMenuOpened = false;
     bool isMainMenuOpened = true;
 

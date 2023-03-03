@@ -56,20 +56,16 @@ public class PlayerController : MonoBehaviour
     {
         slimeGenerator  = GetComponent<SlimeGenerator>();
         rb              = GetComponent<Rigidbody2D>();
-        Debug.Log("Start");
-        Debug.Log(rb);
         basicTrajectory = GetComponent<BasicTrajectory>();
         MovingJoint     = GetComponent<FixedJoint2D>();
 
         canMove = false;
         isDead  = false;
 
-        bonePositions     = new Dictionary<Transform, Vector2>();
-        boneCollisionDict = new Dictionary<Bone_Softbody, List<Rigidbody2D>>();
-
-        bones           = new List<Bone_Softbody>();
-        boneRigidbodies = new List<Rigidbody2D>();
-
+        bonePositions        = new Dictionary<Transform, Vector2>();
+        boneCollisionDict    = new Dictionary<Bone_Softbody, List<Rigidbody2D>>();
+        bones                = new List<Bone_Softbody>();
+        boneRigidbodies      = new List<Rigidbody2D>();
         recentWallCollisions = new Dictionary<GameObject, double>();
 
         InitializeBones();
@@ -284,7 +280,7 @@ public class PlayerController : MonoBehaviour
 
         PlayHitEffects(collision);
         
-        if (platformHit is MovingPlatform)
+        if (platformHit.GetComponent<MovingObject>())
         {
             StopMovement(false);
             EnableMovingJoint(platformHit.GetComponent<Rigidbody2D>());
@@ -335,7 +331,7 @@ public class PlayerController : MonoBehaviour
 
             if (hitSomething)
             {
-                if (platformHit is MovingPlatform)
+                if (platformHit.GetComponent<MovingObject>())
                 {
                     StopMovement(false);
                     EnableMovingJoint(platformHit.GetComponent<Rigidbody2D>());

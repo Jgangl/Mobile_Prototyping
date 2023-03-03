@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -55,7 +56,11 @@ public class ResizableSpikeWall : MonoBehaviour
     }
 
     private void RegenerateSpikes()
-    { 
+    {
+        // Don't do anything in Prefab mode
+        if (PrefabStageUtility.GetCurrentPrefabStage())
+            return;
+        
         DeleteAllSpikes();
 
         spikes = new List<Transform>();
