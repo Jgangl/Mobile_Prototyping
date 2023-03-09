@@ -945,8 +945,8 @@ Transform:
   m_GameObject: {fileID: 6119821868485345451}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.93, y: 0.35, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6119821869043745329}
   - {fileID: 6119821868769107752}
@@ -1076,8 +1076,8 @@ MonoBehaviour:
   - {fileID: 6119821868292192845}
   - {fileID: 6119821869596645141}
   m_Bounds:
-    m_Center: {x: 0.00053060055, y: -0.0067299604, z: 0}
-    m_Extent: {x: 1.2767808, y: 1.2695619, z: 0}
+    m_Center: {x: 0.00053048134, y: -0.006729841, z: 0}
+    m_Extent: {x: 1.2767811, y: 1.269562, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -1102,11 +1102,12 @@ MonoBehaviour:
   bonesCollisionTime: 0.2
   platformIgnoreTime: 0.25
   maxSwipeLength: 300
-  playerRadius: 0.75
+  playerRadius: 0.63
   collisionLayerMask:
     serializedVersion: 2
     m_Bits: 0
   recentCollisionTimeDiffThreshold: 0.20000000298023224
+  swipeForceThreshold: 100
   playerTrail: {fileID: 2725041052965305109}
   playerSlimeParticles: {fileID: 9032588162941493982}
 --- !u!58 &156612942
@@ -1142,8 +1143,11 @@ MonoBehaviour:
   - {fileID: 7473275929454565281, guid: 57a4f68eb4cc9ba42804f35fa716b954, type: 3}
   - {fileID: 7473275929454565281, guid: 2b3ece35ad00d16419a66b2eb0174a54, type: 3}
   - {fileID: 7473275929454565281, guid: 5475e7e1fa0f86044a067c4e6f587515, type: 3}
-  slimePrefabs:
-  - {fileID: 6797190405620914769, guid: ae41cf6ca25d30a4a804e42adfc11b34, type: 3}
+  slimeParticleSystem: {fileID: 6797190405620914769, guid: ae41cf6ca25d30a4a804e42adfc11b34, type: 3}
+  slimeMaterials:
+  - {fileID: 2100000, guid: 49e537e72a2ba2242ba473f522e85457, type: 2}
+  - {fileID: 2100000, guid: c62629915be16254eb9d60618c0ff2e8, type: 2}
+  - {fileID: 2100000, guid: 0ad86ca49faca434b953a9856e514047, type: 2}
   collectionChecks: 1
   slimePoolSize: 100
 --- !u!114 &3452020396485294500
@@ -1160,8 +1164,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useCullingMasks: 0
   timeStepInterval: 0.02
-  lineWidthStart: 13
-  lineWidthEnd: 5
   maxSteps: 60
   gravityScale: 1
   playerRadius: 0.25

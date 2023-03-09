@@ -210,6 +210,7 @@ public class GameManager : Singleton<GameManager>
 
     void OnPlayerJumped()
     {
+        Debug.Log("Player Jumped");
         numJumpsThisLevel++;
     }
 

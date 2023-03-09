@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float playerRadius = 0.75f;
     [SerializeField] LayerMask collisionLayerMask;
     [SerializeField] double recentCollisionTimeDiffThreshold = 0.2f;
+    [SerializeField] float swipeForceThreshold = 20.0f;
     [SerializeField] ParticleSystem playerTrail;
     [SerializeField] ParticleSystem playerSlimeParticles;
     
@@ -100,8 +101,8 @@ public class PlayerController : MonoBehaviour
 
                 if (basicTrajectory)
                     basicTrajectory.ClearArc();
-                
-                if (Mathf.Abs(currentSwipeForce.x) >= 0.01f || Mathf.Abs(currentSwipeForce.y) >= 0.01f) 
+
+                if (Mathf.Abs(currentSwipeForce.x) >= swipeForceThreshold || Mathf.Abs(currentSwipeForce.y) >= swipeForceThreshold) 
                 {
                     EnableMovement();
 
@@ -113,6 +114,7 @@ public class PlayerController : MonoBehaviour
                     
                     playerSlimeParticles.Play();
                     
+                    Debug.Log("OnJumped");
                     OnJumped?.Invoke();
                 }
 
@@ -306,7 +308,7 @@ public class PlayerController : MonoBehaviour
 
         if (stuckToPlatform)
             return;
-        
+
         Platform platformHit;
         bool bHitPlatform = collision.gameObject.TryGetComponent(out platformHit);
         if (!bHitPlatform)
@@ -317,33 +319,24 @@ public class PlayerController : MonoBehaviour
                 bHitPlatform = collisionParent.gameObject.TryGetComponent(out platformHit);
             }
         }
-        
+
         bool bHitPlatformIsCurrent = CurrentPlatform == platformHit;
 
         // If timer timed out and hit the same platform 
         if (bonesCanCollide && bHitPlatformIsCurrent)
         {
-            // Try a circle overlap to make sure we are touching something
-
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, playerRadius, collisionLayerMask);
-            
-            bool hitSomething = colliders.Length > 0;
-
-            if (hitSomething)
+            if (platformHit.GetComponent<MovingObject>())
             {
-                if (platformHit.GetComponent<MovingObject>())
-                {
-                    StopMovement(false);
-                    EnableMovingJoint(platformHit.GetComponent<Rigidbody2D>());
-                }
-                else
-                {
-                    StopMovement(true);
-                }
-                
-                PlayHitEffects(collision);
-                stuckToPlatform = true;
+                StopMovement(false);
+                EnableMovingJoint(platformHit.GetComponent<Rigidbody2D>());
             }
+            else
+            {
+                StopMovement(true);
+            }
+            
+            PlayHitEffects(collision);
+            stuckToPlatform = true;
         }
     }
 

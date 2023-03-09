@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor.SceneManagement;
+#endif
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -23,6 +25,8 @@ public class ResizableSpikeWall : MonoBehaviour
 
     private SpriteRenderer sprite;
 
+    Transform spikeParent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +39,7 @@ public class ResizableSpikeWall : MonoBehaviour
             sprite = GetComponent<SpriteRenderer>();
 
         Vector2 currentSpriteSize = sprite.size;
-        
+
         if (currentSpriteSize != prevSpriteRendererSize)
         {
             RegenerateSpikes();
@@ -48,7 +52,7 @@ public class ResizableSpikeWall : MonoBehaviour
     {
         if (spikes == null) return;
         
-        foreach (Transform spike in spikes)
+        foreach (Transform spike in spikeParent)
         {
             if (spike != null)
                 DestroyImmediate(spike.gameObject);
@@ -57,19 +61,27 @@ public class ResizableSpikeWall : MonoBehaviour
 
     private void RegenerateSpikes()
     {
+#if UNITY_EDITOR
         // Don't do anything in Prefab mode
         if (PrefabStageUtility.GetCurrentPrefabStage())
             return;
+#endif
+
+        spikeParent = transform.Find("SpikeParent");
+
+        if (spikeParent)
+        {
+            DestroyImmediate(spikeParent.gameObject);
+        }
         
+        
+        spikeParent = new GameObject("SpikeParent").transform;
+        spikeParent.transform.parent = transform;
+
         DeleteAllSpikes();
 
         spikes = new List<Transform>();
 
-        foreach (Transform spike in transform)
-        {
-            spikes.Add(spike);
-        }
-        
         Bounds mainBounds = GetComponent<SpriteRenderer>().bounds;
 
         Vector3 minBounds = mainBounds.min;
@@ -98,15 +110,15 @@ public class ResizableSpikeWall : MonoBehaviour
         Transform topRightOppSpike = Instantiate(spikePrefab, topRight, Quaternion.Euler(0f, 0f, -45f + 180f));
         Transform botRightOppSpike = Instantiate(spikePrefab, botRight, Quaternion.Euler(0f, 0f, -45f - 90f + 180f));
 
-        topLeftSpike.parent = transform;
-        botLeftSpike.parent = transform;
-        topRightSpike.parent = transform;
-        botRightSpike.parent = transform;
+        topLeftSpike.parent = spikeParent;
+        botLeftSpike.parent = spikeParent;
+        topRightSpike.parent = spikeParent;
+        botRightSpike.parent = spikeParent;
         
-        topLeftOppSpike.parent = transform;
-        botLeftOppSpike.parent = transform;
-        topRightOppSpike.parent = transform;
-        botRightOppSpike.parent = transform;
+        topLeftOppSpike.parent = spikeParent;
+        botLeftOppSpike.parent = spikeParent;
+        topRightOppSpike.parent = spikeParent;
+        botRightOppSpike.parent = spikeParent;
         
         spikes.Add(topLeftSpike);
         spikes.Add(botLeftSpike);
@@ -132,10 +144,10 @@ public class ResizableSpikeWall : MonoBehaviour
             Vector3 p = leftMiddle + Vector3.right * n * (i + 1);
             // Top
             Transform topSpike = Instantiate(spikePrefab, p + yBoundsExtentsVector - new Vector3(0f, leftRightSpikeYOffset), Quaternion.Euler(0f, 0f, 0f));
-            topSpike.parent = gameObject.transform;
+            topSpike.parent = spikeParent;
             // Bottom
             Transform botSpike = Instantiate(spikePrefab, p - yBoundsExtentsVector + new Vector3(0f, leftRightSpikeYOffset), Quaternion.Euler(0f, 0f, 180f));
-            botSpike.parent = gameObject.transform;
+            botSpike.parent = spikeParent;
             
             spikes.Add(topSpike);
             spikes.Add(botSpike);
@@ -155,10 +167,10 @@ public class ResizableSpikeWall : MonoBehaviour
             Vector3 p = middleTop + Vector3.down * n * (i + 1);
             // Left
             Transform leftSpike = Instantiate(spikePrefab, p - xBoundsExtentsVector + new Vector3(topBottomSpikeXOffset, 0f), Quaternion.Euler(0f, 0f, 90f));
-            leftSpike.parent = gameObject.transform;
+            leftSpike.parent = spikeParent;
             // Right
             Transform rightSpike = Instantiate(spikePrefab, p + xBoundsExtentsVector - new Vector3(topBottomSpikeXOffset, 0f), Quaternion.Euler(0f, 0f, -90f));
-            rightSpike.parent = gameObject.transform;
+            rightSpike.parent = spikeParent;
             
             spikes.Add(leftSpike);
             spikes.Add(rightSpike);

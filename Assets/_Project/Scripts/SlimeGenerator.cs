@@ -9,7 +9,8 @@ using UnityEngine.Pool;
 public class SlimeGenerator : MonoBehaviour
 {
     [SerializeField] GameObject[] slimeBallPrefabs;
-    [SerializeField] ParticleSystem[] slimePrefabs;
+    [SerializeField] ParticleSystem slimeParticleSystem;
+    [SerializeField] Material[] slimeMaterials;
 
     ObjectPool<GameObject> slimePool;
 
@@ -40,31 +41,31 @@ public class SlimeGenerator : MonoBehaviour
 
     public void Generate(Vector3 position, GameObject hitObject)
     {
-        ParticleSystem slime = Instantiate(slimePrefabs[0], position, Quaternion.identity);
+        ParticleSystem slime = Instantiate(slimeParticleSystem, position, Quaternion.identity);
+        slime.GetComponent<ParticleSystemRenderer>().material = GetRandomSlimeMaterial();
         
         //GameObject slime = slimePool.Get();
         MovingObject movingObject = hitObject.GetComponentInParent<MovingObject>();
-        //MovingPlatform movingPlatform = hitObject.GetComponentInParent<MovingPlatform>();
 
         bool bParentToHitObject = movingObject != null;
         
         slime.transform.position = position;
         
-        // Parent to a moving object
-        if (bParentToHitObject)
-            slime.transform.parent = movingObject.transform;
+        slime.transform.parent = bParentToHitObject ? movingObject.transform : slimeBallParent;
     }
 
     GameObject CreatePooledItem()
     {
-        GameObject randomSlimePrefab = GetRandomSlimePrefab();
+        //GameObject randomSlimePrefab = GetRandomSlimePrefab();
         
-        GameObject slimeBall = Instantiate(randomSlimePrefab, Vector2.zero, Quaternion.identity);
-        slimeBall.SetActive(false);
+        //GameObject slimeBall = Instantiate(randomSlimePrefab, Vector2.zero, Quaternion.identity);
+        //slimeBall.SetActive(false);
 
-        slimeBall.transform.parent = slimeBallParent;
+        //slimeBall.transform.parent = slimeBallParent;
         
-        return slimeBall;
+        //return slimeBall;
+
+        return null;
     }
 
     void OnTakeFromPool(GameObject slime)
@@ -91,10 +92,10 @@ public class SlimeGenerator : MonoBehaviour
         Destroy(slime);
     }
 
-    GameObject GetRandomSlimePrefab()
+    Material GetRandomSlimeMaterial()
     {
-        int randIndex = Random.Range(0, slimeBallPrefabs.Length);
+        int randIndex = Random.Range(0, slimeMaterials.Length);
 
-        return slimeBallPrefabs[randIndex];
+        return slimeMaterials[randIndex];
     }
 }

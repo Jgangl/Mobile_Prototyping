@@ -49,6 +49,12 @@ public class Level_Manager : Singleton<Level_Manager> {
         if (currentOpenScene != managersUIScene)
         {
             currentLevel = currentOpenScene.buildIndex;
+            try
+            {
+                SceneManager.SetActiveScene(currentOpenScene);
+            }
+            catch
+            {}
         }
         else
         {

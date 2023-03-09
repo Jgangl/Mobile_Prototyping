@@ -92,7 +92,9 @@ public class Bouncer : MonoBehaviour
         Vector2 bounceVelocity  = bounceDirection * bounceForce;
 
         // using player speed to allow player to still bounce when going fast
-        Vector2 targetVelocity = playerVelocity + (bounceVelocity * (playerSpeed / playerSpeedBounceFactor));
+        //Vector2 targetVelocity = playerVelocity + (bounceVelocity * (playerSpeed / playerSpeedBounceFactor));
+
+        Vector2 targetVelocity = playerVelocity + bounceVelocity;
 
         player.SetVelocity(targetVelocity);
 
