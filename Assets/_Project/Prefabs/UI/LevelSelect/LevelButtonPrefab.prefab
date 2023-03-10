@@ -249,7 +249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8184530410528982638
 RectTransform:
   m_ObjectHideFlags: 0
@@ -804,5 +804,6 @@ MonoBehaviour:
   buttonText: {fileID: 8572649755233925346}
   completeCheckmark: {fileID: 3496101932325202409}
   lockTransform: {fileID: 6987810122738325431}
+  completeColor: {r: 0.49411765, g: 0.6509804, b: 0.54509807, a: 1}
   bgImage: {fileID: 0}
   clickAnimation: {fileID: 7906845358020043213}

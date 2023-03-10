@@ -16,6 +16,7 @@ public class LevelSelectButton : MonoBehaviour
     [SerializeField] TextMeshProUGUI buttonText;
     [SerializeField] Transform completeCheckmark;
     [SerializeField] Transform lockTransform;
+    [SerializeField] Color completeColor;
     [SerializeField] Image bgImage;
     [SerializeField] DOTweenAnimation clickAnimation;
 
@@ -41,9 +42,17 @@ public class LevelSelectButton : MonoBehaviour
         completeCheckmark.gameObject.SetActive(enabled);
     }
 
+    void SetColor(Color newColor)
+    {
+        Image image = button.GetComponent<Image>();
+        if (image)
+            image.color = newColor;
+    }
+
     public void Complete()
     {
-        EnableLevelCompleteCheck(true);
+        SetColor(completeColor);
+        //EnableLevelCompleteCheck(true);
     }
 
     public void Unlock()
