@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Fader : Singleton<Fader>
+public class CanvasFader : Singleton<CanvasFader>
 {
     private CanvasGroup canvasGroup;
 
@@ -88,6 +88,13 @@ public class Fader : Singleton<Fader>
     {
         // Fade while ignoring timescale
         Tween tween = canvasGroup.DOFade(target, time).SetUpdate(true);
+        yield return tween.WaitForCompletion();
+    }
+    
+    private IEnumerator DOFadeVolumeRoutine(float target, float time, AudioSource targetAudioSource)
+    {
+        // Fade volume while ignoring timescale
+        Tween tween = targetAudioSource.DOFade(target, time).SetUpdate(true);
         yield return tween.WaitForCompletion();
     }
     /*

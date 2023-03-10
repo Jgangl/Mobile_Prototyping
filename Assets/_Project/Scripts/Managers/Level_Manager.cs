@@ -316,7 +316,7 @@ public class Level_Manager : Singleton<Level_Manager> {
     {
         loadingLevel = true;
 
-        yield return Fader.Instance.FadeOutCoroutine(2f);
+        yield return CanvasFader.Instance.FadeOutCoroutine(2f);
 
         // Unload previous scenes
         UnloadPreviousScenes();
@@ -332,7 +332,7 @@ public class Level_Manager : Singleton<Level_Manager> {
 
         TimeDilator.ResumeNormalTime();
         
-        Fader.Instance.FadeIn(1f);
+        CanvasFader.Instance.FadeIn(1f);
 
         // Wait time for fade in
         yield return new WaitForSeconds(transitionTime);
@@ -345,7 +345,7 @@ public class Level_Manager : Singleton<Level_Manager> {
 
     IEnumerator RestartLevelRoutine()
     {
-        yield return Fader.Instance.FadeOutCoroutine(1f);
+        yield return CanvasFader.Instance.FadeOutCoroutine(1f);
 
         // Reset player position
         player.Reset(playerSpawnLocation);
@@ -356,7 +356,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         
         levelCompleted = false;
 
-        yield return Fader.Instance.FadeInCoroutine(1.5f);
+        yield return CanvasFader.Instance.FadeInCoroutine(1.5f);
     }
 
     public int GetFirstUncompletedLevel()

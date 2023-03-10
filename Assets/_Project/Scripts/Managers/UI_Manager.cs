@@ -96,11 +96,11 @@ public class UI_Manager : Singleton<UI_Manager>
 
         TimeDilator.SlowTimeIndefinitely(0.25f);
 
-        yield return Fader.Instance.FadeToCoroutine(0.35f, 1f);
+        yield return CanvasFader.Instance.FadeToCoroutine(0.35f, 1f);
 
         afterLevelMenu.Open();
         
-        Fader.Instance.FadeInInstant();
+        CanvasFader.Instance.FadeInInstant();
     }
 
     void EnableMainMenu(bool enabled)
@@ -220,7 +220,7 @@ public class UI_Manager : Singleton<UI_Manager>
 
     IEnumerator ReturnToMainMenuRoutine()
     {
-        yield return Fader.Instance.FadeOutCoroutine(0.5f);
+        yield return CanvasFader.Instance.FadeOutCoroutine(0.5f);
 
         currentOpenMenu.CloseInstant();
         // Unload previous scenes
@@ -233,7 +233,7 @@ public class UI_Manager : Singleton<UI_Manager>
         
         yield return new WaitForSeconds(0.5f);
         
-        yield return StartCoroutine(Fader.Instance.FadeInCoroutine(1f));
+        yield return StartCoroutine(CanvasFader.Instance.FadeInCoroutine(1f));
     }
 
     public void SetCurrentOpenMenu(Menu openMenu)

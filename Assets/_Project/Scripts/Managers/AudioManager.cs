@@ -20,7 +20,7 @@ public class AudioManager : Singleton<AudioManager>
     public SquishAudioClip[] launchClips;
     public SquishAudioClip[] successClips;
     public AudioClip   startClip;
-    
+
     public void PlayLaunchSound() 
     {
         if (!enableSoundFX)
@@ -70,6 +70,9 @@ public class AudioManager : Singleton<AudioManager>
     private void Start()
     {
         UpdateMusicStatus();
+        
+        AudioFader.Instance.FadeOutInstant(backgroundSource);
+        AudioFader.Instance.FadeIn(backgroundSource, 3f);
     }
 
     private void UpdateMusicStatus() 

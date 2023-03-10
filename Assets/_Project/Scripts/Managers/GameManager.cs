@@ -45,6 +45,10 @@ public class GameManager : Singleton<GameManager>
         PlayerController.OnJumped += OnPlayerJumped;
         
         LoadGame();
+        
+        // Fade in on Game start
+        CanvasFader.Instance.FadeOutInstant();
+        CanvasFader.Instance.FadeIn(3f);
     }
 
     void Update()
