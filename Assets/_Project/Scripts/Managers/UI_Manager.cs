@@ -11,9 +11,12 @@ public class UI_Manager : Singleton<UI_Manager>
     [SerializeField] SettingsMenu settingsMenu;
     [SerializeField] AfterLevelMenu afterLevelMenu;
     [SerializeField] LevelSelection levelSelection;
+    [SerializeField] GameObject levelBanner;
+    [SerializeField] TextMeshProUGUI levelBannerText;
     [SerializeField] GameObject inLevelUI;
     [SerializeField] GameObject mainMenu;
     [SerializeField] Button startButton;
+    [SerializeField] float levelBannerShowTime = 1.5f;
 
     Menu currentOpenMenu;
     PlayerController player;
@@ -71,15 +74,27 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         player = FindObjectOfType<PlayerController>();
         if (player == null) Debug.Log("Player was null");
+
+        ResetLevelBanner();
+
+        levelBannerText.fontSize = 100.0f;
+        levelBannerText.text = "Level " + Level_Manager.Instance.GetCurrentLevel()?.levelNumber;
+        // Show level banner
+        Invoke("OpenLevelBanner", 0.5f);
+        // Close banner after delay
+        Invoke("CloseLevelBanner", levelBannerShowTime);
         
         EnableMainMenu(false);
         EnableLevelSelectionMenu(false, false);
         afterLevelMenu.CloseInstant();
         EnableInLevelUI(true);
+        SetInLevelUIButtonsClickable(true);
     }
 
     void LevelManager_OnLevelCompleted(int levelCompleted)
     {
+        SetInLevelUIButtonsClickable(false);
+        
         StartCoroutine("LevelCompleteRoutine");
     }
     
@@ -95,12 +110,23 @@ public class UI_Manager : Singleton<UI_Manager>
         UpdateMenuStatus(true);
 
         TimeDilator.SlowTimeIndefinitely(0.25f);
+        
+        // Show level complete banner
+        levelBannerText.fontSize = 80.0f;
+        levelBannerText.text = "Level Complete";
+        OpenLevelBanner();
 
         yield return CanvasFader.Instance.FadeToCoroutine(0.35f, 1f);
 
-        afterLevelMenu.Open();
-        
-        CanvasFader.Instance.FadeInInstant();
+        // Go to next level
+
+        yield return new WaitForSecondsRealtime(2.0f);
+
+        Level_Manager.Instance.LoadNextLevel();
+
+        //afterLevelMenu.Open();
+
+        //CanvasFader.Instance.FadeInInstant();
     }
 
     void EnableMainMenu(bool enabled)
@@ -116,6 +142,33 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         isMenuOpened = menuOpened;
         GameManager.Instance.SetMenuOpened(isMenuOpened);
+    }
+    
+    void OpenLevelBanner()
+    {
+        levelBanner.GetComponent<Animator>()?.SetTrigger("Start");
+    }
+
+    void CloseLevelBanner()
+    {
+        levelBanner.GetComponent<Animator>()?.SetTrigger("Close");
+    }
+
+    void ResetLevelBanner()
+    {
+        Animator anim = levelBanner.GetComponent<Animator>();
+        anim?.SetTrigger("Reset");
+        anim?.ResetTrigger("Close");
+    }
+
+    public void SetInLevelUIButtonsClickable(bool clickable)
+    {
+        Button[] inlevelUIButtons = inLevelUI.GetComponentsInChildren<Button>();
+
+        foreach (Button inLevelUIButton in inlevelUIButtons)
+        {
+            inLevelUIButton.interactable = clickable;
+        }
     }
     
     public void OpenLevelSelectionMenu() 
@@ -222,7 +275,11 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         yield return CanvasFader.Instance.FadeOutCoroutine(0.5f);
 
-        currentOpenMenu.CloseInstant();
+        if (currentOpenMenu)
+            currentOpenMenu.CloseInstant();
+
+        ResetLevelBanner();
+        
         // Unload previous scenes
         Level_Manager.Instance.UnloadPreviousScenes();
         

@@ -173,6 +173,8 @@ public class Level_Manager : Singleton<Level_Manager> {
             LoadLevel(currentLevel);
         }
         else {
+            // Go back to main menu
+            UI_Manager.Instance.OnMainMenuButtonPressed();
             Debug.Log("No more levels");
         }
     }
@@ -332,7 +334,7 @@ public class Level_Manager : Singleton<Level_Manager> {
 
         TimeDilator.ResumeNormalTime();
         
-        CanvasFader.Instance.FadeIn(1f);
+        CanvasFader.Instance.FadeIn(2f);
 
         // Wait time for fade in
         yield return new WaitForSeconds(transitionTime);

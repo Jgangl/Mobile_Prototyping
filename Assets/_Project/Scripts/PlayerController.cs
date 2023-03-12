@@ -113,8 +113,7 @@ public class PlayerController : MonoBehaviour
                     AudioManager.Instance.PlayLaunchSound();
                     
                     playerSlimeParticles.Play();
-                    
-                    Debug.Log("OnJumped");
+
                     OnJumped?.Invoke();
                 }
 

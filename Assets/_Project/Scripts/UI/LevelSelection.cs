@@ -64,6 +64,7 @@ public class LevelSelection : MonoBehaviour
             {
                 levelButtons[i].Unlock();
                 levelButtons[i].Complete();
+                levelButtons[i].StopIdleAnimation();
 
                 if (i < levels.Length - 1)
                 {
@@ -89,7 +90,10 @@ public class LevelSelection : MonoBehaviour
         // Unlock next level
         LevelSelectButton nextLevelButton = GetLevelButton(levelCompleted + 1);
         if (nextLevelButton)
+        {
             nextLevelButton.Unlock();
+            nextLevelButton.PlayIdleAnimation();
+        }
         else
         {
             Debug.Log("Next Level Button null");
