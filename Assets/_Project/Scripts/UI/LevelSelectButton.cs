@@ -30,8 +30,8 @@ public class LevelSelectButton : MonoBehaviour
 
     void OnEnable()
     {
-        Level levelObject = Level_Manager.Instance.GetLevel(level);
-        Level prevLevelObject = Level_Manager.Instance.GetLevel(level - 1);
+        Level levelObject = Level_Manager.Instance?.GetLevel(level);
+        Level prevLevelObject = Level_Manager.Instance?.GetLevel(level - 1);
 
         idleAnimation.CreateTween(true, false);
         

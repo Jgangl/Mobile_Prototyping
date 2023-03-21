@@ -10,6 +10,8 @@ public class LevelSelection : MonoBehaviour
     
     [SerializeField] GameObject levelsPanel;
     [SerializeField] GameObject levelButtonPrefab;
+    [SerializeField] GameObject levelButtonsParent_Page_1;
+    [SerializeField] GameObject levelButtonsParent_Page_2;
     int numLevels;
     List<LevelSelectButton> levelButtons;
 
@@ -27,14 +29,14 @@ public class LevelSelection : MonoBehaviour
 
     void AddLevelButtons() 
     {
-        foreach (LevelSelectButton button in levelsPanel.GetComponentsInChildren<LevelSelectButton>())
+        foreach (LevelSelectButton button in levelButtonsParent_Page_1.GetComponentsInChildren<LevelSelectButton>())
         {
             Destroy(button.gameObject);
         }
 
         for (int i = 1; i <= numLevels; i++) 
         {
-            GameObject levelButtonObject = Instantiate(levelButtonPrefab, levelsPanel.transform);
+            GameObject levelButtonObject = Instantiate(levelButtonPrefab, levelButtonsParent_Page_1.transform);
             levelButtonObject.name = "Level_" + i;
 
             LevelSelectButton currentButton = levelButtonObject.GetComponent<LevelSelectButton>();
