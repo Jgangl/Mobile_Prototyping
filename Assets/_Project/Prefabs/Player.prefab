@@ -1166,14 +1166,14 @@ MonoBehaviour:
   timeStepInterval: 0.02
   maxSteps: 60
   gravityScale: 1
-  playerRadius: 0.25
+  playerRadius: 0.6
   collisionLayers:
     serializedVersion: 2
     m_Bits: 64
   lineColor: {r: 0, g: 0.5188679, b: 0.24213837, a: 1}
-  capColor: {r: 0, g: 1, b: 0.31651497, a: 1}
+  capColor: {r: 0, g: 0.5176471, b: 0.24313726, a: 1}
   lineThickness: 0.1
-  endCapRadius: 0.2
+  endCapRadius: 0.15
   numLineSkipPoints: 5
 --- !u!255 &6981968941831187579
 FixedJoint2D:

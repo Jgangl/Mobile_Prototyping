@@ -107,12 +107,11 @@ public class PlayerController : MonoBehaviour
                     EnableMovement();
 
                     // Add swipe force
-                    foreach (Rigidbody2D bone in boneRigidbodies)
-                        bone.AddForce(currentSwipeForce);
+                    AddForce(currentSwipeForce);
                     
                     AudioManager.Instance.PlayLaunchSound();
                     
-                    playerSlimeParticles.Play();
+                    PlaySlimeParticles();
 
                     OnJumped?.Invoke();
                 }
@@ -123,26 +122,10 @@ public class PlayerController : MonoBehaviour
             {
                 fingerCurrentPos = Input.mousePosition;
 
-                // Calculate current position difference
-                Vector2 currSwipeDirection = (fingerCurrentPos - fingerDownPos).normalized;
-                float currSwipeLength = Vector2.Distance(fingerCurrentPos, fingerDownPos);
+                currentSwipeForce = CalculateSwipeForce(fingerDownPos, fingerCurrentPos);
 
-                // Clamp swipe length
-                if (currSwipeLength > maxSwipeLength)
-                    currSwipeLength = maxSwipeLength;
-
-                // Calculate force
-                currentSwipeForce = (currSwipeDirection * -1) * speed * currSwipeLength * swipeLengthVariableGain *
-                                    swipeLengthFlatGain;
-                
                 // Simulate launch
-                if (basicTrajectory)
-                {
-                    basicTrajectory.SimulateArc(gameObject.transform.position, 
-                        currentSwipeForce.normalized,
-                        currentSwipeForce.magnitude,
-                        rb.mass);
-                }
+                SimulateTrajectory(currentSwipeForce);
             }
         }
 
@@ -151,6 +134,47 @@ public class PlayerController : MonoBehaviour
         prevPosition = currentPosition;
 
         prevFingerPos = Input.mousePosition;
+    }
+
+    public void AddForce(Vector2 force)
+    {
+        foreach (Rigidbody2D bone in boneRigidbodies)
+        {
+            bone.AddForce(force);
+        }
+    }
+
+    public void PlaySlimeParticles()
+    {
+        playerSlimeParticles.Play();
+    }
+
+    public Vector2 CalculateSwipeForce(Vector2 startPos, Vector2 endPos)
+    {
+        // Calculate current position difference
+        Vector2 currSwipeDirection = (endPos - startPos).normalized;
+        float currSwipeLength = Vector2.Distance(endPos, startPos);
+
+        // Clamp swipe length
+        if (currSwipeLength > maxSwipeLength)
+            currSwipeLength = maxSwipeLength;
+
+        // Calculate force
+        Vector2 swipeForce = (currSwipeDirection * -1) * speed * currSwipeLength * swipeLengthVariableGain *
+                            swipeLengthFlatGain;
+
+        return swipeForce;
+    }
+
+    public void SimulateTrajectory(Vector2 swipeForce)
+    {
+        if (basicTrajectory)
+        {
+            basicTrajectory.SimulateArc(gameObject.transform.position, 
+                swipeForce.normalized,
+                swipeForce.magnitude,
+                rb.mass);
+        }
     }
     
     void InitializeBones()
@@ -181,7 +205,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
-    void EnableMovement() 
+    public void EnableMovement() 
     {
         StartCoroutine("IgnorePlatformTimer");
         StartCoroutine("IgnoreBonesTimer");

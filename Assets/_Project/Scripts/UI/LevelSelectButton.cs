@@ -32,18 +32,12 @@ public class LevelSelectButton : MonoBehaviour
     {
         Level levelObject = Level_Manager.Instance.GetLevel(level);
         Level prevLevelObject = Level_Manager.Instance.GetLevel(level - 1);
-        Debug.Log("On Enable");
-        //idleAnimation.DOKill();
-        
+
         idleAnimation.CreateTween(true, false);
         
         if (prevLevelObject.levelNumber != -1 && prevLevelObject.completed && !levelObject.completed)
         {
-            
-            //idleAnimation.DOPlay();
             idleAnimation.DORestart();
-            //idleAnimation.DOPlayForward();
-            //idleAnimation.DOPlayNext();
         }
         else
         {
@@ -59,10 +53,6 @@ public class LevelSelectButton : MonoBehaviour
         button.onClick.AddListener(() => AudioManager.Instance.PlayLaunchSound());
         
         buttonText.text = level.ToString();
-        
-        //idleAnimation.DORestart();
-        //idleAnimation.DOPlay();
-        //Debug.Log(idleAnimation.isActive);
     }
     
     public void EnableLevelCompleteCheck(bool enabled) 
@@ -80,30 +70,12 @@ public class LevelSelectButton : MonoBehaviour
     public void Complete()
     {
         SetColor(completeColor);
-        //idleAnimation.DOKill();
-        //EnableLevelCompleteCheck(true);
     }
 
     public void Unlock()
     {
         bLocked = false;
         EnableLevelLock(false);
-        //PlayIdleAnimation();
-    }
-
-    public void PlayIdleAnimation()
-    {
-        Debug.Log("Play idle anim for level: " + level);
-        //idleAnimation.DORestart();
-        //idleAnimation.DOPlay();
-        //idleAnimation.DOTogglePause();
-    }
-    
-    public void StopIdleAnimation()
-    {
-        Debug.Log("Stop idle anim for level: " + level);
-        //idleAnimation.DOKill();
-        //idleAnimation.DOComplete();
     }
 
     void EnableLevelLock(bool enabled) 

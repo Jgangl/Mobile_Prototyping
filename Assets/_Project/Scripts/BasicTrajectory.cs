@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using Shapes;
+using UnityEngine.Rendering.Universal;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -90,7 +91,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
 
     public override void DrawShapes(Camera cam)
     {
-        using( Draw.Command( cam ) )
+        using( Draw.Command( cam ))
         {
             if (linePositions.Count == 0)
                 return;
@@ -134,7 +135,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
         Draw.Color = capColor;
 
         Vector3 endCapPos = linePositions[^1];
-        endCapPos.z += 0.5f;
+        //endCapPos.z += 0.01f;
             
         Draw.Disc(endCapPos, Quaternion.identity, endCapRadius);
     }

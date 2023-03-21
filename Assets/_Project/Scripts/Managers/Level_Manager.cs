@@ -238,7 +238,6 @@ public class Level_Manager : Singleton<Level_Manager> {
         if (level != -1)
         {
             currentLevel = level;
-            OnLevelLoaded.Invoke();
         }
     }
 
@@ -301,6 +300,8 @@ public class Level_Manager : Singleton<Level_Manager> {
         
         // Get player spawn point
         Initialize();
+        
+        OnLevelLoaded.Invoke();
     }
 
     void Initialize()

@@ -109,7 +109,7 @@ public class UI_Manager : Singleton<UI_Manager>
     {
         UpdateMenuStatus(true);
 
-        TimeDilator.SlowTimeIndefinitely(0.25f);
+        TimeDilator.SlowTimeIndefinitely(0.1f);
         
         // Show level complete banner
         levelBannerText.fontSize = 80.0f;
