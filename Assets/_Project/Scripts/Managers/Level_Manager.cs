@@ -485,7 +485,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         // Set editor build settings scenes
         EditorBuildSettings.scenes = scenes;
     }
-
+    
     [Title("Scene Renaming (CAUTION)", Bold = true, TitleAlignment = TitleAlignments.Centered)]
     [Button("Increment Levels")]
     public void InrementLevelNumbers()
@@ -552,7 +552,6 @@ public class Level_Manager : Singleton<Level_Manager> {
         
         AssetDatabase.Refresh();
     }
-    
     
     [Title("Scene Renaming (CAUTION)", Bold = true, TitleAlignment = TitleAlignments.Centered)]
     [Button("Decrement Levels")]

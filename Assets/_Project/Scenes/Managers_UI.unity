@@ -4410,7 +4410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1488721812551170811, guid: 329e532c2267ba445ba3f2c5424e60e4, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1488721812551170811, guid: 329e532c2267ba445ba3f2c5424e60e4, type: 3}
       propertyPath: m_Lens.OrthographicSize
