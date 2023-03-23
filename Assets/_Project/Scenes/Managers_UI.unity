@@ -3543,7 +3543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5303874046333041262, guid: 6284634264d625b45ab17354dab01364, type: 3}
       propertyPath: numLevels
-      value: 8
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5303874046333041262, guid: 6284634264d625b45ab17354dab01364, type: 3}
       propertyPath: LastLevelToIncrement
@@ -22098,6 +22098,9 @@ MonoBehaviour:
   levelButtonPrefab: {fileID: 9174853583577544461, guid: aafea89b50a61714a8be540f426916e9, type: 3}
   levelButtonsParent_Page_1: {fileID: 478034715}
   levelButtonsParent_Page_2: {fileID: 1117834375}
+  paginationRect: {fileID: 8856617179260167508}
+  prevPageButton: {fileID: 7886333236707130892}
+  nextPageButton: {fileID: 1530438334795125824}
 --- !u!95 &7366699436275809217
 Animator:
   serializedVersion: 4

@@ -69,6 +69,8 @@ public class Level_Manager : Singleton<Level_Manager> {
     void Start()
     {
         Initialize();
+        
+        currentLevel = GetFirstUncompletedLevel();
     }
 
     public bool TryLoadLevels(Level[] savedLevels)

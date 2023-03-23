@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UI.Pagination;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class LevelSelection : MonoBehaviour
     [SerializeField] GameObject levelButtonPrefab;
     [SerializeField] GameObject levelButtonsParent_Page_1;
     [SerializeField] GameObject levelButtonsParent_Page_2;
+    [SerializeField] PagedRect paginationRect;
+    [SerializeField] Button prevPageButton;
+    [SerializeField] Button nextPageButton;
+    
     int numLevels;
     List<LevelSelectButton> levelButtons;
 
@@ -23,8 +29,11 @@ public class LevelSelection : MonoBehaviour
         levelButtons = new List<LevelSelectButton>();
 
         AddLevelButtons();
-        
         UpdateLevelCompletionIcons();
+        
+        paginationRect.SetCurrentPage(1, true);
+
+        paginationRect.PageChangedEvent.AddListener(PageChanged);
     }
 
     void AddLevelButtons() 
@@ -120,5 +129,21 @@ public class LevelSelection : MonoBehaviour
             else
                 anim.SetTrigger("Close_Instant");
         }
+        
+        UpdatePaginationButtons();
+    }
+
+    void UpdatePaginationButtons()
+    {
+        int numPages = paginationRect.NumberOfPages;
+        int currPage = paginationRect.CurrentPage;
+
+        prevPageButton.interactable = currPage > 1;
+        nextPageButton.interactable = currPage < numPages;
+    }
+
+    void PageChanged(Page prevPage, Page currPage)
+    {
+        UpdatePaginationButtons();
     }
 }

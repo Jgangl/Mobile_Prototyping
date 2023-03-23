@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
-using Random = UnityEngine.Random;
 
 public class LevelSelectButton : MonoBehaviour
 {
@@ -21,6 +17,8 @@ public class LevelSelectButton : MonoBehaviour
     [SerializeField] DOTweenAnimation clickAnimation;
     [SerializeField] DOTweenAnimation idleAnimation;
 
+    //Tween idleTween;
+
     bool bLocked = true;
 
     void Start()
@@ -33,15 +31,14 @@ public class LevelSelectButton : MonoBehaviour
         Level levelObject = Level_Manager.Instance?.GetLevel(level);
         Level prevLevelObject = Level_Manager.Instance?.GetLevel(level - 1);
 
-        idleAnimation.CreateTween(true, false);
+        idleAnimation.CreateTween(true, true);
+
+        Level currentLevel = Level_Manager.Instance.GetCurrentLevel();
         
-        if (prevLevelObject.levelNumber != -1 && prevLevelObject.completed && !levelObject.completed)
+        // Play idle animation on 'current level'
+        if (currentLevel != levelObject)
         {
-            idleAnimation.DORestart();
-        }
-        else
-        {
-            idleAnimation.DOComplete();
+            idleAnimation.DOKill(); 
         }
     }
 
@@ -49,9 +46,8 @@ public class LevelSelectButton : MonoBehaviour
     {
         this.level = level;
         button.onClick.AddListener(() => onClickAction(level));
-        button.onClick.AddListener(() => clickAnimation.DORestart());
-        button.onClick.AddListener(() => AudioManager.Instance.PlayLaunchSound());
-        
+        button.onClick.AddListener(OnClick);
+
         buttonText.text = level.ToString();
     }
     
@@ -94,5 +90,14 @@ public class LevelSelectButton : MonoBehaviour
     public void SetLocked(bool isLocked)
     {
         bLocked = isLocked;
+    }
+
+    void OnClick()
+    {
+        idleAnimation.DORestart();
+        idleAnimation.DOKill();
+        clickAnimation.CreateTween(true, true);
+
+        AudioManager.Instance.PlayLaunchSound();
     }
 }

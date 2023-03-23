@@ -12,10 +12,7 @@ public class Bouncer : MonoBehaviour
     public float playerSpeedBounceFactor = 3f;
 
     public bool visualizeDirection;
-
     public bool enableBouncing = true;
-
-    [SerializeField] DOTweenAnimation scaleAnim;
 
     Transform bouncerTransform;
     Transform leftCircle;
@@ -217,6 +214,7 @@ public class Bouncer : MonoBehaviour
 
     void ScaleAnimationCompleted()
     {
+        Debug.Log("Scale anim complete");
         isAnimationPlaying = false;
         EnableCollision(true);
     }
@@ -225,12 +223,16 @@ public class Bouncer : MonoBehaviour
     {
         isAnimationStarted = true;
         isAnimationPlaying = true;
+
+        Vector3 scale = new Vector3(0.35f, 0.35f, 0.35f);
+        float duration = 0.1f;
+        transform.DOPunchScale(scale, duration, 8, 1.0f).OnComplete(ScaleAnimationCompleted);
         
-        Vector3 worldPos = transform.TransformVector(0.5f, 0.0f, 0.0f);
-        Tween tween = transform.DOPunchPosition(worldPos, 0.15f, 15, 1.5f, false);
-        tween.Play();
-        tween.onComplete += ScaleAnimationCompleted;
-        scaleAnim.DORestart();
+        //Vector3 worldPos = transform.TransformVector(0.5f, 0.0f, 0.0f);
+        Vector3 worldPos = new Vector3(0.0f, 0.5f, 0.0f);
+        //Tweener tween = transform.DOPunchPosition(worldPos, 0.15f, 15, 1.5f, false);
+        //tween.SetRelative(true);
+        //tween.Play();
     }
 
     void EnableCollision(bool enable)
