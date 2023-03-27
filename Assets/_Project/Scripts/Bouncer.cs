@@ -209,7 +209,6 @@ public class Bouncer : MonoBehaviour
             yield return new WaitForSeconds(collisionTimeoutTime);
         
         canCollideWithBouncer = true;
-        //EnableCollision(true);
     }
 
     void ScaleAnimationCompleted()

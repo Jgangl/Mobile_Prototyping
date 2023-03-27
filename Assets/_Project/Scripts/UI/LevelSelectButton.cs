@@ -17,6 +17,8 @@ public class LevelSelectButton : MonoBehaviour
     [SerializeField] DOTweenAnimation clickAnimation;
     [SerializeField] DOTweenAnimation idleAnimation;
 
+    Vector3 startScale;
+
     //Tween idleTween;
 
     bool bLocked = true;
@@ -28,6 +30,8 @@ public class LevelSelectButton : MonoBehaviour
 
     void OnEnable()
     {
+        button.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        
         Level levelObject = Level_Manager.Instance?.GetLevel(level);
         Level prevLevelObject = Level_Manager.Instance?.GetLevel(level - 1);
 

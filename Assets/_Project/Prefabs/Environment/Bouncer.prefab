@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6431352597475057173}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.371, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 1, z: 1}
+  m_LocalPosition: {x: 0.37, y: 0, z: 0}
+  m_LocalScale: {x: 0.3972876, y: 0.19379884, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6827767270261973210}
@@ -72,13 +72,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.96599996, g: 1, b: 0.76600003, a: 1}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: -5177388603050735206, guid: 2ec82e01a1218b94294dfbd31ca07741, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49411765}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_DrawMode: 1
+  m_Size: {x: 0.63, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -136,7 +136,6 @@ MonoBehaviour:
   playerSpeedBounceFactor: 3
   visualizeDirection: 0
   enableBouncing: 1
-  scaleAnim: {fileID: 0}
   collisionTimeoutTime: 0.25
   simulatedCollisionTimeoutTime: 0.001
   isSimulated: 0
@@ -238,7 +237,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.93525916, g: 1, b: 0.5424528, a: 1}
+  m_Color: {r: 1, g: 0.6551531, b: 0.525, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -377,7 +376,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.93525916, g: 1, b: 0.5424528, a: 1}
+  m_Color: {r: 1, g: 0.6551531, b: 0.525, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -555,7 +554,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.93525916, g: 1, b: 0.5424528, a: 1}
+  m_Color: {r: 1, g: 0.6551531, b: 0.525, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

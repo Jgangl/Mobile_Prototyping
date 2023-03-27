@@ -3170,7 +3170,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 1
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -4358,6 +4358,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1488721812551170805, guid: 329e532c2267ba445ba3f2c5424e60e4, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1488721812551170805, guid: 329e532c2267ba445ba3f2c5424e60e4, type: 3}
+      propertyPath: cameraShakeEnabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1488721812551170805, guid: 329e532c2267ba445ba3f2c5424e60e4, type: 3}
@@ -18362,7 +18366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2781362694214002293, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
       propertyPath: isOn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2781362694214002293, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
       propertyPath: saveValue
@@ -18551,6 +18555,10 @@ PrefabInstance:
     - target: {fileID: 4052233757426576527, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355614867173218704, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
+      propertyPath: isOn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4355614867173218704, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
       propertyPath: saveValue
@@ -18795,6 +18803,10 @@ PrefabInstance:
     - target: {fileID: 6599885302298385610, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
       propertyPath: m_Name
       value: Music_Switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700838906578950713, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
+      propertyPath: isOn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6700838906578950713, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
       propertyPath: OnEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target

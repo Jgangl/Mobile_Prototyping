@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -257,8 +258,10 @@ public class PlayerController : MonoBehaviour
         // Don't collide with other bones
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || isDead)
             return;
+        
+        bool isHazard = collision.gameObject.GetComponentInParent<Hazard>() != null;
 
-        if (stuckToPlatform)
+        if (stuckToPlatform && !isHazard)
             return;
 
         Platform platformHit;
@@ -286,10 +289,9 @@ public class PlayerController : MonoBehaviour
         bool bHitPlatformIsCurrent = CurrentPlatform == platformHit;
 
         bool speedThresholdPassed = GetObjectAverageVelocity().magnitude > hitSpeedThreshold;
-        
-        
+
         // If hit a platform OR didn't hit a platform but going fast enough
-        if ((speedThresholdPassed && bCanCollideWithWall) && !bHitPlatform)
+        if ((speedThresholdPassed && bCanCollideWithWall && !bHitPlatform) || (isHazard && bCanCollideWithWall))
         {
             PlayHitEffects(collision);
         }
