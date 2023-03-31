@@ -148,7 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20db597c02f44ad49818fca0ac8bec80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloodSplatterPrefab: {fileID: 5215806931310048102, guid: 98cfc5542511831449a4e4f81e92511d, type: 3}
 --- !u!114 &1662724044990208405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +167,11 @@ MonoBehaviour:
   ySpikeSpacing: 0.02
   leftRightSpikeYOffset: 0.02
   topBottomSpikeXOffset: 0.02
+  enableCornerSpikes: 1
+  enableTopSpikes: 1
+  enableBottomSpikes: 1
+  enableLeftSpikes: 1
+  enableRightSpikes: 1
 --- !u!1818360610 &8528248484033117837
 ScaleConstraint:
   m_ObjectHideFlags: 0

@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.3584906
       objectReference: {fileID: 0}
+    - target: {fileID: 7222166190620185672, guid: 80dbf96289b43e141975161f4d196e24, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7222166190620185673, guid: 80dbf96289b43e141975161f4d196e24, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -77,6 +81,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7222166190620185677, guid: 80dbf96289b43e141975161f4d196e24, type: 3}
   m_PrefabInstance: {fileID: 8977560094437649615}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &2209370608659582826
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778071610455832706}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &4705663120812405317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +112,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20db597c02f44ad49818fca0ac8bec80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6002730601781359047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778071610455832706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97625f93913f492408bcea1e7364a43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7263891858910256817
@@ -108,15 +145,8 @@ MonoBehaviour:
   ySpikeSpacing: 0.01
   leftRightSpikeYOffset: 0
   topBottomSpikeXOffset: 0
---- !u!114 &6002730601781359047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1778071610455832706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97625f93913f492408bcea1e7364a43f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  enableCornerSpikes: 1
+  enableTopSpikes: 1
+  enableBottomSpikes: 1
+  enableLeftSpikes: 1
+  enableRightSpikes: 1

@@ -125,8 +125,12 @@ public class PlayerController : MonoBehaviour
 
                 currentSwipeForce = CalculateSwipeForce(fingerDownPos, fingerCurrentPos);
 
-                // Simulate launch
-                SimulateTrajectory(currentSwipeForce);
+                if (Mathf.Abs(currentSwipeForce.x) >= swipeForceThreshold ||
+                    Mathf.Abs(currentSwipeForce.y) >= swipeForceThreshold)
+                {
+                    // Simulate launch
+                    SimulateTrajectory(currentSwipeForce);
+                }
             }
         }
 
@@ -261,6 +265,12 @@ public class PlayerController : MonoBehaviour
         
         bool isHazard = collision.gameObject.GetComponentInParent<Hazard>() != null;
 
+        if (isHazard)
+        {
+            isDead = true;
+            GameManager.Instance.PlayerDied();
+        }
+
         if (stuckToPlatform && !isHazard)
             return;
 
@@ -291,7 +301,7 @@ public class PlayerController : MonoBehaviour
         bool speedThresholdPassed = GetObjectAverageVelocity().magnitude > hitSpeedThreshold;
 
         // If hit a platform OR didn't hit a platform but going fast enough
-        if ((speedThresholdPassed && bCanCollideWithWall && !bHitPlatform) || (isHazard && bCanCollideWithWall))
+        if (speedThresholdPassed && bCanCollideWithWall && !bHitPlatform)
         {
             PlayHitEffects(collision);
         }

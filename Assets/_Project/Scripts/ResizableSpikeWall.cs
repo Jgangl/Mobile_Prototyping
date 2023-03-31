@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 #endif
@@ -9,21 +10,27 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ResizableSpikeWall : MonoBehaviour
 {
-    [SerializeField] private Transform spikePrefab;
+    [SerializeField] Transform spikePrefab;
 
-    [SerializeField] private float xOffset;
-    [SerializeField] private float yOffset;
+    [SerializeField] float xOffset;
+    [SerializeField] float yOffset;
 
-    [SerializeField] private float xSpikeSpacing = 0.02f;
-    [SerializeField] private float ySpikeSpacing = 0.02f;
-    [SerializeField] private float leftRightSpikeYOffset = 0.02f;
-    [SerializeField] private float topBottomSpikeXOffset = 0.02f;
+    [SerializeField] float xSpikeSpacing = 0.02f;
+    [SerializeField] float ySpikeSpacing = 0.02f;
+    [SerializeField] float leftRightSpikeYOffset = 0.02f;
+    [SerializeField] float topBottomSpikeXOffset = 0.02f;
 
-    private Vector2 prevSpriteRendererSize;
+    public bool enableCornerSpikes = true;
+    public bool enableTopSpikes = true;
+    public bool enableBottomSpikes = true;
+    public bool enableLeftSpikes = true;
+    public bool enableRightSpikes = true;
+    
+    Vector2 prevSpriteRendererSize;
 
-    private List<Transform> spikes;
+    List<Transform> spikes;
 
-    private SpriteRenderer sprite;
+    SpriteRenderer sprite;
 
     Transform spikeParent;
 
@@ -33,7 +40,7 @@ public class ResizableSpikeWall : MonoBehaviour
         RegenerateSpikes();
     }
 
-    private void Update()
+    void Update()
     {
         if (sprite == null)
             sprite = GetComponent<SpriteRenderer>();
@@ -48,7 +55,7 @@ public class ResizableSpikeWall : MonoBehaviour
         }
     }
 
-    private void DeleteAllSpikes()
+    void DeleteAllSpikes()
     {
         if (spikes == null) return;
         
@@ -59,7 +66,10 @@ public class ResizableSpikeWall : MonoBehaviour
         }
     }
 
-    private void RegenerateSpikes()
+#if UNITY_EDITOR
+    [Button("Regenerate Spikes")]
+#endif
+    void RegenerateSpikes()
     {
 #if UNITY_EDITOR
         // Don't do anything in Prefab mode
@@ -99,36 +109,39 @@ public class ResizableSpikeWall : MonoBehaviour
         Vector3 botRight = maxBounds - new Vector3(0f, mainBounds.extents.y * 2f, 0f) + new Vector3(-xOffset, yOffset, 0f);
 
         // Corners
-        Transform topLeftSpike = Instantiate(spikePrefab, topLeft, Quaternion.Euler(0f, 0f, 45f));
-        Transform botLeftSpike = Instantiate(spikePrefab, botLeft, Quaternion.Euler(0f, 0f, 45f + 90f));
-        Transform topRightSpike = Instantiate(spikePrefab, topRight, Quaternion.Euler(0f, 0f, -45f));
-        Transform botRightSpike = Instantiate(spikePrefab, botRight, Quaternion.Euler(0f, 0f, -45f - 90f));
+        if (enableCornerSpikes)
+        {
+            Transform topLeftSpike = Instantiate(spikePrefab, topLeft, Quaternion.Euler(0f, 0f, 45f));
+            Transform botLeftSpike = Instantiate(spikePrefab, botLeft, Quaternion.Euler(0f, 0f, 45f + 90f));
+            Transform topRightSpike = Instantiate(spikePrefab, topRight, Quaternion.Euler(0f, 0f, -45f));
+            Transform botRightSpike = Instantiate(spikePrefab, botRight, Quaternion.Euler(0f, 0f, -45f - 90f));
+            
+            // Corner opposites, (To look better)
+            Transform topLeftOppSpike = Instantiate(spikePrefab, topLeft, Quaternion.Euler(0f, 0f, 45f + 180f));
+            Transform botLeftOppSpike = Instantiate(spikePrefab, botLeft, Quaternion.Euler(0f, 0f, 45f + 90f + 180f));
+            Transform topRightOppSpike = Instantiate(spikePrefab, topRight, Quaternion.Euler(0f, 0f, -45f + 180f));
+            Transform botRightOppSpike = Instantiate(spikePrefab, botRight, Quaternion.Euler(0f, 0f, -45f - 90f + 180f));
+            
+            topLeftSpike.parent = spikeParent;
+            botLeftSpike.parent = spikeParent;
+            topRightSpike.parent = spikeParent;
+            botRightSpike.parent = spikeParent;
         
-        // Corner opposites, (To look better)
-        Transform topLeftOppSpike = Instantiate(spikePrefab, topLeft, Quaternion.Euler(0f, 0f, 45f + 180f));
-        Transform botLeftOppSpike = Instantiate(spikePrefab, botLeft, Quaternion.Euler(0f, 0f, 45f + 90f + 180f));
-        Transform topRightOppSpike = Instantiate(spikePrefab, topRight, Quaternion.Euler(0f, 0f, -45f + 180f));
-        Transform botRightOppSpike = Instantiate(spikePrefab, botRight, Quaternion.Euler(0f, 0f, -45f - 90f + 180f));
-
-        topLeftSpike.parent = spikeParent;
-        botLeftSpike.parent = spikeParent;
-        topRightSpike.parent = spikeParent;
-        botRightSpike.parent = spikeParent;
+            topLeftOppSpike.parent = spikeParent;
+            botLeftOppSpike.parent = spikeParent;
+            topRightOppSpike.parent = spikeParent;
+            botRightOppSpike.parent = spikeParent;
         
-        topLeftOppSpike.parent = spikeParent;
-        botLeftOppSpike.parent = spikeParent;
-        topRightOppSpike.parent = spikeParent;
-        botRightOppSpike.parent = spikeParent;
+            spikes.Add(topLeftSpike);
+            spikes.Add(botLeftSpike);
+            spikes.Add(topRightSpike);
+            spikes.Add(botRightSpike);
         
-        spikes.Add(topLeftSpike);
-        spikes.Add(botLeftSpike);
-        spikes.Add(topRightSpike);
-        spikes.Add(botRightSpike);
-        
-        spikes.Add(topLeftOppSpike);
-        spikes.Add(botLeftOppSpike);
-        spikes.Add(topRightOppSpike);
-        spikes.Add(botRightOppSpike);
+            spikes.Add(topLeftOppSpike);
+            spikes.Add(botLeftOppSpike);
+            spikes.Add(topRightOppSpike);
+            spikes.Add(botRightOppSpike);
+        }
 
         float spikeXSize = spikePrefab.GetComponentInChildren<SpriteRenderer>().bounds.size.x + xSpikeSpacing;
         
@@ -142,15 +155,25 @@ public class ResizableSpikeWall : MonoBehaviour
         for(int i = 0; i < count; i++)
         {
             Vector3 p = leftMiddle + Vector3.right * n * (i + 1);
-            // Top
-            Transform topSpike = Instantiate(spikePrefab, p + yBoundsExtentsVector - new Vector3(0f, leftRightSpikeYOffset), Quaternion.Euler(0f, 0f, 0f));
-            topSpike.parent = spikeParent;
-            // Bottom
-            Transform botSpike = Instantiate(spikePrefab, p - yBoundsExtentsVector + new Vector3(0f, leftRightSpikeYOffset), Quaternion.Euler(0f, 0f, 180f));
-            botSpike.parent = spikeParent;
             
-            spikes.Add(topSpike);
-            spikes.Add(botSpike);
+            // Top
+            if (enableTopSpikes)
+            {
+                Transform topSpike = Instantiate(spikePrefab, p + yBoundsExtentsVector - new Vector3(0f, leftRightSpikeYOffset), Quaternion.Euler(0f, 0f, 0f));
+                topSpike.parent = spikeParent;
+                
+                spikes.Add(topSpike);
+            }
+
+            // Bottom
+            if (enableBottomSpikes)
+            {
+                Transform botSpike = Instantiate(spikePrefab,
+                    p - yBoundsExtentsVector + new Vector3(0f, leftRightSpikeYOffset), Quaternion.Euler(0f, 0f, 180f));
+                botSpike.parent = spikeParent;
+
+                spikes.Add(botSpike);
+            }
         }
 
         // Total Distance / num Objects
@@ -166,14 +189,24 @@ public class ResizableSpikeWall : MonoBehaviour
         {
             Vector3 p = middleTop + Vector3.down * n * (i + 1);
             // Left
-            Transform leftSpike = Instantiate(spikePrefab, p - xBoundsExtentsVector + new Vector3(topBottomSpikeXOffset, 0f), Quaternion.Euler(0f, 0f, 90f));
-            leftSpike.parent = spikeParent;
+            if (enableLeftSpikes)
+            {
+                Transform leftSpike = Instantiate(spikePrefab,
+                    p - xBoundsExtentsVector + new Vector3(topBottomSpikeXOffset, 0f), Quaternion.Euler(0f, 0f, 90f));
+                leftSpike.parent = spikeParent;
+
+                spikes.Add(leftSpike);
+            }
+
             // Right
-            Transform rightSpike = Instantiate(spikePrefab, p + xBoundsExtentsVector - new Vector3(topBottomSpikeXOffset, 0f), Quaternion.Euler(0f, 0f, -90f));
-            rightSpike.parent = spikeParent;
-            
-            spikes.Add(leftSpike);
-            spikes.Add(rightSpike);
+            if (enableRightSpikes)
+            {
+                Transform rightSpike = Instantiate(spikePrefab,
+                    p + xBoundsExtentsVector - new Vector3(topBottomSpikeXOffset, 0f), Quaternion.Euler(0f, 0f, -90f));
+                rightSpike.parent = spikeParent;
+
+                spikes.Add(rightSpike);
+            }
         }
     }
 }

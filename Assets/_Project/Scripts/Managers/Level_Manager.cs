@@ -19,6 +19,8 @@ public class Level_Manager : Singleton<Level_Manager> {
         get => numLevels;
     }
 
+    [SerializeField] public bool unlockAllLevels;
+
     Level[] levels;
     int currentLevel = 1;
     //int highestCompletedLevel = 0;
@@ -88,7 +90,7 @@ public class Level_Manager : Singleton<Level_Manager> {
             }
         }
         
-        levels = savedLevels;
+        //levels = savedLevels;
         return true;
     }
 
