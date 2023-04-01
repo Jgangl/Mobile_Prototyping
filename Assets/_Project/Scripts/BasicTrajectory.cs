@@ -20,7 +20,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
     [SerializeField] float lineThickness = 0.1f;
     [SerializeField] float endCapRadius = 0.2f;
     [SerializeField] int numLineSkipPoints;
-    int consecutiveCollisionThreshold = 3;
+    [SerializeField] int consecutiveCollisionThreshold = 10;
 
     List<Vector2> linePositions;
 
