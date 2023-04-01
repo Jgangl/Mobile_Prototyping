@@ -312,9 +312,9 @@ public class PlayerController : MonoBehaviour
         // Platform collision hasn't timed out and hit platform is same as current
         if (!platformCollisionTimeout && bHitPlatformIsCurrent)
             return;
-        
-        CurrentPlatform = platformHit;
 
+        CurrentPlatform = platformHit;
+        
         PlayHitEffects(collision);
         
         if (platformHit.GetComponent<MovingObject>())
@@ -412,7 +412,7 @@ public class PlayerController : MonoBehaviour
     void PlayHitEffects(Collision2D collision)
     {
         // Only play sound/screen shake during the level
-        if (!isDead && !Level_Manager.Instance.IsLevelCompleted() && !Level_Manager.Instance.LevelJustStarted())
+        if (!Level_Manager.Instance.IsLevelCompleted() && !Level_Manager.Instance.LevelJustStarted())
         {
             AudioManager.Instance.PlaySquishSound();
             CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
