@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Numerics;
+using System.Collections.Generic;using System.Numerics;
 using UnityEngine;
 using Shapes;
 using UnityEngine.Rendering.Universal;
@@ -39,6 +38,10 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
         int numConsecutiveCollisions = 0;
 
         RaycastHit2D oldestHit = new RaycastHit2D();
+
+        float distFromPlayerThreshold = 1.0f;
+
+        //Debug.Log(initialVelocity);
         
         for (int i = 1; i < maxSteps; i++)
         {
@@ -52,6 +55,17 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
             //RaycastHit2D hit = Physics2D.Raycast(previousPos, rayDirection, rayDirection.magnitude, collisionLayers);
             RaycastHit2D hit = Physics2D.CircleCast(previousPos, playerRadius, rayDirection, rayDirection.magnitude, collisionLayers);
             bool bHit = hit.collider != null;
+
+            //float distFromPlayer = (calculatedPosition - launchPosition).magnitude;
+
+            if (Vector2.Distance(launchPosition, calculatedPosition) <= distFromPlayerThreshold)
+            {
+                bHit = false;
+            }
+            
+
+            //if (i < 10)
+            //    bHit = false;
             
             if (bHit)
             {
@@ -69,7 +83,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
                     linePositions.RemoveRange(startingIndex, numPositionsToRemove);
 
                     if (oldestHit.collider != null)
-                        linePositions.Add(oldestHit.centroid);
+                        linePositions.Add(calculatedPosition);
 
                     break;
                 }
@@ -99,7 +113,7 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
             Draw.BlendMode = ShapesBlendMode.Transparent;
             
             DrawPathPointDiscs();
-            DrawFinalDisc();
+            //DrawFinalDisc();
         }
     }
 
@@ -118,11 +132,11 @@ public class BasicTrajectory : ImmediateModeShapeDrawer
             
             Vector3 point = linePositions[i];
 
-            float distToEndCap = Vector2.Distance(point, linePositions[^1]);
+            //float distToEndCap = Vector2.Distance(point, linePositions[^1]);
                 
             // Don't draw points too close to end cap
-            if (distToEndCap < endCapRadius + lineThickness)
-                continue;
+            //if (distToEndCap < endCapRadius + lineThickness)
+            //    continue;
                 
             point.z = point.z - 0.5f;
                 
