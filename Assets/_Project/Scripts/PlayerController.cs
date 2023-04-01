@@ -125,11 +125,23 @@ public class PlayerController : MonoBehaviour
 
                 currentSwipeForce = CalculateSwipeForce(fingerDownPos, fingerCurrentPos);
 
+                //Debug.Log("X: " + currentSwipeForce.x + "  Y: " + currentSwipeForce.y);
+                
                 if (Mathf.Abs(currentSwipeForce.x) >= swipeForceThreshold ||
-                    Mathf.Abs(currentSwipeForce.y) >= swipeForceThreshold)
+                    Mathf.Abs(currentSwipeForce.y) >= swipeForceThreshold ||
+                    Mathf.Abs(currentSwipeForce.x) + Mathf.Abs(currentSwipeForce.y) >= swipeForceThreshold)
                 {
+                    
                     // Simulate launch
                     SimulateTrajectory(currentSwipeForce);
+                }
+                else
+                {
+                    
+                    //Debug.Log(currentSwipeForce.y);
+                    //Debug.Log("Clear arc");
+                    if (basicTrajectory)
+                        basicTrajectory.ClearArc();
                 }
             }
         }
