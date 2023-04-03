@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,7 +24,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float swipeForceThreshold = 20.0f;
     [SerializeField] ParticleSystem playerTrail;
     [SerializeField] ParticleSystem playerSlimeParticles;
-    
+    [SerializeField] GameObject leftEye;
+    [SerializeField] GameObject rightEye;
+    [SerializeField] GameObject mouth;
+
     GameObject previousPlatform;
     bool platformCollisionTimeout = true;
     bool mouseHeldDown;
@@ -52,6 +56,11 @@ public class PlayerController : MonoBehaviour
 
     Dictionary<GameObject, double> recentWallCollisions;
 
+    Tweener leftEyePunch;
+    Tweener rightEyePunch;
+    Tweener mouthScale;
+    Vector2 mouthOriginalScale;
+
     public static Action OnJumped;
 
     void Start()
@@ -71,10 +80,14 @@ public class PlayerController : MonoBehaviour
         recentWallCollisions = new Dictionary<GameObject, double>();
 
         InitializeBones();
+
+        mouthOriginalScale = mouth.transform.localScale;
     }
 
-    void Update() 
+    void Update()
     {
+        MoveEyesToDirection();
+        
         UpdateRecentCollisions();
         
         if (disableInput)
@@ -220,6 +233,8 @@ public class PlayerController : MonoBehaviour
         
         rb.velocity = Vector2.zero;
         canMove = true;
+
+        mouth.transform.DOScale(mouthOriginalScale, 0.2f);
     }
 
     public void EnableMovement() 
@@ -239,6 +254,11 @@ public class PlayerController : MonoBehaviour
         {
             bone.SetRigidbodyIsKinematic(false);
         }
+
+        Vector3 addMouthScale = new Vector3(0.5f, 0.1f, 0.0f);
+        Vector2 targetScale = mouth.transform.localScale + addMouthScale;
+        float duration = 0.2f;
+        mouth.transform.DOScale(targetScale, duration);
     }
 
     public void EnableInput(bool newEnabled) 
@@ -423,12 +443,15 @@ public class PlayerController : MonoBehaviour
 
     void PlayHitEffects(Collision2D collision)
     {
+        
         // Only play sound/screen shake during the level
         if (!Level_Manager.Instance.IsLevelCompleted() && !Level_Manager.Instance.LevelJustStarted())
         {
             AudioManager.Instance.PlaySquishSound();
             CinemachineShake.Instance.ShakeCamera(0.5f, 0.2f);
         }
+        
+        Blink();
 
         slimeGenerator.Generate(collision.contacts[0].point, collision.gameObject);
         SpawnHitParticles(collision);
@@ -559,5 +582,73 @@ public class PlayerController : MonoBehaviour
         MovingJoint.connectedBody = null;
         MovingJoint.autoConfigureConnectedAnchor = true;
         MovingJoint.enabled = false;
+    }
+
+    void Blink()
+    {
+        if (rightEyePunch != null && rightEyePunch.active)
+        {
+            return;
+        }
+        
+        if (leftEyePunch != null && leftEyePunch.active)
+        {
+            return;
+        }
+        
+        
+        //Debug.Log("Blink");
+        Vector2 targetScale = new Vector2(-1.0f, 0.1f);
+        float duration = 0.25f;
+        int vibrato = 1;
+        float elasticity = 1.0f;
+        
+        leftEyePunch = leftEye.transform.DOPunchScale(targetScale, duration, vibrato, elasticity);
+        targetScale = new Vector2(-1.0f, 0.1f);
+        rightEyePunch = rightEye.transform.DOPunchScale(targetScale, duration, vibrato, elasticity);
+    }
+
+    void MoveEyesToDirection()
+    {
+        if (stuckToPlatform)
+            return;
+
+        // Don't try to move eyes if scale animation is active
+        if (rightEyePunch != null && rightEyePunch.active)
+        {
+            return;
+        }
+        
+        if (leftEyePunch != null && leftEyePunch.active)
+        {
+            return;
+        }
+        
+        // Right Eye
+
+        Collider2D eyeBoundsCollider = rightEye.GetComponent<Collider2D>();
+        Vector2 velocity = GetObjectAverageVelocity().normalized * 20.0f;
+        Debug.DrawRay(transform.position, velocity, Color.red, .01f);
+        
+
+        //Vector2 leftVel = leftEye.transform.InverseTransformDirection(velocity);
+        //Vector2 rightVel = rightEye.transform.InverseTransformDirection(velocity);
+        
+        
+        Vector2 targetPupilPosition = eyeBoundsCollider.ClosestPoint(velocity);
+        Transform rightPupil = rightEye.transform.Find("EyePupil").transform;
+        Vector2 currRightPupilPosition = rightPupil.transform.position;
+
+        rightPupil.position = Vector2.Lerp(currRightPupilPosition, targetPupilPosition, Time.deltaTime * 10.0f);
+
+        
+        // Left Eye
+        eyeBoundsCollider = leftEye.GetComponent<Collider2D>();
+        targetPupilPosition = eyeBoundsCollider.ClosestPoint(velocity);
+        Transform leftPupil = leftEye.transform.Find("EyePupil").transform;
+        Vector2 currLeftPupilPosition = leftPupil.transform.position;
+
+        leftPupil.position = Vector2.Lerp(currLeftPupilPosition, targetPupilPosition, Time.deltaTime * 10.0f);
+
     }
 }

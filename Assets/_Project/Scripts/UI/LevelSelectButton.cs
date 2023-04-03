@@ -13,6 +13,7 @@ public class LevelSelectButton : MonoBehaviour
     [SerializeField] Transform completeCheckmark;
     [SerializeField] Transform lockTransform;
     [SerializeField] Color completeColor;
+    [SerializeField] Image mainImage;
     [SerializeField] Image bgImage;
     [SerializeField] DOTweenAnimation clickAnimation;
     [SerializeField] DOTweenAnimation idleAnimation;
@@ -62,9 +63,8 @@ public class LevelSelectButton : MonoBehaviour
 
     void SetColor(Color newColor)
     {
-        Image image = button.GetComponent<Image>();
-        if (image)
-            image.color = newColor;
+        if (mainImage)
+            mainImage.color = newColor;
     }
 
     public void Complete()
