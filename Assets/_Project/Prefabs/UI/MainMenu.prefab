@@ -5360,6 +5360,9 @@ MonoBehaviour:
   prevPageButton: {fileID: 0}
   nextPageButton: {fileID: 0}
   buttonsPerPage: 0
+  objectsToDisable: []
+  viewport: {fileID: 0}
+  disableDelay: 0
 --- !u!95 &7366699436221116171
 Animator:
   serializedVersion: 4

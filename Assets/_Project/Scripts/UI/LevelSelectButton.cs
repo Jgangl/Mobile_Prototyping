@@ -104,4 +104,27 @@ public class LevelSelectButton : MonoBehaviour
 
         AudioManager.Instance.PlayLaunchSound();
     }
+
+    public void Show()
+    {
+        button.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        
+        Level levelObject = Level_Manager.Instance?.GetLevel(level);
+        Level prevLevelObject = Level_Manager.Instance?.GetLevel(level - 1);
+
+        idleAnimation.CreateTween(true, true);
+
+        Level currentLevel = Level_Manager.Instance?.GetCurrentLevel();
+        
+        // Play idle animation on 'current level'
+        if (currentLevel != null && currentLevel != levelObject)
+        {
+            idleAnimation.DOKill(); 
+        }
+    }
+
+    public void Hide()
+    {
+        
+    }
 }
