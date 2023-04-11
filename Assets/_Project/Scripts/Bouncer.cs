@@ -19,8 +19,12 @@ public class Bouncer : MonoBehaviour
     Transform rightCircle;
     Transform middleSquare;
     CapsuleCollider2D bounceCollider;
+    
+    Transform hitLeftCircle;
+    Transform hitRightCircle;
+    Transform hitMiddleSquare;
 
-    Vector3 bouncerScale;
+    [SerializeField] Vector3 bouncerScale;
 
     bool canCollideWithBouncer = true;
 
@@ -33,7 +37,7 @@ public class Bouncer : MonoBehaviour
     public bool isSimulated = false;
 
     [SerializeField]
-    Collider2D baseCollider;
+    Collider2D[] baseColliders;
     [SerializeField]
     Collider2D hitCollider;
     Rigidbody2D rb;
@@ -44,12 +48,17 @@ public class Bouncer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bouncerScale = transform.localScale;
+        //bouncerScale = transform.localScale;
 
         bouncerTransform = transform;
         leftCircle = transform.Find("LeftCircle");
         rightCircle = transform.Find("RightCircle");
         middleSquare = transform.Find("MiddleSquare");
+
+        hitLeftCircle = transform.Find("HitSprite").Find("LeftCircle");
+        hitRightCircle = transform.Find("HitSprite").Find("RightCircle");
+        hitMiddleSquare = transform.Find("HitSprite").Find("MiddleSquare");
+        
         bounceCollider = middleSquare.GetComponent<CapsuleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -60,7 +69,7 @@ public class Bouncer : MonoBehaviour
         if (bouncerTransform != null && bouncerTransform.hasChanged) 
         {
             // update scales
-            bouncerScale = transform.localScale;
+            //bouncerScale = transform.localScale;
 
             if (bouncerTransform == null)
                 bouncerTransform = transform;
@@ -73,14 +82,38 @@ public class Bouncer : MonoBehaviour
 
             if (middleSquare == null)
                 middleSquare = transform.Find("MiddleSquare");
+            
+            if (hitLeftCircle == null)
+                hitLeftCircle = transform.Find("HitSprite").Find("LeftCircle");
+
+            if (hitRightCircle == null)
+                hitRightCircle = transform.Find("HitSprite").Find("RightCircle");
+
+            if (hitMiddleSquare == null)
+                hitMiddleSquare = transform.Find("HitSprite").Find("MiddleSquare");
 
             if (bounceCollider == null && middleSquare != null)
                 bounceCollider = middleSquare.GetComponent<CapsuleCollider2D>();
 
             // Update child object scales
-            leftCircle.localScale = new Vector3(leftCircle.localScale.x, (bouncerScale.x / bouncerScale.y), leftCircle.localScale.z);
-            rightCircle.localScale = new Vector3(rightCircle.localScale.x, (bouncerScale.x / bouncerScale.y), rightCircle.localScale.z);
-            bounceCollider.size = new Vector2(bounceCollider.size.x, 1 + (bouncerScale.x / bouncerScale.y));
+            leftCircle.localScale = new Vector3(bouncerScale.y, bouncerScale.y , 1.0f);
+            leftCircle.localPosition = new Vector3(0.0f, bouncerScale.x / 2);
+            
+            rightCircle.localScale = new Vector3(bouncerScale.y, bouncerScale.y , 1.0f);
+            rightCircle.localPosition = new Vector3(0.0f, -bouncerScale.x / 2);
+            
+            middleSquare.localScale = new Vector3(bouncerScale.y - 0.005f, bouncerScale.x , 1.0f);
+
+
+            hitLeftCircle.localScale = new Vector3(bouncerScale.y / 2, bouncerScale.y / 2 , 1.0f);
+            hitLeftCircle.localPosition = new Vector3(bouncerScale.y / 4, bouncerScale.x / 2, 0.0f);
+            
+            hitRightCircle.localScale = new Vector3(bouncerScale.y / 2, bouncerScale.y / 2 , 1.0f);
+            hitRightCircle.localPosition = new Vector3(bouncerScale.y / 4, -bouncerScale.x / 2, 0.0f);
+            
+            hitMiddleSquare.localScale = new Vector3(bouncerScale.y / 2 - 0.005f, bouncerScale.x , 1.0f);
+            hitMiddleSquare.localPosition = new Vector3(bouncerScale.y / 4, 0.0f, 0.0f);
+
         }
 
         if (visualizeDirection)
@@ -89,10 +122,9 @@ public class Bouncer : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.otherCollider == baseCollider)
+        if (col.otherCollider != hitCollider)
             return;
-        
-        
+
         if (!enableBouncing || !canCollideWithBouncer)
             return;
 
@@ -175,7 +207,7 @@ public class Bouncer : MonoBehaviour
 
     void OnValidate() 
     {
-        bouncerScale = transform.localScale;
+        //bouncerScale = transform.localScale;
 
         if (bouncerTransform == null)
             bouncerTransform = transform;
@@ -192,10 +224,16 @@ public class Bouncer : MonoBehaviour
         if (bounceCollider == null && middleSquare != null)
             bounceCollider = middleSquare.GetComponent<CapsuleCollider2D>();
 
-        leftCircle.localScale = new Vector3(leftCircle.localScale.x, bouncerScale.x, leftCircle.localScale.z);
-        rightCircle.localScale = new Vector3(rightCircle.localScale.x, bouncerScale.x, rightCircle.localScale.z);
+        // Update child object scales
+        leftCircle.localScale = new Vector3(bouncerScale.y, bouncerScale.y , 1.0f);
+        leftCircle.localPosition = new Vector3(0.0f, bouncerScale.x / 2);
+            
+        rightCircle.localScale = new Vector3(bouncerScale.y, bouncerScale.y , 1.0f);
+        rightCircle.localPosition = new Vector3(0.0f, -bouncerScale.x / 2);
+            
+        middleSquare.localScale = new Vector3(bouncerScale.y - 0.005f, bouncerScale.x , 1.0f);
 
-        bounceCollider.size = new Vector2(bounceCollider.size.x, 1 + bouncerScale.x);
+        //bounceCollider.size = new Vector2(bounceCollider.size.x, 1 + bouncerScale.x);
     }
 
     IEnumerator CollisionTimeoutTimer()
@@ -229,7 +267,11 @@ public class Bouncer : MonoBehaviour
 
     void EnableCollision(bool enable)
     {
-        baseCollider.enabled = enable;
+        foreach (Collider2D baseCollider in baseColliders)
+        {
+            baseCollider.enabled = enable;
+        }
+        
         hitCollider.enabled = enable;
     }
 
