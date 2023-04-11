@@ -38,10 +38,10 @@ public class LevelSelectButton : MonoBehaviour
 
         idleAnimation.CreateTween(true, true);
 
-        Level currentLevel = Level_Manager.Instance.GetCurrentLevel();
+        Level currentLevel = Level_Manager.Instance?.GetCurrentLevel();
         
         // Play idle animation on 'current level'
-        if (currentLevel != levelObject)
+        if (currentLevel != null && currentLevel != levelObject)
         {
             idleAnimation.DOKill(); 
         }
