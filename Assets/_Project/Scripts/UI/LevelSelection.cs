@@ -10,10 +10,7 @@ public class LevelSelection : MonoBehaviour
 {
     const string LEVEL_SELECT_BUTTON_NAME = "LevelSelectSingleButton";
     
-    [SerializeField] GameObject levelsPanel;
     [SerializeField] GameObject levelButtonPrefab;
-    [SerializeField] GameObject levelButtonsParent_Page_1;
-    [SerializeField] GameObject levelButtonsParent_Page_2;
     [SerializeField] PagedRect paginationRect;
     [SerializeField] Button prevPageButton;
     [SerializeField] Button nextPageButton;
@@ -21,6 +18,8 @@ public class LevelSelection : MonoBehaviour
     [SerializeField] List<GameObject> objectsToDisable;
     [SerializeField] GameObject viewport;
     [SerializeField] float disableDelay;
+    
+    List<Transform> levelButtonsParents;
     
     int numLevels;
     List<LevelSelectButton> levelButtons;
@@ -38,19 +37,40 @@ public class LevelSelection : MonoBehaviour
         numLevels = Level_Manager.Instance.NumLevels;
         levelButtons = new List<LevelSelectButton>();
 
+        float numLevelsFloat = Level_Manager.Instance.NumLevels / (float)buttonsPerPage;
+
+        totalNumberOfPages = Mathf.CeilToInt(numLevelsFloat);
+
+        levelButtonsParents = new List<Transform>();
+        InitializeLevelButtonsParentList();
+
         AddLevelButtons();
         UpdateLevelCompletionIcons();
 
+        // This helps with Pagination performance (Not exactly sure why)
         for (int i = 1; i <= paginationRect.Pages.Count; i++)
         {
             paginationRect.SetCurrentPage(i);
         }
 
         paginationRect.PageChangedEvent.AddListener(PageChanged);
-        
-        float numLevelsFloat = Level_Manager.Instance.NumLevels / (float)buttonsPerPage;
+    }
 
-        totalNumberOfPages = Mathf.CeilToInt(numLevelsFloat);
+    void InitializeLevelButtonsParentList()
+    {
+        List<Page> pages = paginationRect.Pages;
+        foreach (Page page in pages)
+        {
+            Transform levelButtonsParent = page.transform.Find("LevelButtons");
+            if (levelButtonsParent)
+            {
+                levelButtonsParents.Add(levelButtonsParent);
+            }
+            else
+            {
+                Debug.LogError("Could not find 'LevelButtons' transform.");
+            }
+        }
     }
 
     void Update()
@@ -65,41 +85,28 @@ public class LevelSelection : MonoBehaviour
 
     void AddLevelButtons() 
     {
-        // I should really do the pages better but I am not going to
-        foreach (Transform t in levelButtonsParent_Page_1.transform)
+        foreach (Transform levelButtonsParent in levelButtonsParents)
         {
-            Destroy(t.gameObject);
+            foreach (Transform t in levelButtonsParent)
+            {
+                Destroy(t.gameObject);
+            }
         }
         
-        foreach (Transform t in levelButtonsParent_Page_2.transform)
-        {
-            Destroy(t.gameObject);
-        }
-
         for (int i = 1; i <= numLevels; i++) 
         {
             float numLevelsFloat = i / (float)buttonsPerPage;
 
             int currPage = Mathf.CeilToInt(numLevelsFloat);
 
-            Transform levelButtonsParentTransform = levelButtonsParent_Page_1.transform;
-            
-            switch (currPage)
-            {
-                case 1:
-                    levelButtonsParentTransform = levelButtonsParent_Page_1.transform;
-                    break;
-                case 2:
-                    levelButtonsParentTransform = levelButtonsParent_Page_2.transform;
-                    break;
-                //case 3:
-                    //levelButtonsParentTransform = levelButtonsParent_Page_3.transform;
-            }
-            
+            int pageIndex = currPage - 1;
+            if (pageIndex >= levelButtonsParents.Count)
+                continue;
+
+            Transform levelButtonsParentTransform = levelButtonsParents[pageIndex];
+
             GameObject levelButtonObject = Instantiate(levelButtonPrefab, levelButtonsParentTransform);
             levelButtonObject.name = "Level_" + i;
-            
-            //levelButtonObject.SetActive(false);
 
             LevelSelectButton currentButton = levelButtonObject.GetComponent<LevelSelectButton>();
             currentButton.Setup(i, OnLevelButtonPressed);
@@ -167,19 +174,25 @@ public class LevelSelection : MonoBehaviour
         Animator anim = GetComponent<Animator>();
         if (!anim)
             return;
+
+        if (enabled)
+        {
+            StartCoroutine("EnableObjectsCoroutine");
+            Invoke("UpdateCurrentPage", 0.05f);
+            anim.SetTrigger("Open");
+        }
         
         if (withAnimation)
         {
-            if (enabled)
-                anim.SetTrigger("Open");
-            else
+            if (!enabled)
+            {
+                Invoke("DisableObjects", disableDelay);
                 anim.SetTrigger("Close");
+            }
         }
         else
         {
-            if (enabled)
-                anim.SetTrigger("Open");
-            else
+            if (!enabled)
             {
                 DisableObjects();
                 anim.SetTrigger("Close_Instant");
@@ -187,17 +200,6 @@ public class LevelSelection : MonoBehaviour
         }
         
         UpdatePaginationButtons();
-
-        if (enabled)
-        {
-            StartCoroutine("EnableObjectsCoroutine");
-            Invoke("UpdateCurrentPage", 0.05f);
-        }
-        else
-        {
-            Invoke("DisableObjects", disableDelay);
-        }
-            
     }
 
     void UpdateCurrentPage()

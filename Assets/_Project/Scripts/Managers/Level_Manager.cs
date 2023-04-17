@@ -324,6 +324,9 @@ public class Level_Manager : Singleton<Level_Manager> {
         loadingLevel = true;
 
         yield return CanvasFader.Instance.FadeOutCoroutine(2f);
+        
+        // Close level selection when loading level
+        UI_Manager.Instance.EnableLevelSelectionMenu(false, false);
 
         // Unload previous scenes
         UnloadPreviousScenes();
@@ -331,7 +334,7 @@ public class Level_Manager : Singleton<Level_Manager> {
         // Load new scene
         LoadScene(levelIndex);
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSecondsRealtime(0.2f);
         UpdateCurrentLevel();
 
         levelCompleted = false;

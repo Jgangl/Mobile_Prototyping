@@ -57,9 +57,10 @@ public class UI_Manager : Singleton<UI_Manager>
         GameManager.Instance.QuitGame();
     }
 
-    void EnableLevelSelectionMenu(bool enabled, bool withAnimation)
+    public void EnableLevelSelectionMenu(bool enabled, bool withAnimation)
     {
-        levelSelection.EnableLevelSelectionMenu(enabled, withAnimation);
+        if (enabled != isLevelSelectionMenuOpen)
+            levelSelection.EnableLevelSelectionMenu(enabled, withAnimation);
         
         isLevelSelectionMenuOpen = enabled;
         UpdateMenuStatus(enabled);

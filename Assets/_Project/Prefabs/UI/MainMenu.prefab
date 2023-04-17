@@ -5352,10 +5352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9631c46cba5eab84eacbe3ac762e9305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelsPanel: {fileID: 7366699436289124637}
   levelButtonPrefab: {fileID: 9174853583577544461, guid: aafea89b50a61714a8be540f426916e9, type: 3}
-  levelButtonsParent_Page_1: {fileID: 0}
-  levelButtonsParent_Page_2: {fileID: 0}
   paginationRect: {fileID: 0}
   prevPageButton: {fileID: 0}
   nextPageButton: {fileID: 0}
