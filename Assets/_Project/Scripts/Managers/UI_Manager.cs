@@ -10,6 +10,7 @@ public class UI_Manager : Singleton<UI_Manager>
 {
     [SerializeField] SettingsMenu settingsMenu;
     [SerializeField] AfterLevelMenu afterLevelMenu;
+    [SerializeField] StoreMenu storeMenu;
     [SerializeField] LevelSelection levelSelection;
     [SerializeField] GameObject levelBanner;
     [SerializeField] TextMeshProUGUI levelBannerText;
@@ -203,6 +204,25 @@ public class UI_Manager : Singleton<UI_Manager>
             UpdateMenuStatus(false);
         }
     }
+    
+    public void OpenStoreMenu()
+    {
+        DisablePlayerInput();
+        
+        storeMenu.Open();
+        UpdateMenuStatus(true);
+    }
+
+    public void CloseStoreMenu()
+    {
+        EnablePlayerInput();
+        
+        if (storeMenu)
+        {
+            storeMenu.Close();
+            UpdateMenuStatus(false);
+        }
+    }
 
     void UpdateStartButton()
     {
@@ -216,13 +236,13 @@ public class UI_Manager : Singleton<UI_Manager>
 
         if (numCompletedLevels == 0)
         {
-            startButtonText.text = "Start";
-            startButtonText.fontSize = 75;
+            startButtonText.text = "Play";
+            startButtonText.fontSize = 85;
         }
         else
         {
-            startButtonText.text = "Continue";
-            startButtonText.fontSize = 60;
+            startButtonText.text = "Play";
+            startButtonText.fontSize = 85;
         }
     }
 

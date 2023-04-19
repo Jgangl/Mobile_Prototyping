@@ -5073,6 +5073,7 @@ MonoBehaviour:
   keepAlive: 0
   settingsMenu: {fileID: 5600686363455271754}
   afterLevelMenu: {fileID: 0}
+  storeMenu: {fileID: 0}
   levelSelection: {fileID: 0}
   levelBanner: {fileID: 0}
   levelBannerText: {fileID: 0}

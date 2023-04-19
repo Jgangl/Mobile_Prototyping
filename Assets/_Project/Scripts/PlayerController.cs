@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float swipeLengthVariableGain = 1.0f;
     [SerializeField] float swipeLengthFlatGain = 0.01f;
     [SerializeField] float speed;
-    [SerializeField] GameObject hitParticles;
+    [SerializeField] ParticleSystem hitParticles;
     [SerializeField] bool canMove;
     [SerializeField] bool disableInput;
     [SerializeField] float bonesCollisionTime = 0.05f;
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     BasicTrajectory basicTrajectory;
     SlimeGenerator slimeGenerator;
+    ColorManager colorManager;
     
     Vector2 fingerDownPos;
     Vector2 fingerCurrentPos;
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         slimeGenerator  = GetComponent<SlimeGenerator>();
+        colorManager    = GetComponent<ColorManager>();
         rb              = GetComponent<Rigidbody2D>();
         basicTrajectory = GetComponent<BasicTrajectory>();
         MovingJoint     = GetComponent<FixedJoint2D>();
@@ -492,9 +494,13 @@ public class PlayerController : MonoBehaviour
         Vector2 colPoint = collision.contacts[0].point;
 
         // Create particles and apply rotation
-        GameObject particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
+        ParticleSystem particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
+        
+        Debug.Log(colorManager.GetSelectedHue());
+        colorManager.SetParticleSystemStartColorHue(particles, colorManager.GetSelectedHue());
+        
         particles.transform.rotation = q;
-        Destroy(particles, 0.5f);
+        Destroy(particles.gameObject, 0.5f);
     }
 
     IEnumerator IgnoreBonesTimer() 

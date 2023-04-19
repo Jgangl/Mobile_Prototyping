@@ -2449,6 +2449,7 @@ GameObject:
   - component: {fileID: 3452020396485294500}
   - component: {fileID: 6981968941831187579}
   - component: {fileID: 2919447222391628740}
+  - component: {fileID: 2285433841441136058}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -2490,7 +2491,7 @@ Transform:
   - {fileID: 355717316088182315}
   - {fileID: 5239055241678300449}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6119821868485345446
 SpriteRenderer:
@@ -2580,7 +2581,7 @@ MonoBehaviour:
   swipeLengthVariableGain: 1
   swipeLengthFlatGain: 0.01
   speed: 200
-  hitParticles: {fileID: 9014898375944429613, guid: dad80a64aeaa07f41a0dca929618bb67, type: 3}
+  hitParticles: {fileID: 9014898375944429615, guid: dad80a64aeaa07f41a0dca929618bb67, type: 3}
   canMove: 1
   disableInput: 0
   bonesCollisionTime: 0.2
@@ -2625,18 +2626,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9031363934d6a244290296f20ef7b130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeBallPrefabs:
-  - {fileID: 7473275929454565281, guid: b526c3ffdaaa15f438f53257d90f7e1c, type: 3}
-  - {fileID: 7473275929454565281, guid: 57a4f68eb4cc9ba42804f35fa716b954, type: 3}
-  - {fileID: 7473275929454565281, guid: 2b3ece35ad00d16419a66b2eb0174a54, type: 3}
-  - {fileID: 7473275929454565281, guid: 5475e7e1fa0f86044a067c4e6f587515, type: 3}
   slimeParticleSystem: {fileID: 6797190405620914769, guid: ae41cf6ca25d30a4a804e42adfc11b34, type: 3}
   slimeMaterials:
   - {fileID: 2100000, guid: 49e537e72a2ba2242ba473f522e85457, type: 2}
   - {fileID: 2100000, guid: c62629915be16254eb9d60618c0ff2e8, type: 2}
   - {fileID: 2100000, guid: 0ad86ca49faca434b953a9856e514047, type: 2}
-  collectionChecks: 1
-  slimePoolSize: 100
 --- !u!114 &3452020396485294500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2657,8 +2651,8 @@ MonoBehaviour:
   collisionLayers:
     serializedVersion: 2
     m_Bits: 64
-  lineColor: {r: 0, g: 0.5188679, b: 0.24213837, a: 1}
-  capColor: {r: 0, g: 0.5176471, b: 0.24313726, a: 1}
+  lineColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+  capColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
   lineThickness: 0.1
   endCapRadius: 0.1
   numLineSkipPoints: 5
@@ -2713,11 +2707,37 @@ MonoBehaviour:
   - {fileID: 2977569808825385761}
   - {fileID: 5239055241678300449}
   m_Bounds:
-    m_Center: {x: 0.038011074, y: -0.09429884, z: 0}
-    m_Extent: {x: 5.2077975, y: 5.1782827, z: 0}
+    m_Center: {x: 0.03801298, y: -0.09429836, z: 0}
+    m_Extent: {x: 5.207795, y: 5.1782827, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
+--- !u!114 &2285433841441136058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119821868485345451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5dfd7b02f635644875e38059c2fca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  green: {r: 0.0627451, g: 0.8784314, b: 0.54509807, a: 1}
+  red: {r: 0.8784314, g: 0.06274507, b: 0.06274507, a: 1}
+  yellow: {r: 0.8784314, g: 0.7560785, b: 0.06274507, a: 1}
+  blue: {r: 0.06274507, g: 0.08993459, b: 0.8784314, a: 1}
+  playerTrail: {fileID: 2725041052965305109}
+  playerSlimeParticleSystem: {fileID: 9032588162941493982}
+  mainImage: {fileID: 6119821868485345446}
+  outlineImage: {fileID: 6134187180336565630}
+  leftEyePupil: {fileID: 5461881582007040837}
+  leftEyeBack: {fileID: 6615267018864088742}
+  rightEyePupil: {fileID: 8238619543575166674}
+  rightEyeBack: {fileID: 8798629389810166407}
+  mouth: {fileID: 6038488542553451597}
+  defaultColor: {r: 0.35686275, g: 0.68235296, b: 0.4745098, a: 1}
 --- !u!1 &6133203192227274563
 GameObject:
   m_ObjectHideFlags: 0
@@ -3147,8 +3167,8 @@ MonoBehaviour:
   - {fileID: 2451343034462566962}
   - {fileID: 1562328816888351222}
   m_Bounds:
-    m_Center: {x: 0.0034270287, y: -0.12239027, z: 0}
-    m_Extent: {x: 5.689201, y: 5.6961765, z: 0}
+    m_Center: {x: 0.0034279823, y: -0.12238932, z: 0}
+    m_Extent: {x: 5.6891985, y: 5.696177, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
