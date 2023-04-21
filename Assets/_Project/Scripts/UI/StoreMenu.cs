@@ -11,6 +11,8 @@ public class StoreMenu : Menu
     [SerializeField] SliderBase hueSlider;
     [SerializeField] ParticleSystem previewSlimeParticleSystem;
 
+    [SerializeField] Image previewSlimeImage;
+
     ColorButton prevSelectedColorButton;
     PlayerColor selectedPlayerColor;
 
@@ -19,45 +21,25 @@ public class StoreMenu : Menu
     void Start()
     {
         colorPicker.Show(true);
-        //colorPicker.Show(false);
         
-        Debug.Log("Default Color: " + ColorUtility.ToHtmlStringRGB(playerPreviewColorManager.GetDefaultColor()));
         string colorHtmlString = PlayerPrefs.GetString("PlayerColor", "#" + ColorUtility.ToHtmlStringRGB(playerPreviewColorManager.GetDefaultColor()));
-        Debug.Log("Read color: " + colorHtmlString);
         ColorUtility.TryParseHtmlString(colorHtmlString, out Color savedColor);
         Color.RGBToHSV(savedColor, out float hue, out float sat, out float val);
 
         hueSlider.ForceSetValue(hue * hueSlider.maxValue, false);
+        
+        // Set color with saved value on startup
+        SelectColor(hue);
 
         colorPicker.OnColorValueChanged += ColorChanged;
         hueSlider.ActionToInvokeOnPointerRelease += OnSliderReleased;
     }
-/*
-    public void ColorButtonClicked(ColorButton clickedColorButton)
-    {
-        if (prevSelectedColorButton != clickedColorButton)
-        {
-            if (prevSelectedColorButton != null)
-            {
-                prevSelectedColorButton.StopIdleAnimation();
-            }
-            
-            selectedPlayerColor = clickedColorButton.GetColor();
-            clickedColorButton.PlayIdleAnimation();
-            
-            //SelectColor(selectedPlayerColor);
-            
-            prevSelectedColorButton = clickedColorButton;
-        }
-    }
-*/
+
     public void SelectColor(float hue)
     {
         playerPreviewColorManager.SetColor(hue);
-        
         playerPreviewColorManager.SetParticleSystemStartColorHue(previewSlimeParticleSystem, hue);
-        
-        //PlayerPrefs.SetString("PlayerColor", newColor.ToString());
+        SetImageHue(previewSlimeImage, hue);
     }
 
     void OnSliderReleased(float val)
@@ -74,9 +56,15 @@ public class StoreMenu : Menu
         currSliderColor = newColor;
         
         Color.RGBToHSV(newColor, out float hue, out float sat, out float val);
-        
-        Debug.Log("Color Changed: " + newColor);
+
         SelectColor(hue);
+    }
+    
+    void SetImageHue(Image image, float desiredHue)
+    {
+        Color.RGBToHSV(image.color, out float hue, out float saturation, out float value);
+        Color newColor = Color.HSVToRGB(desiredHue, saturation, value);
+        image.color = new Color(newColor.r, newColor.g, newColor.b, image.color.a);
     }
 }
 

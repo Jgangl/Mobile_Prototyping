@@ -959,7 +959,7 @@ MonoBehaviour:
   buttonText: {fileID: 8572649755233925346}
   completeCheckmark: {fileID: 3496101932325202409}
   lockTransform: {fileID: 6987810122738325431}
-  completeColor: {r: 0.49411765, g: 0.6509804, b: 0.54509807, a: 1}
+  completeColor: {r: 0.5540964, g: 0.73, b: 0.61126506, a: 1}
   mainImage: {fileID: 5180921546154134514}
   bgImage: {fileID: 0}
   clickAnimation: {fileID: 7906845358020043213}
