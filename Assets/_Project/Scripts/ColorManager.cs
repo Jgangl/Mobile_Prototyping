@@ -30,13 +30,10 @@ public class ColorManager : MonoBehaviour
     
     void Start()
     {
-        Debug.Log(ColorUtility.ToHtmlStringRGB(defaultColor));
         string colorHtmlString = PlayerPrefs.GetString("PlayerColor", "#" + ColorUtility.ToHtmlStringRGB(defaultColor));
-        Debug.Log(colorHtmlString);
         ColorUtility.TryParseHtmlString(colorHtmlString, out Color savedColor);
         Color.RGBToHSV(savedColor, out float hue, out float sat, out float val);
-        
-        Debug.Log(hue);
+
         SetColor(hue);
     }
 

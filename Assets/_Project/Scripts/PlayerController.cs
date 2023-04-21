@@ -495,8 +495,7 @@ public class PlayerController : MonoBehaviour
 
         // Create particles and apply rotation
         ParticleSystem particles = Instantiate(hitParticles, colPoint, Quaternion.identity);
-        
-        Debug.Log(colorManager.GetSelectedHue());
+
         colorManager.SetParticleSystemStartColorHue(particles, colorManager.GetSelectedHue());
         
         particles.transform.rotation = q;
