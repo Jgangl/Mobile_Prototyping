@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviour
     Tweener mouthScale;
     Vector2 mouthOriginalScale;
 
+    float idleTime;
+    float idleBlinkStartTime = 5.0f;
+
     public static Action OnJumped;
 
     void Start()
@@ -88,6 +91,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (idleTime >= idleBlinkStartTime)
+        {
+            Blink();
+            idleTime = 0.0f;
+        }
+        else
+        {
+            idleTime += Time.deltaTime;
+        }
+        
         MoveEyesToDirection();
         
         UpdateRecentCollisions();
@@ -110,6 +123,8 @@ public class PlayerController : MonoBehaviour
                 
                 fingerDownPos = Input.mousePosition;
                 mouseHeldDown = true;
+
+                idleTime = 0.0f;
             }
             else if (Input.GetMouseButtonUp(0)) 
             {
@@ -133,6 +148,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 currentSwipeForce = Vector2.zero;
+                idleTime = 0.0f;
             }
             else if (mouseHeldDown && (mouseMoved || CurrentPlatform != null)) 
             {
@@ -158,6 +174,8 @@ public class PlayerController : MonoBehaviour
                     if (basicTrajectory)
                         basicTrajectory.ClearArc();
                 }
+                
+                idleTime = 0.0f;
             }
         }
 
