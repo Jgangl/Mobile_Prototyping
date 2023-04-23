@@ -2228,7 +2228,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6033,11 +6033,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1045177682775357574, guid: 6284634264d625b45ab17354dab01364, type: 3}
       propertyPath: m_Volume
-      value: 0.35
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1045177682775357574, guid: 6284634264d625b45ab17354dab01364, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045177683908715396, guid: 6284634264d625b45ab17354dab01364, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5303874046333041256, guid: 6284634264d625b45ab17354dab01364, type: 3}
       propertyPath: m_IsActive
@@ -15879,7 +15883,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -29759,7 +29763,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  DisableDragging: 0
+  DisableDragging: 1
   ResetDragOffset: 1
   _PagedRect: {fileID: 8856617179260167508}
   ScrollBar: {fileID: 7621020385223056696}
@@ -38805,7 +38809,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 75}
+  m_AnchoredPosition: {x: 0, y: 74.999985}
   m_SizeDelta: {x: 500, y: 125}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7366699436785487441
@@ -40178,13 +40182,13 @@ MonoBehaviour:
   LastPageKey: 279
   LimitDraggingToOnePageAtATime: 1
   UseSwipeInput: 0
-  UseSwipeInputForScrollRect: 1
+  UseSwipeInputForScrollRect: 0
   SwipeDeltaThreshold: 0.1
   SpaceBetweenPages: 0
   LoopSeamlessly: 0
   ShowScrollBar: 0
-  UseScrollWheelInput: 1
-  OnlyUseScrollWheelInputWhenMouseIsOver: 1
+  UseScrollWheelInput: 0
+  OnlyUseScrollWheelInputWhenMouseIsOver: 0
   HighlightWhenMouseIsOver: 0
   NormalColor: {r: 1, g: 1, b: 1, a: 1}
   HighlightColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}

@@ -322,6 +322,7 @@ public class Level_Manager : Singleton<Level_Manager> {
     IEnumerator LoadLevelCoroutine(int levelIndex)
     {
         loadingLevel = true;
+        
 
         yield return CanvasFader.Instance.FadeOutCoroutine(2f);
         

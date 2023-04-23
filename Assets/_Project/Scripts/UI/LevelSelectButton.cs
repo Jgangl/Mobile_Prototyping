@@ -31,6 +31,8 @@ public class LevelSelectButton : MonoBehaviour
 
     void OnEnable()
     {
+        button.interactable = true;
+        
         button.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         
         Level levelObject = Level_Manager.Instance?.GetLevel(level);
@@ -103,6 +105,8 @@ public class LevelSelectButton : MonoBehaviour
         clickAnimation.CreateTween(true, true);
 
         AudioManager.Instance.PlayLaunchSound();
+        
+        
     }
 
     public void Show()
@@ -126,5 +130,11 @@ public class LevelSelectButton : MonoBehaviour
     public void Hide()
     {
         
+    }
+
+    public void SetInteractable(bool interactable)
+    {
+        if (!bLocked)
+            button.interactable = interactable;
     }
 }

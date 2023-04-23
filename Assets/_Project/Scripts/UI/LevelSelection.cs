@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UI.Pagination;
+using UnityEngine.EventSystems;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class LevelSelection : MonoBehaviour
     int targetPage = 1;
 
     bool prevUnlockAllLevels;
+
+    bool loadingLevel = false;
 
     // Start is called before the first frame update
     void Start()
@@ -119,6 +122,8 @@ public class LevelSelection : MonoBehaviour
 
     void OnLevelButtonPressed(int level) 
     {
+        DisableAllLevelButtons();
+        
         Level_Manager.Instance.LoadLevel(level);
     }
 
@@ -171,6 +176,8 @@ public class LevelSelection : MonoBehaviour
 
     public void EnableLevelSelectionMenu(bool enabled, bool withAnimation)
     {
+        EnableAllLevelButtons();
+        
         Animator anim = GetComponent<Animator>();
         if (!anim)
             return;
@@ -342,6 +349,22 @@ public class LevelSelection : MonoBehaviour
         for (int i = 0; i < paginationRect.Pages.Count; i++)
         {
             HidePage(i);
+        }
+    }
+    
+    public void EnableAllLevelButtons()
+    {
+        foreach (LevelSelectButton button in levelButtons)
+        {
+            button.SetInteractable(true);
+        }
+    }
+
+    public void DisableAllLevelButtons()
+    {
+        foreach (LevelSelectButton button in levelButtons)
+        {
+            button.SetInteractable(false);
         }
     }
 }
