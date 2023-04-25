@@ -2000,7 +2000,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -8821,7 +8821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9219364834691753308, guid: 6ce3fbce001f10a45910be83e3bdcc1a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnLevelSettingsButtonPressed
+      value: OpenSettingsMenu
       objectReference: {fileID: 0}
     - target: {fileID: 9219364834691753308, guid: 6ce3fbce001f10a45910be83e3bdcc1a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -26987,22 +26987,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -62.5
       objectReference: {fileID: 0}
-    - target: {fileID: 993393626672116901, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
-      propertyPath: m_Color.a
-      value: 0.7019608
-      objectReference: {fileID: 0}
-    - target: {fileID: 993393626672116901, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
-      propertyPath: m_Color.b
-      value: 0.32941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 993393626672116901, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
-      propertyPath: m_Color.g
-      value: 0.32941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 993393626672116901, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
-      propertyPath: m_Color.r
-      value: 0.32941177
-      objectReference: {fileID: 0}
     - target: {fileID: 993393626672116903, guid: e85b798f863d9dd4784e59b17d0414d3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -30965,7 +30949,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -49.99994}
+  m_AnchoredPosition: {x: 0, y: -49.999878}
   m_SizeDelta: {x: -800, y: -250.00015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6646231431911427748
@@ -31999,7 +31983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 0.8156863}
+  m_Color: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 0.9019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

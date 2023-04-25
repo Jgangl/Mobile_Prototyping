@@ -200,7 +200,6 @@ public class UI_Manager : Singleton<UI_Manager>
         {
             GameManager.Instance.PauseGame(false);
             settingsMenu.Close();
-            settingsMenu.EnableHomeButton(!isMainMenuOpened);
             UpdateMenuStatus(false);
         }
     }

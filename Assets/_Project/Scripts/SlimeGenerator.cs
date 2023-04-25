@@ -68,14 +68,10 @@ public class SlimeGenerator : MonoBehaviour
 
             foreach (Collider2D colliderToRemove in collidersToRemove)
             {
-                Debug.Log("Colliders Being Removed:");
-                Debug.Log(Vector2.Distance(sprite.transform.position, colliderToRemove.transform.position));
-                
                 // Fade out image and then delete
                 SpriteRenderer spriteToRemove = colliderToRemove.GetComponent<SpriteRenderer>();
                 if (spriteToRemove)
                 {
-                    
                     Destroy(colliderToRemove, 0.01f);
                     spriteToRemove.DOFade(0.0f, 2.0f).OnComplete(() => Destroy(spriteToRemove.gameObject));
                 }
