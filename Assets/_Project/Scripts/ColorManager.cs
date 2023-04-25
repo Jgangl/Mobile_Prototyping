@@ -60,7 +60,7 @@ public class ColorManager : MonoBehaviour
         SetParticleSystemStartColorHue(playerSlimeParticleSystem, selectedHue);
     }
 
-    void SetSpriteHue(SpriteRenderer sprite, float desiredHue)
+    public void SetSpriteHue(SpriteRenderer sprite, float desiredHue)
     {
         Color.RGBToHSV(sprite.color, out float hue, out float saturation, out float value);
         Color newColor = Color.HSVToRGB(desiredHue, saturation, value);

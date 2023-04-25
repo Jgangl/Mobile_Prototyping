@@ -2491,7 +2491,7 @@ Transform:
   - {fileID: 355717316088182315}
   - {fileID: 5239055241678300449}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6119821868485345446
 SpriteRenderer:
@@ -2626,11 +2626,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9031363934d6a244290296f20ef7b130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeParticleSystem: {fileID: 6797190405620914769, guid: ae41cf6ca25d30a4a804e42adfc11b34, type: 3}
-  slimeMaterials:
-  - {fileID: 2100000, guid: 49e537e72a2ba2242ba473f522e85457, type: 2}
-  - {fileID: 2100000, guid: c62629915be16254eb9d60618c0ff2e8, type: 2}
-  - {fileID: 2100000, guid: 0ad86ca49faca434b953a9856e514047, type: 2}
+  slimePrefabs:
+  - {fileID: 8745205487977756384, guid: 9025c97dd2cb539478f50b31086910e9, type: 3}
+  - {fileID: 8745205487977756384, guid: 81551268db5f93d498667f00e865a3a3, type: 3}
+  - {fileID: 8745205487977756384, guid: 6b6c6fecf074fa84c8eb965075a275cb, type: 3}
+  maxNumOverlappingSlimeSprites: 3
+  COLLIDER_DIST_THRESHOLD: 1
 --- !u!114 &3452020396485294500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2707,8 +2708,8 @@ MonoBehaviour:
   - {fileID: 2977569808825385761}
   - {fileID: 5239055241678300449}
   m_Bounds:
-    m_Center: {x: 0.03801298, y: -0.09429836, z: 0}
-    m_Extent: {x: 5.207795, y: 5.1782827, z: 0}
+    m_Center: {x: 0.03801298, y: -0.09429884, z: 0}
+    m_Extent: {x: 5.2077956, y: 5.178282, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -3167,8 +3168,8 @@ MonoBehaviour:
   - {fileID: 2451343034462566962}
   - {fileID: 1562328816888351222}
   m_Bounds:
-    m_Center: {x: 0.0034279823, y: -0.12238932, z: 0}
-    m_Extent: {x: 5.6891985, y: 5.696177, z: 0}
+    m_Center: {x: 0.0034279823, y: -0.12239027, z: 0}
+    m_Extent: {x: 5.689198, y: 5.6961765, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
